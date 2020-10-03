@@ -10,5 +10,5 @@ Just execute files.
 hw0104/hw0106:
 Just read pdf files.
 hw0105:
-Execute the file and read pdf.(Do not input an integer over 255.)
+Execute the file and read pdf.(Do not input an integer over 2^7-1.)
 
