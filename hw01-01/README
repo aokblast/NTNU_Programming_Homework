@@ -8,7 +8,7 @@ Execute:
 run ./hw0101 ./hw0102.... to execute files .
 
 Clean:
-run make clean to remove ./hw0101 ./hw0102....
+run /make clean to remove ./hw0101 ./hw0102....
 
 hw0101/hw0102/hw0103:
 Just execute files.
