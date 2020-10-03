@@ -4,6 +4,11 @@ student Name:洪盛益
 Build:
 run /make .
 Execute:
-run ./hw0101 ./hw0102.... to execute the file .
-
+run ./hw0101 ./hw0102.... to execute files .
+hw0101/hw0102/hw0103:
+Just execute files.
+hw0104/hw0106:
+Just read pdf files.
+hw0105:
+Execute the file and read pdf.
 
