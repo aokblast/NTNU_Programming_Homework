@@ -8,5 +8,5 @@ int main(){
 		prod*=(num%10);
 		num/=10;
 	}
-	printf("Result:%ld",prod);
+	printf("Result:%ld\n",prod);
 }
