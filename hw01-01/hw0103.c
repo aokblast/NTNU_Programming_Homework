@@ -7,6 +7,6 @@ int main(){
 	scanf("%lf",&grav);
 	printf("Please enter the time(s):");
 	scanf("%lf",&t);
-	printf("Final velocity: %.10lfm/s\nThe altitude: %.10lfm\n",grav*t,grav*t*t/2.0);
+	printf("Final velocity: %gm/s\nThe altitude: %gm\n",grav*t,grav*t*t/2.0);
 
 }
