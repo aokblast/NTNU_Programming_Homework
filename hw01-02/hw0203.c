@@ -27,7 +27,7 @@ int32_t pas(const char *p){
 }
 
 int32_t res(int32_t total,struct tax group){
-	return printf("%lg\n",total*group.rate-group.pdc);
+	return printf("Total tax: %lg\n",total*group.rate-group.pdc);
 
 }
 
@@ -45,8 +45,12 @@ int main(){
 	person.child=pas("How many preschool children: ");
 	person.disabled=pas("How many disable people: ");
 	
-	int32_t total=person.salary-person.pop*88000-person.income_pop*200000-(person.marry? 240000:120000)-person.sav_inv*270000-person.tuit*25000-person.child*120000-person.disabled*2000000;
-	
+	int32_t total=person.salary-person.pop*88000-person.income_pop*200000-(person.marry? 240000:120000)-person.sav_inv*270000-person.tuit*25000-person.child*120000-person.disabled*200000;
+		
+	if(total<0){
+		printf("Total tax: 0");
+		exit(0);
+	}
 	//printf("%d\n",total);
 	
 	if(total>4530000){
