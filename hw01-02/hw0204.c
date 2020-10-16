@@ -42,18 +42,20 @@ int *pas(const char *p){
 
 int pass_days(int y,int m,int d){
 	int days=0;	
-	y--;
-	/*for(int i=1;i<y;i++){
-		days+=((y%4==0 && y%100!=0)|| y%400==0) ? 366:365;
-	}*/
-	days+=365*y+y/4-y/100+y/400;	
-
-	//printf("%d\n",days);
-	
 	if(m>2){
 		days+=(isrun(y)? 1:0);
 	}
 	
+	
+	y--;
+	/*for(int i=1;i<y;i++){
+	 *
+		days+=((y%4==0 && y%100!=0)|| y%400==0) ? 366:365;
+	}*/
+	days+=(365*y+y/4-y/100+y/400);	
+
+	//printf("%d\n",days);
+			
 	
 	//printf("%d\n",days);
 	for(int i=1;i<m;i++){
@@ -66,9 +68,7 @@ int pass_days(int y,int m,int d){
 int minus(int y1,int m1,int d1,int y2,int m2,int d2){
 	int a=pass_days(y1,m1,d1);
 	int b=pass_days(y2,m2,d2);
-	if(isrun(y1) || isrun(y2)){
-		b++;
-	}
+	
 	return b-a;
 }
 
