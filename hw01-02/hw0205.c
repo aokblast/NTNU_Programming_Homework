@@ -14,13 +14,13 @@ int col_judge(int *a){
 }
 
 int num_judge(int *a,int num){
-	int num_arr[13]={0},cnt=0;
+	int num_buck[13]={0},cnt=0;
 	for(int i=0;i<size_of_array;i++){
-		num_arr[a[i]%13]++;
+		num_buck[a[i]%13]++;
 	}
 	
 	for(int i=0;i<13;i++){
-		if(num_arr[i]==num){
+		if(num_buck[i]==num){
 			cnt++;
 		}
 	}
@@ -34,7 +34,7 @@ int contin_judge(int *a){
 	for(int i=0;i<size_of_array;i++){
 		a[i]%=13;
 	}
-
+	//qsort
 	for(int i=0;i<size_of_array;i++){
 		for(int j=i+1;j<size_of_array;j++){
 			if(a[i]>a[j]){
@@ -49,7 +49,7 @@ int contin_judge(int *a){
 
 	for(int i=1;i<size_of_array;i++){
 		if((a[i])!=contin+1){
-			return 0;
+			retrn 0;
 		}
 		else{
 			contin++;
