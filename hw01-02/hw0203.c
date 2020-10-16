@@ -9,7 +9,7 @@ struct tax{
 }class[5]={{0.05,0},{0.12,37800},{0.2,134600},{0.3,376600},{0.4,829600}};
 
 struct profile{
-	uint32_t salary,marry,pop,income_pop,sav_inv,tuit,child,disabled;
+	int32_t salary,marry,pop,income_pop,sav_inv,tuit,child,disabled;
 }person;
 
 //Print and Scanf
@@ -17,7 +17,7 @@ int32_t pas(const char *p){
 	int32_t num=0;
 	printf("%s",p);
 	
-	if(scanf(" %d",&num)==1){
+	if(scanf(" %ud",&num)==1 && num >=0){
 		return num;
 	}
 	else{

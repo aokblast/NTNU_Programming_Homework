@@ -49,7 +49,7 @@ int contin_judge(int *a){
 
 	for(int i=1;i<size_of_array;i++){
 		if((a[i])!=contin+1){
-			retrn 0;
+			return 0;
 		}
 		else{
 			contin++;
