@@ -9,7 +9,7 @@ struct tax{
 }class[5]={{0.05,0},{0.12,37800},{0.2,134600},{0.3,376600},{0.4,829600}};
 
 struct profile{
-	int32_t salary,marry,pop,income_pop,sav_inv,tuit,child,disabled;
+	uint32_t salary,marry,pop,income_pop,sav_inv,tuit,child,disabled;
 }person;
 
 //Print and Scanf
