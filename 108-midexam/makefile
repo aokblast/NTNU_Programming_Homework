@@ -1,0 +1,12 @@
+all:
+	gcc mid01.c -o mid01 -lm
+	gcc mid02.c -o mid02 -lm
+	gcc mid03.c -o mid03 -lm
+	gcc mid04.c -o mid04 -lm
+	gcc mid05.c -o mid05 -lm
+clear:
+	rm -rf mid01
+	rm -rf mid02
+	rm -rf mid03
+	rm -rf mid04
+	rm -rf mid05
