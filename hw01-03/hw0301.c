@@ -39,7 +39,7 @@ int main(){
 
 	for(int i=0;i<height;i++){
 		for(int j=0;j<width;j++){
-			printf("%3d ",torna[j][i]);
+			printf("%4d ",torna[j][i]);
 		
 		}
 		printf("\n");

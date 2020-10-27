@@ -62,9 +62,9 @@ int main(){
 	poly=input("Please enter a quadratic polynomial(ax^2+bx+c):",3);
 	print(poly);
     inter=input("Plase enter the interval[s,t]:",2);
-    printf("The integral: %lf\n",integral(poly,inter));
+    printf("The integral: %lg\n",integral(poly,inter));
     for(int i=2;i<=65536;i*=2){
-        printf("The Riemann sum of n=%d:%lf\n",i,riemann(poly,inter,i));
+        printf("The Riemann sum of n=%d:%lg\n",i,riemann(poly,inter,i));
     }
 
 }
