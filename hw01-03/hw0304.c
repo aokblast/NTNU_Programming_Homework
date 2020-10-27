@@ -60,10 +60,31 @@ double target_poly(double *arr,double num){
 int main(){
 	double *poly,*inter;
 	poly=input("Please enter a quadratic polynomial(ax^2+bx+c):",3);
+<<<<<<< HEAD
 	print(poly);
     inter=input("Plase enter the interval[s,t]:",2);
     printf("The integral: %lf\n",integral(poly,inter));
     for(int i=2;i<=65536;i*=2){
         printf("The Riemann sum of n=%d:%lf\n",i,riemann(poly,inter,i));
     }
+=======
+	int cnt=2;
+	printf("%lgx^2",poly[0]);
+	for(int i=1;i<=2;i++){
+		if(poly[i]==0){
+			printf("");
+		}else if (cnt==0){
+			printf("%+lg",poly[i]);
+		}
+		else{
+			printf("%+lgx^%d",poly[i],cnt);
+		}
+
+		cnt--;
+	
+	}
+	printf("\n");
+	inter=input("Plase enter the interval[s,t]:",2);
+
+>>>>>>> d23a64756e485ee2c1243691d1e68d07a883a649
 }
