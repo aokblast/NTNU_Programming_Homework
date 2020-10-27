@@ -20,14 +20,15 @@ int main(){
 	double *poly,*inter;
 	poly=input("Please enter a quadratic polynomial(ax^2+bx+c):",3);
 	int cnt=2;
-	for(int i=0;i<=2;i++){
+	printf("%lgx^2",poly[0]);
+	for(int i=1;i<=2;i++){
 		if(poly[i]==0){
 			printf("");
 		}else if (cnt==0){
-			printf("%lg",poly[i]);
+			printf("%+lg",poly[i]);
 		}
 		else{
-			printf("%lgx^%d",poly[i],cnt);
+			printf("%+lgx^%d",poly[i],cnt);
 		}
 
 		cnt--;
