@@ -5,7 +5,7 @@
 int pas(const char *p){
 	int num=0;
 	printf("%s",p);
-	if(scanf("%d",&num)==1 && num>0){
+	if(scanf(" %d",&num)==1 && num>0){
 		return num;
 	
 	}

@@ -6,7 +6,7 @@ double *input(const char *prt,int n){
 	double *num_arr=malloc(sizeof(double)*n);
 	printf("%s",prt);
 	for(int i=0;i<n;i++){
-		if(scanf("%lf,",&num_arr[i])!=1){
+		if(scanf(" %lf,",&num_arr[i])!=1){
 			printf("Wrong input.\n");
 			exit(0);
 		}

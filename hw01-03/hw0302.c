@@ -5,7 +5,7 @@
 int main(){
 	int32_t cnt=0,tmp=0,num=0,start=0,end=0;
 	printf("Please enter a number:");
-	if(scanf("%d",&num)==0 || num<0){
+	if(scanf(" %d",&num)==0 || num<0){
 		printf("wrong input.");
 		exit(0);
 	}
