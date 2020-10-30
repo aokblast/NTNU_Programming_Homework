@@ -47,7 +47,7 @@ double integral(double *arr,double *interval){
 double target_poly(double*,double);
 double riemann(double *arr,double *interval,int num){
     double sum=0;
-    for(int i=1;i<=num;i++){
+    for(int i=0;i<=num-1;i++){
         sum+=target_poly(arr,interval[0]+((interval[1]-interval[0])/(double)num*i))*(interval[1]-interval[0])/(double)num;
     }
     return sum;
