@@ -3,10 +3,11 @@
 #include <stdint.h>
 #include <math.h>
 int main(){
-	int32_t cnt=0,tmp=0,num=0,start=0,end=0;
+	int32_t cnt=0,tmp=0,start=0,end=0;
+    double num;
 	printf("Please enter a number:");
-	if(scanf(" %d",&num)==0 || num<0){
-		printf("wrong input.");
+	if(scanf(" %lf",&num)==0 || num<0 || num!=(int)num){
+		printf("Wrong input.\n");
 		exit(0);
 	}
 	tmp=num;
@@ -20,5 +21,5 @@ int main(){
 	num-=(start*pow(10,cnt));
 	num+=(end*pow(10,cnt));
 	num+=start;
-	printf("%d",num);
+    printf("%d\n",(int)num);
 }

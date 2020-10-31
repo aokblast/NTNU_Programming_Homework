@@ -3,14 +3,14 @@
 #include <string.h>
 
 int pas(const char *p){
-	int num=0;
+	double num=0;
 	printf("%s",p);
-	if(scanf(" %d",&num)==1 && num>0){
-		return num;
+	if(scanf(" %lf",&num)==1 && num>0 && num==(int)num ){
+		return (int)num;
 	
 	}
 	else{
-		printf("Wrong input.");
+		printf("Wrong input.\n");
 		exit(0);		
 	}
 }
@@ -20,11 +20,10 @@ int pas(const char *p){
 
 
 int main(){
-	int total=0,x=0,y=0,num=1,direct[4][2]={{1,0},{0,1},{-1,0},{0,-1}},dircnt=0;
+	int x=0,y=0,num=1,direct[4][2]={{1,0},{0,1},{-1,0},{0,-1}},dircnt=0;
 	int width=pas("Please enter the width:");
 	int height=pas("Please enter the height:");
 	int torna[width][height];
-	total=0;
 	memset(torna,0,sizeof(torna));
 	
 	while(num<=width*height){

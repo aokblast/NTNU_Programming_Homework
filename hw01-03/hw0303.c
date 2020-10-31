@@ -11,13 +11,13 @@ int final();
 
 
 int input(){
-	int num=0;
+	double num=0;
 	printf("Please input an integer: ");
-	if(scanf(" %d",&num)==0){
+	if(scanf(" %lf",&num)==0 || num!=(int)num){
 		printf("Wrong input.\n");
 		exit(0);
 	}
-	return num;
+	return (int)num;
 
 }
 

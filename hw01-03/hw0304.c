@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+double *poly;
+
 double *input(const char *prt,int n){
 	double *num_arr=malloc(sizeof(double)*n);
 	printf("%s",prt);
@@ -16,55 +18,58 @@ double *input(const char *prt,int n){
 }
 
 
-void print(double *arr){
-    printf("%lgx^2",arr[0]);
-    int cnt=1;
-    for(int i=1;i<=2;i++){
-        if(arr[i]==0){
-            printf("");
-        }else if(cnt==0){
-            printf("+%lg",arr[i]);
-        }else{
-            printf("+%lgx^%d",arr[i],cnt);
-        }
-        cnt--;
+void print(){
+    if(poly[0]==1){
+        printf("x^2");
+    }else if(poly[0]==0){
+        printf("Wrong input.\n");
+    }else{
+        printf("%lgx^2",poly[0]);
+    }
+    if(poly[1]==1){
+        printf("+x^1");
+    }else if(poly[1]!=0){
+        printf("+%lgx^1",poly[1]);
+    }
+    if(poly[2]!=0){
+        printf("+%lg",poly[2]);
     }
     printf("\n");
 }
 
-double integral(double *arr,double *interval){
+double integral(double *interval){
     double sum=0;    
 
     for(int i=3;i>=1;i--){
-        sum+=((1/(double)i)*arr[3-i]*pow(interval[1],i));
+        sum+=((1/(double)i)*poly[3-i]*pow(interval[1],i));
     }
     //printf("%lf",sum);
     for(int i=3;i>=1;i--){
-        sum-=((1/(double)i)*arr[3-i]*pow(interval[0],i));
+        sum-=((1/(double)i)*poly[3-i]*pow(interval[0],i));
     } 
     return sum; 
 }
-double target_poly(double*,double);
-double riemann(double *arr,double *interval,int num){
+double target_poly(double);
+double riemann(double *interval,int num){
     double sum=0;
     for(int i=0;i<=num-1;i++){
-        sum+=target_poly(arr,interval[0]+((interval[1]-interval[0])/(double)num*i))*(interval[1]-interval[0])/(double)num;
+        sum+=target_poly(interval[0]+((interval[1]-interval[0])/(double)num*i))*(interval[1]-interval[0])/(double)num;
     }
     return sum;
 }
 
-double target_poly(double *arr,double num){
-    return arr[0]*pow(num,2)+arr[1]*pow(num,1)+arr[2];
+double target_poly(double num){
+    return poly[0]*pow(num,2)+poly[1]*pow(num,1)+poly[2];
 }
 
 int main(){
-	double *poly,*inter;
+	double *inter;
 	poly=input("Please enter a quadratic polynomial(ax^2+bx+c):",3);
-	print(poly);
+	print();
     inter=input("Plase enter the interval[s,t]:",2);
-    printf("The integral: %lg\n",integral(poly,inter));
+    printf("The integral: %lg\n",integral(inter));
     for(int i=2;i<=65536;i*=2){
-        printf("The Riemann sum of n=%d:%lg\n",i,riemann(poly,inter,i));
+        printf("The Riemann sum of n=%d:%lg\n",i,riemann(inter,i));
     }
 
 }

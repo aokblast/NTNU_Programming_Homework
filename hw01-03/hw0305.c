@@ -2,10 +2,10 @@
 #include <stdlib.h>
 
 int input(const char *n){
-    int num;
+    double num;
     printf("%s",n);
-    if(scanf("%d",&num)==1 && num>0){
-        return num;
+    if(scanf("%lf",&num)==1 && num>0 && num==(int)num){
+        return (int)num;
     }else{
         printf("Wrong input.\n");
         exit(0);
