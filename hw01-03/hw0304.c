@@ -5,7 +5,7 @@
 double *poly;
 
 double *input(const char *prt,int n){
-	double *num_arr=malloc(sizeof(double)*n);
+	double *num_arr=(double *) malloc(sizeof(double)*n);
 	printf("%s",prt);
 	for(int i=0;i<n;i++){
 		if(scanf(" %lf,",&num_arr[i])!=1){

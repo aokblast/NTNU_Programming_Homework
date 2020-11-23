@@ -7,9 +7,9 @@ int main(){
 
 	uint32_t num=0;
 
-	printf("Please enter a number.");
+	printf("Please enter a number:");
 	if(scanf("%ud",&num)==0){
-		printf("Wrong input.");
+		printf("Wrong input.\n");
 		exit(0);
 	
 	}
