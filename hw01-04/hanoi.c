@@ -16,14 +16,4 @@ void hanoi_recursive(i32 disk_num,i32 first,i32 end,i32 tmp){
     } 
 }
 
-void hanoi_loop(i32 disk_num){
-    i32 cnt=0,ho[1000][3],tmp=3,target=2,init=1;
-    memset(ho,0,sizeof(ho));
-    for(i32 i=disk_num;i>=1;i--){
-        ho[cnt][0]=disk_num;
-        cnt++;
-    }
-    for(i32 i=0;i<3*disk_num-2;i++){
-        
-    }
-}
+

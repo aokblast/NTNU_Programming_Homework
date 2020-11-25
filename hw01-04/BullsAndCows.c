@@ -5,16 +5,16 @@
 #define i32 int32_t
 
 i32 cnt=1;
-i32 input(const char *);
-i32 range_judge(i32);
-i32 judge(i32,i32);
+double input(const char *);
+i32 range_judge(double);
 i32 rand_generator();
-i32 num_judge(i32);
+i32 num_judge(double);
 void compare(i32,i32);
+void bac(i32 ans);
 
 void bac(i32 ans){
     printf("Round %d >>>\n",cnt++);
-    i32 num=input("Your Guess: ");
+    double num=input("Your Guess: ");
     printf("Response: ");
     if(num==ans){
         printf("\033[1;31mB\033[0;32mi\033[1;33mn\033[1;34mg\033[1;35mo\033[1;36m! \033[1;35mC\033[1;34mo\033[1;33mn\033[1;32mg\033[1;31mr\033[1;32ma\033[1;33mt\033[1;34mu\033[1;35ml\033[1;36ma\033[1;35mt\033[1;34mi\033[1;33mo\033[1;32mn\033[1;31ms\033[1;32m.\n");
@@ -23,7 +23,7 @@ void bac(i32 ans){
         printf("Invalid Guess.\n");
         bac(ans);
     }else{
-        compare(num,ans);
+        compare((i32)num,ans);
         bac(ans);
     }
 }
@@ -34,14 +34,14 @@ void bac_init(){
     bac(ans);
 }
 
-i32 input(const char *p){
+double input(const char *p){
     printf("%s",p);
-    i32 num=0;
-    scanf("%d",&num);
+    double num=0;
+    scanf("%lf",&num);
     return num;  
 }
 
-i32 range_judge(i32 num){
+i32 range_judge(double num){
     if(num>=1000 && num<=9999){
         return 1;
     }else{
@@ -53,16 +53,20 @@ i32 rand_generator(){
     srand(time(NULL));
     i32 num=0;
     do{
-        num=rand()%8999+1000;
+        num=rand()%9000+1000;
     }while(num_judge(num));
     return num;
 }
 
-i32 num_judge(i32 num){
+i32 num_judge(double num){
+    if(num!=(int)num){
+        return 1;
+    }
+    i32 tmp=(i32)num;
     i32 num_arr[10]={0};
-    while(num>0){
-        num_arr[num%10]++;
-        num/=10;
+    while(tmp>0){
+        num_arr[tmp%10]++;
+        tmp/=10;
     }
     for(i32 i=0;i<=9;i++){
         if(num_arr[i]>=2){

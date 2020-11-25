@@ -16,8 +16,6 @@ int input(const char *p){
 
 }
 
-
-
 int main(){
     int num=input("Please input a number: ");
     DecToRoman(num);

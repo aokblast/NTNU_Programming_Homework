@@ -21,6 +21,7 @@ int main(){
     i32 num=0;
     printf("k-th order Taylor polynomial for e\n");
     num=input("Please enter k: ");
-    printf("%.50lf\n",natural_log(num));
+    printf("%.20lf\n",natural_log(num));
+    printf("Best accuracy when k=17\n");
     //printf("%.5lf\n",exp(num));
 }

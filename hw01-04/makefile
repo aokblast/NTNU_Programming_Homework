@@ -4,9 +4,11 @@ all:
 	gcc hw0402.c hanoi.c -o hw0402
 	gcc hw0404.c eqresis.c -o hw0404
 	gcc hw0405.c BullsAndCows.c -o hw0405 
+	gcc hw0406.c -o hw0406
 clear:
 	rm -rf hw0401
 	rm -rf hw0403
 	rm -rf hw0402
 	rm -rf hw0404
 	rm -rf hw0405
+	rm -rf hw0406
