@@ -13,9 +13,9 @@ void compare(i32,i32);
 void bac(i32 ans);
 
 void bac(i32 ans){
-    printf("Round %d >>>\n",cnt++);
+    printf("\033[1;0mRound %d >>>\n",cnt++);
     double num=input("Your Guess: ");
-    printf("Response: ");
+    printf("\033[1;31mResponse: ");
     if(num==ans){
         printf("\033[1;31mB\033[0;32mi\033[1;33mn\033[1;34mg\033[1;35mo\033[1;36m! \033[1;35mC\033[1;34mo\033[1;33mn\033[1;32mg\033[1;31mr\033[1;32ma\033[1;33mt\033[1;34mu\033[1;35ml\033[1;36ma\033[1;35mt\033[1;34mi\033[1;33mo\033[1;32mn\033[1;31ms\033[1;32m.\n");
         exit(0);

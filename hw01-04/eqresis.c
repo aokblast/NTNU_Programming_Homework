@@ -5,9 +5,10 @@
 
 double eqresis(i32 n,i32 r){
     if(n==1){
-        return r+r;
+        return r*2.0;
     }else{
-        return eqresis(n-1,r)*r/(eqresis(n-1,r)+r/1.0)+r;
+        double k=eqresis(n-1,r);
+        return k*r/(k+r)+r;
     }
 }
 

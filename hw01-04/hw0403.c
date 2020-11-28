@@ -7,7 +7,7 @@
 i32 input(const char *p){
     double num;
     printf("%s",p);
-    if(scanf("%lf",&num)==1 && num>=1 && num==(int)num){
+    if(scanf("%lf",&num)==1 && num>=0 && num==(int)num){
         return (int)num;
     }else{
         printf("Wrong input.\n");

@@ -9,8 +9,8 @@ double factorio(i32 n){
     }
 }
 double natural_log(i32 k){
-    if(k<=1){
-        return 2;
+    if(k==0){
+        return 1;
     }else{
         return 1/factorio(k)+natural_log(k-1); 
     }
