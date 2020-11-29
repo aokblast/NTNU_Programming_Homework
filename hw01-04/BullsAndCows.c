@@ -29,8 +29,8 @@ void bac(i32 ans){
 }
 
 void bac_init(){
-    i32 ans=rand_generator();
-    //i32 ans=1234;
+    //i32 ans=rand_generator();
+    i32 ans=234;
     bac(ans);
 }
 
@@ -42,7 +42,7 @@ double input(const char *p){
 }
 
 i32 range_judge(double num){
-    if(num>=1000 && num<=9999){
+    if(num>=100 && num<=9999){
         return 1;
     }else{
         return 0;
@@ -53,7 +53,7 @@ i32 rand_generator(){
     srand(time(NULL));
     i32 num=0;
     do{
-        num=rand()%9000+1000;
+        num=rand()%9900+100;
     }while(num_judge(num));
     return num;
 }
@@ -64,9 +64,11 @@ i32 num_judge(double num){
     }
     i32 tmp=(i32)num;
     i32 num_arr[10]={0};
-    while(tmp>0){
+    i32 i=4;
+    while(i>0){
         num_arr[tmp%10]++;
         tmp/=10;
+        i--;
     }
     for(i32 i=0;i<=9;i++){
         if(num_arr[i]>=2){
@@ -78,8 +80,8 @@ i32 num_judge(double num){
 
 void compare(i32 num,i32 ans){
     i32 num_table[10]={0};
-    i32 a=0,b=0;
-    while(num>0 || ans>0){
+    i32 a=0,b=0,i=4;
+    while(i>0){
         if(num%10==ans%10){
             a++;
         }
@@ -87,6 +89,7 @@ void compare(i32 num,i32 ans){
         num_table[ans%10]++;
         num/=10;
         ans/=10;
+        i--;
     }
     for(size_t i=0;i<=9;i++){
         if(num_table[i]>=2){
