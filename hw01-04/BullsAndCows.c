@@ -29,8 +29,8 @@ void bac(i32 ans){
 }
 
 void bac_init(){
-    //i32 ans=rand_generator();
-    i32 ans=234;
+    i32 ans=rand_generator();
+    //i32 ans=234;
     bac(ans);
 }
 
