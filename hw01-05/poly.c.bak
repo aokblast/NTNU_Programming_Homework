@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#define i32 int32_t
+
+i32 *poly_input(const char *str){
+    i32 len;
+    printf("Please enter %s degree:",str);
+    scanf(" %d",&len);
+    i32 *array=(i32 *)malloc(sizeof(i32)*(len+2));
+    *array=len;
+    printf("Please enter %s coefficient:",str);
+    for(i32 i=len+1;i>=1;i--){
+        scanf(" %d",(array+i));
+    }
+    return array;
+}
+void print_poly(i32 *arr){
+    if(*(arr+*(arr)+1)!=0)printf("%dx^%d",*(arr+*(arr)+1),*(arr));
+    for(i32 i=*arr;i>=2;i--){
+        if(*(arr+i)!=0)printf("+%dx^%d",*(arr+i),i-1);
+    }
+    if(*(arr+1)!=0)printf("+%d",*(arr+1));
+    if(*(arr+1)==0 && *(arr)==0)printf("0");
+    printf("\n");
+}
+
+i32 *add_poly(i32 *arr1,i32 *arr2,i32 mode){
+    i32 max_len=(*arr1>*arr2 ? *arr1 : *arr2);
+    i32 *result=(i32 *)malloc(sizeof(i32)*max_len+2);
+    for(i32 i=max_len+1;i>=1;i--){
+        i32 a=(i<=*arr1+1?*(arr1+i):0);
+        i32 b=(i<=*arr2+1?*(arr2+i):0);
+        //printf("%d,%d\n",a,b);
+        if(mode){
+            *(result+i)=a+b;
+        }else{
+            *(result+i)=a-b;
+        }
+    }
+    while(*(result+max_len+1)==0 && max_len>0){
+        max_len--;
+    }
+    *result=max_len;
+    return result;
+}
+
+i32 *multi_poly(i32 *arr1,i32 *arr2){
+    i32 max_len=(*arr1)+(*arr2);
+    i32 *result=(i32 *)malloc(sizeof(i32)*(max_len+2));
+    for(i32 i=*arr1+1;i>=1;i--){
+        for(i32 j=*arr2+1;j>=1;j--){
+            *(result+i+j-1)+=(*(arr1+i)*(*(arr2+j)));
+            //printf("%d,%d,%d\n",i+j-1,*(arr1+i),*(arr2+j));
+        }
+    }
+    *result=max_len;
+    return result;
+}
+
+void poly(){
+    i32 *p1=poly_input("p1");
+    i32 *p2=poly_input("p2");
+    print_poly(p1);
+    print_poly(p2);
+    i32 *add=add_poly(p1,p2,1);
+    i32 *minus=add_poly(p1,p2,0);
+    i32 *multi=multi_poly(p1,p2);
+    print_poly(add);
+    print_poly(minus);
+    print_poly(multi);
+    free(p1);
+    free(p2);
+    free(add);
+    free(minus);
+    free(multi);
+}
