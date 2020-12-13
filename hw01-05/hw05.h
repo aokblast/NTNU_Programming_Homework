@@ -5,3 +5,4 @@ void init(i32 *,i32);
 i32 deter(i32 *,i32);
 void poly();
 void regression();
+void game_init();
