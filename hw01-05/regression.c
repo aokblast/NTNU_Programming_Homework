@@ -3,19 +3,19 @@
 #include <stdint.h>
 #define i32 int32_t
 
-struct point{
+typedef struct point{
     i32 x;
     i32 y;
-};
+}point;
 
-double sigma(struct point *ptr,double avg_x,i32 n){
+double sigma(point *ptr,double avg_x,i32 n){
     if(n>=0){
         return ((ptr+n)->x-avg_x)*((ptr+n)->x-avg_x)+sigma(ptr,avg_x,n-1);
     }else{
         return 0;
     }
 }
-double omega(struct point *ptr,double avg_x,double avg_y,i32 n){
+double omega(point *ptr,double avg_x,double avg_y,i32 n){
     if(n>=0){
         return ((ptr+n)->x-avg_x)*((ptr+n)->y-avg_y)+omega(ptr,avg_x,avg_y,n-1);
     }else{
@@ -28,10 +28,10 @@ void regression(){
     double avg_x=0,avg_y=0;
     printf("Please enter the point number:");
     scanf(" %d",&number);
-    struct point *points=(struct point*)malloc(sizeof(struct point)*number);
-    for(int i=0;i<number;i++){
+    point *points=(point*)calloc(number,sizeof(point));
+    for(i32 i=0;i<number;i++){
         printf("Please enter Point %d:",i+1);
-        scanf("%d %d",&(points+i)->x,&(points+i)->y);
+        scanf(" %d %d",&(points+i)->x,&(points+i)->y);
         total_x+=(points+i)->x;
         total_y+=(points+i)->y;
     }

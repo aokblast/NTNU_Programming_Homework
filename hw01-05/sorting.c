@@ -46,7 +46,7 @@ void quick_sort(i32 *arr,i32 front,i32 end,i32 (*cmp)(i32,i32)){
 }
 
 
-void init(i32 *arr,i32 arr_size){
+void sorting(i32 *arr,i32 arr_size){
     quick_sort(arr,0,arr_size-1,cmp);
     for(i32 i=0;i<arr_size;i++){
         printf("%d ",arr[i]);

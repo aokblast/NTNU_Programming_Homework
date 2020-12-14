@@ -7,5 +7,5 @@
 #define int32_t i32
 
 int main(){
-    init(array,array_size);    
+    sorting(array,array_size);    
 }
