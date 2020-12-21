@@ -58,9 +58,9 @@ int num_check(double num,const char *mode){
     }
 }
 
-void mine_generate(mine *table,size_t num){
+void mine_generate(mine *table){
     srand(time(NULL));
-    for(size_t i=0;i<num;i++){
+    for(i32 i=0;i<mine_num;i++){
         i32 x=rand()%width;
         i32 y=rand()%height;
         if((table+y*width+x)->status==1){
@@ -142,16 +142,15 @@ i32 open_check(mine *table){
 }
 
 i32 flag_check(mine *table){
-    i32 cnt=0;
+    i32 cnt=0,flag_total=0;
     for(i32 i=0;i<height;i++){
         for(i32 j=0;j<width;j++){
             mine *ptr=(table+i*width+j);
-            if(ptr->status==1 && ptr->flag==1){
-                cnt++;
-            }
+            if(ptr->flag==1)flag_total++;
+            if(ptr->status==1 && ptr->flag==1)cnt++;
         }
     }
-    if(cnt==mine_num){
+    if(cnt==mine_num && flag_total==mine_num){
         return 1;
     }else{
         return 0;
@@ -201,8 +200,8 @@ void mine_sweeper(mine *table){
         }
         mine_sweeper(table);
     }else if(option==2){
-        ptr->flag=1;
-        ptr->show=1;
+        ptr->flag=(ptr->flag?0:1);
+        ptr->show=(ptr->show?0:1);
         if(flag_check(table)){
             printf("Congratulation!\n");
             exit(0);
@@ -216,7 +215,7 @@ void game_init(){
     height=input("Please input the height(10-16):","len");
     mine_num=input("Please input the mine number(30-90):","mine");
     mine *table=(mine* )calloc(width*height,sizeof(mine));
-    mine_generate(table,mine_num);
+    mine_generate(table);
     mine_counter(table);
     mine_sweeper(table);
 }
