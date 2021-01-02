@@ -5,6 +5,7 @@
 #define i32 int32_t
 
 void showplane(i32 a,i32 b,i32 c,i32 d){
+    printf("The plane is ");
     i32 cnt=0; 
     if(a!=0){
         if(a==1)printf("x");
@@ -26,8 +27,6 @@ void showplane(i32 a,i32 b,i32 c,i32 d){
         else printf("%dz",c);
     }
     printf("=%d\n",d);
-
-
 }
 
 void project(double *x,double *y,double *z,i32 a,i32 b,i32 c,i32 d){

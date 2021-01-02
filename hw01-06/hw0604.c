@@ -11,5 +11,5 @@ int main(){
     printf("Please enter the point:");
     if(scanf(" %lf %lf %lf",&x,&y,&z)!=3) printf("Wrong input.\n"); 
     project(&x,&y,&z,(i32)a,(i32)b,(i32)c,(i32)d);
-    printf("The projection is (%lf %lf %lf)",x,y,z);
+    printf("The projection is (%lg %lg %lg)\n",x,y,z);
 }

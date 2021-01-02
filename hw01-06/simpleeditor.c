@@ -27,6 +27,7 @@ void redo(){
 }
 
 void undo(){
+    if(cnt==0) return;
     if(offset>-10) offset--;
 }
 
@@ -36,12 +37,12 @@ void ptr(){
 }
 
 void texteditor(){
-    i32 val=0;
+    double val=0;
     printf("input:");
-    while(scanf("%d",&val)==1&& val!=0){
+    while(scanf("%lf",&val)==1 && val!=0 && val==(i32)val && val>=-2){
         if(val==-1)undo();
         else if(val==-2)redo();
         else add(val);
-        ptr();
     }
+    ptr();
 }
