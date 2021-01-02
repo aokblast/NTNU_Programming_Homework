@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 int main(){
+    value_check(player1,player2,player3,player4);
     printf( "Before :\n" );
     print_card( player1 );
     print_card( player2 );
