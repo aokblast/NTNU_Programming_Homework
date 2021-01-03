@@ -95,6 +95,7 @@ void printList(Node *first){
         printf("\n");
     }
 }
+
 void deleteList(Node *first){
     Node *current,*tmp;
     current=first;
