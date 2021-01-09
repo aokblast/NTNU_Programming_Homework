@@ -8,7 +8,8 @@ i32 offset=0,arr[10]={0},cnt=0;
 
 void add(i32 val){
     if(offset<0){
-        cnt+=offset;
+	if(cnt+offset>=0) cnt+=offset;
+	else cnt=0;
         offset=0;
     }
     if(cnt>=10){
@@ -27,7 +28,7 @@ void redo(){
 }
 
 void undo(){
-    if(cnt==0) return;
+    if(cnt==0 || cnt+offset <=0) return;
     if(offset>-10) offset--;
 }
 
@@ -43,6 +44,7 @@ void texteditor(){
         if(val==-1)undo();
         else if(val==-2)redo();
         else add(val);
+    	ptr();
     }
     ptr();
 }
