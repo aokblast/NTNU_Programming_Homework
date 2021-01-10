@@ -44,7 +44,6 @@ void texteditor(){
         if(val==-1)undo();
         else if(val==-2)redo();
         else add(val);
-    	ptr();
     }
     ptr();
 }
