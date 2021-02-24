@@ -33,7 +33,7 @@ void undo(){
 }
 
 void ptr(){
-    for(i32 i=0;i<cnt+offset;i++)printf("%d ",arr[i]);
+    for(i32 i=0;i<cnt+offset;i++) printf("%d ",arr[i]);
     printf("\n");
 }
 
