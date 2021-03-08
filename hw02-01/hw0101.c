@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include "strlib.h"
 
 int htd(const char hex[]) {
     int result = 0;
@@ -13,14 +14,6 @@ int htd(const char hex[]) {
 
     return result;
 
-}
-
-int getaline(char target[], int buffer) {
-    int i, c;
-    for (i = 0; (c = getchar()) && c != '\n' && c != EOF && i < buffer - 1; ++i) target[i] = c;
-    target[i] = '\0';
-    if(i % 2 == 1) return 0;
-    else return 1;
 }
 
 void hts(const char target[], char to[]) {
@@ -45,7 +38,7 @@ int main(){
     char str[100000] = {0};
     char ans[100000] = {0};
     printf("Please enter the hex string: ");
-    if(getaline(str, 100000)){
+    if(gotaline(str, 100000)){
         hts(str, ans);
         printf("%s\n", ans);
     }else{
