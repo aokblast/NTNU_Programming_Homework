@@ -70,15 +70,14 @@ char *mystrtok(str,delim)char * str; const char *delim; {
 	}
 	if(tmp == NULL) return NULL;
 
-	char *iter = mystrstr(tmp, delim);
+	char *iter = mystrpbrk(tmp, delim);
 	char *ret = tmp;
-	while(*ret == ' ') ++ret;
 	if(iter == NULL) {
 		tmp = NULL;
 		return ret;
 	}
 	*iter = '\0';
-	tmp = iter + mystrlen(delim);
+	tmp = iter + 1;
 
 	return ret;
 }
