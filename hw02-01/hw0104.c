@@ -14,12 +14,29 @@ void removeZero(char Str[]) {
 bool jsonQuery(const char jsonStr[], char query[]) {
     char *token = strtok(query, ".");
     const char *iter = jsonStr;
-    int layer = 0, presentLayer = 0;
+    int layer = 0, presentLayer = 0, type = 0;
     do{
         ++presentLayer;
-        for(;(strncmp(iter, token, strlen(token)) != 0 || presentLayer != layer) && *iter != '\0'; ++iter) {
+        for(;*iter != '\0'; ++iter) {
             if(*iter == '{') ++layer;
-            else if(*iter == '}') --layer;
+            else if (*iter == ',') type = 0;
+            else if (*iter == ':') type = 1;
+            else if (*iter == '}') --layer;
+            else if (*iter == '\"' && presentLayer == layer && type == 0) {
+                ++iter;
+                int i, j;
+                for(i =0, j = 0; token[j] != 0;++i, ++j) {
+                    if(iter[i] == '\\') ++i;
+                    if(iter[i] != token[j]) break;
+                }
+                if(token[j] == '\0' && iter[i] == '\"' && (iter[i + 1] == ' ' || iter[i + 1] == ':')) break;
+                iter += i;
+            }
+        }
+        if(*iter != '\0') {
+            type = 0;
+            iter = strchr(iter, ':');
+            ++iter;
         }
     }while((token = strtok(NULL, ".")) != NULL && *iter != '\0');
     if(*iter == '\0') {
@@ -27,12 +44,21 @@ bool jsonQuery(const char jsonStr[], char query[]) {
     }
     
     else{
-        iter = strchr(iter, ':');
-        iter = strchr(iter, '\"');
-        ++iter;
+        int type = 0;
+        while(*iter == ' ' || *iter == '\"') {
+            if(*iter == '\"') type = 1;
+            ++iter;
+        }
         int i = 0;
-        for(; *iter != '\"'; ++iter, ++i) {
-            result[i] = *iter;
+        if(type == 1) {
+            for(; *iter != '\"'; ++iter, ++i) {
+                result[i] = *iter;
+            }
+        }
+        else if(type == 0) {
+                for(; *iter != ' ' && *iter != '}' && *iter != ','; ++iter, ++i) {
+                result[i] = *iter;
+            }
         }
         result[i] = '\0';
         return true;
@@ -63,6 +89,7 @@ int main(){
             else printf("Not in the jsonFile.\n");
             
         }else if (mode == 0){
+            printf("Bye\n");
             break;
         }else {
             printf("Wrong input. Please retry.\n");

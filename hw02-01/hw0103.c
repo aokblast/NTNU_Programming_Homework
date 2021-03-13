@@ -11,7 +11,6 @@ void swap(char **p1, char **p2) {
 
 
 int main(){
-    print_answers();
     swap(&pStr01, &pStr02);
     print_answers();
 }

@@ -5,8 +5,7 @@
 
 bool issubstr(const char target[], const char query[]) {
     for(size_t i = 0; query[i] != '\0'; ++i) {
-        //printf("%c,%c", target[i], query[i]);
-        if(query[i] != target[i]) return false;
+        if(query[i] != target[i] || target[i] == '\0') return false;
     }
     return true;
 
@@ -51,13 +50,14 @@ void printafter(const char target[], const char query[], const char repl[]) {
 
 
 int main(){
-    char text[1024] = {0}, query[128] = {0}, repl[128] = {0};
+    char text[1025] = {0}, query[129] = {0}, repl[129] = {0};
     printf("Please enter the original text:\n");
-    getaline(text, 1024);
+    getaline(text, 1025);
     printf("Keyword:\n");
-    getaline(query, 128);
+    getaline(query, 129);
     printf("New word:\n");
-    getaline(repl, 128);
+    getaline(repl, 129);
+    printf("\n");
     printf("Before:\n");
     printbefore(text, query);
     printf("\n");

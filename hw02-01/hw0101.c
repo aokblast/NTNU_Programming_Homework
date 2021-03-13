@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "strlib.h"
+#include <stdbool.h>
 
 int htd(const char hex[]) {
     int result = 0;
@@ -16,7 +17,7 @@ int htd(const char hex[]) {
 
 }
 
-void hts(const char target[], char to[]) {
+bool hts(const char target[], char to[]) {
     int j = 0;
     for (size_t i = 0; target[i] != '\0'; i += 2) {
         int tmp = htd(&target[i]);
@@ -26,11 +27,12 @@ void hts(const char target[], char to[]) {
         }else if (tmp == 0) {
             break;            
         }else{
-            printf("Invalid input");
-            return;
+            printf("Invalid input.\n");
+            return false;
         }
     }
     to[j] = 0;
+    return true;
 
 }
 
@@ -39,10 +41,10 @@ int main(){
     char ans[100000] = {0};
     printf("Please enter the hex string: ");
     if(gotaline(str, 100000)){
-        hts(str, ans);
-        printf("%s\n", ans);
+        if(hts(str, ans))printf("%s\n", ans);
+        else printf("Invalid input\n");
     }else{
-        printf("Invalid input\n");
+        printf("Invalid input.\n");
 
     }
 

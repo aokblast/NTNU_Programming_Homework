@@ -63,7 +63,7 @@ char *mystrstr(const char *haystack, const char *needle){
 	return NULL;
 }
 
-char *mystrtok(str,delim)char * str; const char *delim; {
+char *mystrtok(char *str,const char *delim){
 	static char *tmp = NULL;
 	if(str != NULL) {
 		tmp = str;

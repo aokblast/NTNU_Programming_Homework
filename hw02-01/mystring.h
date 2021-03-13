@@ -4,4 +4,4 @@ size_t mystrspn(const char *str, const char *accept);
 size_t mystrcspn(const char *str, const char *reject);
 char *mystrpbrk(const char *str, const char *accept);
 char *mystrstr(const char *haystack, const char *needle);
-char *mystrtok();
+char *mystrtok(char *str,const char *delim);
