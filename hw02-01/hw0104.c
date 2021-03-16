@@ -15,7 +15,9 @@ bool jsonQuery(const char jsonStr[], char query[]) {
     char *token = strtok(query, ".");
     const char *iter = jsonStr;
     int layer = 0, presentLayer = 0, type = 0;
+    char *arr = NULL;
     do{
+        arr = strchr(token,'[');
         ++presentLayer;
         for(;*iter != '\0'; ++iter) {
             if(*iter == '{') ++layer;
@@ -25,11 +27,11 @@ bool jsonQuery(const char jsonStr[], char query[]) {
             else if (*iter == '\"' && presentLayer == layer && type == 0) {
                 ++iter;
                 int i, j;
-                for(i =0, j = 0; token[j] != 0;++i, ++j) {
+                for(i =0, j = 0; token[j] != 0 && &token[j] != arr;++i, ++j) {
                     if(iter[i] == '\\') ++i;
                     if(iter[i] != token[j]) break;
                 }
-                if(token[j] == '\0' && iter[i] == '\"' && (iter[i + 1] == ' ' || iter[i + 1] == ':')) break;
+                if((token[j] == '\0' || token[j] == '[') && iter[i] == '\"' && (iter[i + 1] == ' ' || iter[i + 1] == ':')) break;
                 iter += i;
             }
         }
@@ -37,6 +39,25 @@ bool jsonQuery(const char jsonStr[], char query[]) {
             type = 0;
             iter = strchr(iter, ':');
             ++iter;
+        }
+        if(arr != NULL && *iter != '\0') {
+            
+            while(arr != NULL && *iter != '\0') {
+                
+                size_t index = 0;
+                iter = strchr(iter, '[');
+                ++iter;
+                for(size_t i = 1; arr[i] != ']'; ++i ) {
+                    index = index * 10 + arr[i] - '0';
+                }
+                for(int i = 0;index != i ;++iter) {
+                    if(*iter == '{') ++layer;
+                    else if(*iter == '}') --layer;
+                    else if(layer == presentLayer && *iter == ',') ++i;
+                }
+                arr = strchr(arr, ']');
+                arr = strchr(arr, '[');
+            }
         }
     }while((token = strtok(NULL, ".")) != NULL && *iter != '\0');
     if(*iter == '\0') {
@@ -56,7 +77,7 @@ bool jsonQuery(const char jsonStr[], char query[]) {
             }
         }
         else if(type == 0) {
-                for(; *iter != ' ' && *iter != '}' && *iter != ','; ++iter, ++i) {
+                for(; *iter != ' ' && *iter != '}'  && *iter != ']' && *iter != ','; ++iter, ++i) {
                 result[i] = *iter;
             }
         }
