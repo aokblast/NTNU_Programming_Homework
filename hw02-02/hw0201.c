@@ -3,7 +3,7 @@
 
 int main() {
     sMixedNumber a, b, ans;
-    if(!mixed_set(&a, -1,  0, 0) || !mixed_set(&b, 3, 0, 0)) {
+    if(mixed_set(&a, -2, 1, 4) == -1 || mixed_set(&b, 0, 1, 3) == -1) {
         printf("Wrong input.\n");
         return 0;
     }
