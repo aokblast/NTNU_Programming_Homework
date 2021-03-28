@@ -238,6 +238,4 @@ int32_t combine( sBigNum *pResult, int32_t n, int32_t k ) {
     }
     for(int i = 1; i <= k; ++i) multin(&malo, malo, i);
     divide(pResult, &test ,*pResult, malo);
-
-
 }
