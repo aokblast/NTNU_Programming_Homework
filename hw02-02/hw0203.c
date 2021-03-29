@@ -26,8 +26,16 @@ void printuByte(const uByte *num) {
 
 int main(){
     uByte num;
-    printf("Plrase enter a byte (0-255): ");
-    scanf("%d", &num.byte);
+    long numb = 0;
+    char tmp[10000] = {0}, *error = NULL;
+    printf("Please enter a byte (0-255): ");
+    scanf("%s", &tmp);
+    numb = strtol(tmp, &error, 10);
+    if(*error != '\0' || numb > 255 || numb < 0) {
+        printf("Wrong input.\n");
+        return 0;
+    }
+    num.byte = numb;
     printuByte(&num);
     uint32_t mode = 0;
     while(1) {
@@ -38,30 +46,14 @@ int main(){
             printf("Wrong input, Please retry.\n");
         }else {
             switch(mode) {
-                case 1:
-                    num.bits.b8 ^= 1;
-                    break;
-                case 2:
-                    num.bits.b7 ^= 1;
-                    break;
-                case 3:
-                    num.bits.b6 ^= 1;
-                    break;
-                case 4:
-                    num.bits.b5 ^= 1;
-                    break;
-                case 5:
-                    num.bits.b4 ^= 1;
-                    break;                
-                case 6:
-                    num.bits.b3 ^= 1;
-                    break;
-                case 7:
-                    num.bits.b2 ^= 1;
-                    break;
-                case 8:
-                    num.bits.b1 ^= 1;
-                    break;                                
+                case 1: num.bits.b8 ^= 1; break;
+                case 2: num.bits.b7 ^= 1; break;
+                case 3: num.bits.b6 ^= 1; break;
+                case 4: num.bits.b5 ^= 1; break;
+                case 5: num.bits.b4 ^= 1; break;                
+                case 6: num.bits.b3 ^= 1; break;
+                case 7: num.bits.b2 ^= 1; break;
+                case 8: num.bits.b1 ^= 1; break;                                
             }
             printuByte(&num);
         }

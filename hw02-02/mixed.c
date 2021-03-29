@@ -4,8 +4,8 @@
 #include <stdbool.h>
 
 bool isInt(const sMixedNumber *r){
-    if(r->deno == 0 && r->frac == 0) return 1;
-    return 0;
+    if(r->deno == 0 && r->frac == 0) return true;
+    return false;
 }
 
 sMixedNumber tofake(const sMixedNumber * r) {
@@ -77,7 +77,11 @@ void mixed_mul( sMixedNumber *pNumber , const sMixedNumber r1, const sMixedNumbe
 }
 
 void mixed_div( sMixedNumber *pNumber , const sMixedNumber r1, const sMixedNumber r2) {
-    if(r2.deno == 0 && r2.frac == 0 && r2.whole == 0) {printf("Wrong divisor.\n"); return;}
+    if(r2.deno == 0 && r2.frac == 0 && r2.whole == 0) {
+        pNumber->whole = pNumber->deno = pNumber->frac = 0;
+        printf("Wrong divisor.\n");
+        return;
+    }
     sMixedNumber f1 = tofake(&r1);
     sMixedNumber f2 = tofake(&r2);
     pNumber->deno = f1.deno * f2.frac;

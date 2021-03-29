@@ -29,7 +29,7 @@ int32_t set( sBigNum *pNum, char *str ) {
     if(*iter == '-') pNum->sign = -1, ++iter;
     else pNum->sign = 1;
     pNum->size = strlen(iter);
-    for(size_t i = strlen(iter) - 1;*iter != '\0'; ++iter, --i) {
+    for(size_t i = pNum->size - 1;*iter != '\0'; ++iter, --i) {
         if(!isdigit(*iter)) return 0;
         pNum->num[i] = (*iter - '0');
     }
@@ -37,8 +37,8 @@ int32_t set( sBigNum *pNum, char *str ) {
 }
 
 int32_t compare( const sBigNum num01 , const sBigNum num02 ) {
-    if(num01.sign == 0 && num02.sign == 1) return 1;
-    else if(num01.sign == 1 && num02.sign == 0) return -1;
+    if(num01.sign == -1 && num02.sign == 1) return 1;
+    else if(num01.sign == 1 && num02.sign == -1) return -1;
     else if(num01.size > num02.size) return num01.sign;
     else if(num02.size > num01.size) return -num01.sign;
     else {
@@ -56,15 +56,16 @@ int32_t digits( const sBigNum num ){
 
 void add( sBigNum *pResult ,const sBigNum num01 , const sBigNum num02 ) {
     if(num01.sign == 1 && num02.sign == -1) {
+        pResult->sign = 1;
         sBigNum *ptr = (sBigNum *)&num02;
         ptr->sign = 1;
         subtract(pResult, num01, num02);
         return;
     }
     else if(num01.sign == -1 && num02.sign == 1) {
+        pResult->sign = 1;
         sBigNum *ptr = (sBigNum *)&num01;
         ptr->sign = 1;
-        pResult->sign = -1;
         subtract(pResult, num02, num01);
         return;
     }
@@ -85,18 +86,21 @@ void add( sBigNum *pResult ,const sBigNum num01 , const sBigNum num02 ) {
 
 void subtract( sBigNum *pResult , const sBigNum num01 , const sBigNum num02 ) {
     if(num01.sign == 1 && num02.sign == -1) {
+        pResult->sign = 1;
         sBigNum *ptr = (sBigNum *)&num02;
         ptr->sign = 1;
         add(pResult, num01, num02);
         return;
     }
     else if(num01.sign == -1 && num02.sign == 1) {
+        pResult->sign = 1;
         sBigNum *ptr = (sBigNum *)&num01;
         ptr->sign = 1;
-        pResult->sign = -1;
-        add(pResult, num02, num01);
+        pResult->sign *= -1;
+        add(pResult, num01, num02);
         return;
     }else if(num01.sign == -1 && num02.sign == -1) {
+        pResult->sign = 1;
         sBigNum *ptr = (sBigNum *)&num01;
         ptr->sign = 1;
         ptr = (sBigNum *)&num02;
@@ -104,7 +108,10 @@ void subtract( sBigNum *pResult , const sBigNum num01 , const sBigNum num02 ) {
         subtract(pResult, num02, num01);
         return;
     }
-    if(compare(num01, num02) == -1) pResult->sign = -1,swapBigNum((sBigNum *) &num01, (sBigNum *) &num02);
+    if(compare(num01, num02) == -1) {
+        if(pResult->sign == 0) pResult->sign = 1;
+        pResult->sign *= -1,swapBigNum((sBigNum *) &num01, (sBigNum *) &num02);
+    }
     tozero(pResult);
     size_t max_size = (num01.size > num02.size ? num01.size : num02.size);
     int carry = 0;
@@ -161,13 +168,27 @@ void multin( sBigNum *pResult , const sBigNum num01 , int n ) {
     while(carry != 0) pResult->num[pResult->size++] = carry % 10, carry /= 10;
 }
 
+int isZero(const sBigNum *num) {
+    for(int i = 0; i < num->size; ++i) if(num->num[i] != 0) return 0;
+    return 1;
+}
+
 void divide( sBigNum *pQuotient , sBigNum *pRemainder , const sBigNum num01 , const sBigNum num02 ) {
+    if(isZero(&num02)) {
+        pQuotient->sign = 1;
+        pQuotient->num[0] = 0;
+        pQuotient->size = 1;
+        *pRemainder = num01;
+        printf("Wrong divisor.\n");
+        return;
+    }
     int index = num01.size - num02.size;
     sBigNum tmp;
     pQuotient->size = (index > 0? index + 1 : 1);
     tozero(pQuotient);
     int eqflag = 0;
-    int sign = num01.sign * num02.sign;
+    int sign = num01.sign;
+    int tsign = num01.sign * num02.sign;
     pQuotient->sign = 1;
     sBigNum *ptr = (sBigNum *)&num01;
     ptr->sign = 1;
@@ -195,8 +216,8 @@ void divide( sBigNum *pQuotient , sBigNum *pRemainder , const sBigNum num01 , co
     subtract(pRemainder, num01, tmp);
     if(pQuotient->size <= 0) pQuotient->size = 1;
     pRemainder->sign = sign;
-    if(pQuotient->num[pQuotient->size - 1] != 0)pQuotient->sign = sign;
-    else if(pQuotient->num[pQuotient->size - 1] == 0) --pQuotient->size;
+    if(pQuotient->num[pQuotient->size - 1] != 0)pQuotient->sign = tsign;
+    else if(pQuotient->size != 1) --pQuotient->size;
 }
 
 void numtoBigNum(sBigNum *pResult, int64_t num){

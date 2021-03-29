@@ -31,7 +31,7 @@ int main() {
     printf("R:");
     print(ans2);
     printf("Power:");
-    power(&ans, 245, 23);
+    power(&ans, 2, 1024);
     print(ans);
     printf("Combine:");
     combine(&ans, 200, 100);

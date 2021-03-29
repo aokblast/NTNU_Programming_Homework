@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef union 
 {
@@ -23,8 +24,14 @@ void frachandler(uint64_t num, size_t times) {
 
 int main() {
     flt num;
-    printf("Please enter a floating -point number (double precision): ");
-    scanf("%lf", &num.flp);
+    char tmp[10000] = {0}, *error = NULL;
+    printf("Please enter a floating-point number (double precision): ");
+    scanf("%s", &tmp);
+    num.flp = strtod(tmp, &error);
+    if(*error != '\0') {
+        printf("Wrong input.\n");
+        return 0;
+    }
     printf("Sign : %d\n", num.ieee.sign);
     printf("Exponent: ");
     printbin(num.ieee.exponent, 11);
