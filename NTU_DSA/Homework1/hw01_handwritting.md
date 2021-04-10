@@ -17,7 +17,7 @@
 
    We only have to consider the condition that n is large enough because $3^n$ is true in a limited n value, so the total step $4^{n-87506055}3^{87506055} = \Theta(4^n)$
 
-4. By the definition of $\Theta$ , $\Theta(k(n)) = q(n)$ exist $c_1\in\mathbb{N^+} \and c_2\in\mathbb{N^+}$ fulfill $c_1k(n)\leq q(n)\leq c_2k(n)$
+4. By the definition of $\Theta$ , $q(n) = \Theta(k(n))$ exist $c_1\in\mathbb{N^+} \and c_2\in\mathbb{N^+}$ fulfill $c_1k(n)\leq q(n)\leq c_2k(n)$
 
    max$(f(n), g(n)) \leq f(n) + g(n) \leq$ $2$max($f(n),g(n)$)
    
@@ -27,7 +27,7 @@
    
    Q.E.D
    
-5. By the definition of $\mathbb{O}$, $\mathbb{O}(k(n)) = q(n)$ exist $c \in \mathbb{N^+}$ fulfill $q(n)\leq ck(n)$
+5. By the definition of $\mathbb{O}$, $q(n) = \mathbb{O}(k(n))$ exist $c \in \mathbb{N^+}$ fulfill $q(n)\leq ck(n)$
 
    $f(n) = \mathbb{O}(i(n))$ exist $c_1$ that $f(n)\leq c_1i(n)$
 
@@ -41,7 +41,7 @@
 
    Q.E.D
 
-6. By the definition of $\mathbb{O}$, $\mathbb{O}(k(n)) = q(n)$ exist $c \in \mathbb{N^+}$ fulfill $q(n)\leq ck(n)$
+6. By the definition of $\mathbb{O}$, $q(n) = \mathbb{O}(k(n))$ exist $c \in \mathbb{N^+}$ fulfill $q(n)\leq ck(n)$
 
    $f(n) = \mathbb{O}(g(n))$ exist $c_1$ that $f(n) <= c_1g(n)$
 
@@ -53,11 +53,11 @@
 
    Q.E.D
 
-7. $\Theta(lg(n)) = ln(n) =\int_{x = 1}^{n}{\frac{1}{x}}{dx}$ By the definition of integral, $\int_{x = 1}^{n}{f(x)}{dx} <= f(1) + f(2) + f(3) ... + f(n - 1) = \Sigma_{k = 1}^{n - 1}f(k) \leq \Sigma_{k = 1}^{n}f(k)$
+7. By the definition of $\Theta$ , $q(n) = \Theta(k(n))$ exist $c_1\in\mathbb{N^+} \and c_2\in\mathbb{N^+}$ fulfill $c_1k(n)\leq q(n)\leq c_2k(n)$
 
-   $\Sigma_{k = 1}^{n}f(x) = 1 + \frac{1}{2} + \frac{1}{3}...+\frac{1}{n} \leq 2(f(2) + f(3) + f(4) + ... +f(n - 1) + f(n)) = 2(\frac{1}{2} + \frac{1}{3} +... + \frac{1}{n}) \leq 2\Sigma_{k = 2}^{n} \leq 2\int_{x = 1}^{n}f(x)dx$
+   $ ln(n) = \Theta(lg(n)) =\int_{x = 1}^{n}{\frac{1}{x}}{dx}$ 
 
-   $\int_{x = 1}^{n}{\frac{1}{x}}dx \leq \Sigma_{k = 1}^{n}{\frac{1}{k}}$
+   $\int_{1}^{n}{\frac{1}{x}dx} < \int_{1}^{n+1}{\frac{1}{x}dx}<\Sigma_{x = 1}^{n}{\frac{1}{x}} = 1 + \int_{2}^{n}\frac{1}{x}dx < 2\int_{1}^{n}{\frac{1}{x}dx}$
 
 
 
@@ -98,12 +98,13 @@
 
 3. A stack has a property that when we pop all the element from one stack and push to another stack, the order of the elements of the stack will be reversed. Below is an easy example. 
    
+
 ![image-20210410031219464](/home/blast/.config/Typora/typora-user-images/image-20210410031219464.png)
-   
+
    With this property, we can use two stacks(assume being called with front and back) as two sides of a deqeu, and use a variable called dir(Here we use value 1 for front, -1 for back) to record the present direction. When we want to change the direction of operation, we only have to push all element from one to another, then we can let the bottom be the top of the stack, the top be the bottom of the stack. Thus we successfully operates on two sides of the deque.
-   
+
    Here is the pseudo code
-   
+
    ```pseudocode
    front and back are two stack and dir is an int
 deq is a deque
@@ -161,7 +162,7 @@ deq is a deque
    	return num
    end procedure
    ```
-   
+
 4. Consider the worst time complexity, a deque has $n$ elements. And the present direction is back, so if we use push_front(), we have to reverse a stack which time complexity is $O(n)$. But after, all the push_front() operation is $O(1)$ because we don't have to reverse a stack. So in $n$ times consecutive push_front(), we use O(n) one time and $O(1)$ $n - 1$ times, the amortized time complexity for each push_front() is $O(1)$.
 
 5. Same as the above, if the original direction is opposite, we have to use $O(n)$ one time and $O(1)$ $n - 1$ times in total $n$ times consecutive push_back(), the amortized time complexity for each push_back() is $O(1)$.
