@@ -312,18 +312,18 @@ end procedure
 4. Step:  Use a variable **iter** to record the current node and **prev** to record the preview node and **Dec** to represent the current decreasing nodes, **move** to record the node you want to move and **move_prev** to record the prev node of move.
 
      1. Initialize **iter** with the header of L and **prev** with NIL and **Dec** to 0
-2. iterate in the list, if you find **iter.val** > **iter.next.val** and **Dec** == 0, record it with **move** and **move_prev** for prev node and increase **Dec** with 1 and continue the loop
+     2. iterate in the list, if you find **iter.val** > **iter.next.val** and **Dec** == 0, record it with **move** and **move_prev** for prev node and increase **Dec** with 1 and continue the loop
      3. if the **Dec** == 1 and **iter.val** > **iter.next.val**, we can compare **move_prev** and **move** with **prev** and **iter** and record the small one in **move_prev** and **move** and increase **Dec** with 1
-4. If **move** exist and **Dec** == 2 and **iter.val** > **move.val** , set **prev_move.next** to **move.next** and Insert the node **move** in the back of **iter**  then break iteration
+     4. If **move** exist and **Dec** == 2 and **iter.val** > **move.val** , set **prev_move.next** to **move.next** and Insert the node **move** in the back of **iter**  then break iteration
      5. Set **prev** to **iter** and **iter** to **iter.next** and back to step 2.
-
+     
      Why: Because there are only two decreasing node which means other nodes' value will less or equal than its next node, so we can move the smaller decreasing node to the right place(iter.val > move.val) to make sure it preserve the original order of other nodes' but still exist one decreasing node at the same time.
-
-   We don't move the bigger decreasing node because it may be the node with biggest value, so there is no other way to insert because nothing bigger than it's val.
-
-   Time complexity: $2n = O(n)$ we at most spend n to find the decreasing node and n to find the place to insert it to the right place.
-
-   Space complexity: $O(1)$ because we only use 4 additional variable.
-
-   ​     
+     
+     We don't move the bigger decreasing node because it may be the node with biggest value, so there is no other way to insert because nothing bigger than it's val.
+     
+     Time complexity: $2n = O(n)$ we at most spend n to find the decreasing node and n to find the place to insert it to the right place.
+     
+     Space complexity: $O(1)$ because we only use 4 additional variable.
+     
+     ​     
 
