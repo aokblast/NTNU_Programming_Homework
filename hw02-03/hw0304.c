@@ -18,12 +18,15 @@ int main(){
         printf("Wrong bpp.\n");
         return 0;
     }
+    
+    //header setting
     header->bpp = 32;
     header->bitmap_size = 0;
     header->compression = 6;
     header->header_size = 56;
     header->offset = 70;
     fwrite(header, sizeof(bmpHeader), 1, writeFile);
+    
     uint32_t masks[4] = {0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000};
     fwrite(masks, sizeof(uint32_t), 4, writeFile);
 
