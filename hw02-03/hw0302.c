@@ -156,7 +156,7 @@ int main(){
         printf("Isn't exist.\n");
         return 0;
     }
-    
+
     printf("1) Who is the winner in this season?\n");
     printf("2) Which team gets the most scores?\n");
     printf("3) Which team gets the most red cards?\n");
@@ -184,10 +184,14 @@ int main(){
                 for(int i = 0; i < 20; ++i) {
                     if(max < teams[i].score){
                         max = teams[i].score;
-                        max_index = i;
                     }
                 }
-                printf("%s %d\n", teams[max_index].teamName, teams[max_index].score);
+                for(int i = 0; i < 20; ++i) {
+                    if(max == teams[i].score) {
+                        printf("%s ", teams[i].teamName);
+                    }
+                }
+                printf("%d\n", max);
                 break;
             case 3:
                 for(int i = 0; i < 20; ++i) {
@@ -196,7 +200,12 @@ int main(){
                         max_index = i;
                     }
                 }
-                printf("%s %d\n", teams[max_index].teamName, teams[max_index].red_cards);
+                for(int i = 0; i < 20; ++i) {
+                    if(max == teams[i].red_cards) {
+                        printf("%s ", teams[i].teamName);
+                    }
+                }
+                printf("%d\n", max);
                 break;
             case 4:
                 for(int i = 0; i < 20; ++i) {
@@ -205,7 +214,12 @@ int main(){
                         max_index = i;
                     }
                 }
-                printf("%s %d\n", teams[max_index].teamName, teams[max_index].win_home);
+                for(int i = 0; i < 20; ++i) {
+                    if(max == teams[i].win_home) {
+                        printf("%s ", teams[i].teamName);
+                    }
+                }
+                printf("%d\n", max);
                 break;
             case 5:
                 for(int i = 0; i < 20; ++i) {
@@ -214,7 +228,12 @@ int main(){
                         max_index = i;
                     }
                 }
-                printf("%s %d\n", teams[max_index].teamName, teams[max_index].win_away);
+                for(int i = 0; i < 20; ++i) {
+                    if(max == teams[i].win_away) {
+                        printf("%s ", teams[i].teamName);
+                    }
+                }
+                printf("%d\n", max);
                 break;
             case 6:
                 printf("%s, %s(%d) vs %s(%d)\n", max_contest.date, max_contest.homeTeam, max_contest.homeScore, max_contest.awayTeam, max_contest.awayScore);
