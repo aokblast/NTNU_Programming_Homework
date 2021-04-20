@@ -23,8 +23,9 @@ typedef struct _contest{
     char awayTeam[200];
     int awayScore;
 }  contest;
+int totalMax = 0;
 
-contest max_contest = {0, 0, 0, 0, 0};
+contest max_contest[400] = {{0, 0, 0, 0, 0}};
 
 void parsing(FILE *parseFile) {
     char line[1000];
@@ -136,7 +137,14 @@ void parsing(FILE *parseFile) {
         //AR
         token = strtok(NULL, ",");
         awayTeam->red_cards += strtol(token, NULL, 10);
-        if(abs(max_contest.awayScore - max_contest.homeScore) < abs(ctmp.awayScore - ctmp.homeScore)) max_contest = ctmp; 
+        if(abs(max_contest[0].awayScore - max_contest[0].homeScore) < abs(ctmp.awayScore - ctmp.homeScore)) {
+            memset(max_contest, sizeof(contest), totalMax);
+            totalMax = 0;
+            max_contest[totalMax++] = ctmp;
+        } 
+        else if(abs(max_contest[0].awayScore - max_contest[0].homeScore) == abs(ctmp.awayScore - ctmp.homeScore)) {
+            max_contest[totalMax++] = ctmp;     
+        }
     }
     
 }
@@ -169,16 +177,27 @@ int main(){
     while(!breakFlag) {
         printf("Choice (1-7, 8:exit):");
         scanf(" %d", &mode);
-        int max = 0, max_index = 0;
+        int max = 0, max_index = 0, need = 0;
+        teamInfo *win_team = &teams[0];
         switch (mode){
             case 1:
-                for(int i = 0; i < 20; ++i) {
-                    if(max < teams[i].points){
-                        max = teams[i].points;
-                        max_index = i;
+                for(int i = 1; i < 20; ++i) {
+                    if(win_team->points < teams[i].points){
+                        win_team = &teams[i];
+                    }else if(win_team->points == teams[i].points) {
+                        if(win_team->goal_against < teams[i].goal_against) {
+                            win_team = &teams[i];
+                        }else if (win_team->goal_against == teams[i].goal_against) {
+                            if(win_team->score < teams[i].score) {
+                                win_team = &teams[i];
+                            }else if (win_team->score == teams[i].score) {
+                                need = 1;
+                            }
+                        }
                     }
                 }
-                printf("The winner is %s\n", teams[max_index].teamName);
+                if(need) printf("Need another game.\n");
+                else printf("The winner is %s\n", win_team->teamName);
                 break;
             case 2:
                 for(int i = 0; i < 20; ++i) {
@@ -236,7 +255,9 @@ int main(){
                 printf("%d\n", max);
                 break;
             case 6:
-                printf("%s, %s(%d) vs %s(%d)\n", max_contest.date, max_contest.homeTeam, max_contest.homeScore, max_contest.awayTeam, max_contest.awayScore);
+                for(int i = 0;i < totalMax; ++i) {
+                    printf("%s, %s(%d) vs %s(%d)\n", max_contest[i].date, max_contest[i].homeTeam, max_contest[i].homeScore, max_contest[i].awayTeam, max_contest[i].awayScore);
+                }
                 break;
             case 7:
                 printf("Team: ");
