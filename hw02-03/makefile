@@ -9,7 +9,7 @@ all:
 	${CC} $$name.c lrc.c ${CFLAG} -o $$name ;\
 	done
 
-	${CC} hw0305.c ${CFLAG} gui.c -o hw0305 `pkg-config --cflags --libs gtk+-3.0`
+	${CC} hw0305.c ${CFLAG} gui.c san5pk_editor.c terminal.c -o hw0305 `pkg-config --cflags --libs gtk+-3.0`
 
 clear:
 	rm -rf ${TARGETS}
