@@ -21,6 +21,8 @@ int main(){
 
     if(angle <= 0 || angle >= 90) {
         printf("Iligal angle.\n");
+        fclose(readFile);
+        fclose(writeFile);        
         return 0;   
     }
 
