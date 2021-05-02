@@ -13,21 +13,25 @@ void edit_monarch(fstream readFile) {
     monarInfo target[1], find[1];
     bool isIn = false;
     uint64_t fileSize = getFileSize(readFile);
+    int64_t tmp = 0;
     //Enter query
     enter_target:
     printf("Please input the monarch data you want to search (-1 for re-enter, -2 for return menu):\n");
     printf("Reputation:");
-    scanf(" %d", &target->heart); 
-    if(target->heart == -1) goto enter_target;
-    else if (target->heart == -2) return;
+    scanf(" %ld", &tmp); 
+    if(tmp == -1) goto enter_target;
+    else if (tmp == -2) return;
+    target->heart = tmp;
     printf("Gold:");
-    scanf(" %d", &target->gold);
-    if(target->gold == -1) goto enter_target;
-    else if(target->gold == -2) return;
+    scanf(" %ld", &tmp);
+    if(tmp == -1) goto enter_target;
+    else if(tmp == -2) return;
+    target->gold = tmp;
     printf("Food:");
-    scanf(" %d", &target->food);
-    if(target->food == -1) goto enter_target;
-    else if(target->food == -2) return;
+    scanf(" %ld", &tmp);
+    if(tmp == -1) goto enter_target;
+    else if(tmp == -2) return;
+    target->food = tmp;
     //Find require
     while(fileSize - ftell(readFile) >= sizeof(monarInfo)) {
         fread(find, sizeof(monarInfo), 1, readFile);
@@ -44,18 +48,18 @@ void edit_monarch(fstream readFile) {
     if(isIn) {
         printf("Enter the data you want to change(-1 for not change):\n");
         printf("Reputation:");
-        int tmp = 0;
-        scanf(" %d", &tmp);
+        tmp = 0;
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->heart = tmp;
         }
         printf("Gold:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->gold = tmp;
         }
         printf("Food:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->food = tmp;
         }
@@ -183,48 +187,48 @@ void edit_city(fstream readFile) {
         printf("Enter the data you want to change(-1 for not change):\n");
         printf("Preparatory-Soldier:");
         tmp = 0;
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->prepare_soldier = tmp;
         }
         printf("Population:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             tmp /= 100;
             find->population = tmp;
         }
         printf("Defeat:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->defeat = tmp;
         }
         printf("Development:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->development = tmp;
         }
         printf("Business:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->business = tmp;
         }
         printf("Water:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->water = tmp;
         }
         printf("Loyalty:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->loyalty = tmp;
         }
         printf("Train:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->train = tmp;
         }
         printf("Moral:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->moral = tmp;
         }
@@ -410,52 +414,52 @@ void edit_commander(fstream readFile) {
         printf("Enter the data you want to change(-1 for not change):\n");
         printf("Reputation:");
         tmp = 0;
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->reputation = tmp;
         }
         printf("Expirence:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->exp = tmp;
         }
         printf("Soldier:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->soldier = tmp;
         }
         printf("Force:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->force = tmp;
         }
         printf("Wise:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->wise = tmp;
         }
         printf("Policy:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->policy = tmp;
         }
         printf("Charm:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->charm = tmp;
         }
         printf("Train:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->train = tmp;
         }
         printf("Moral:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->moral = tmp;
         }
         printf("Loyalty:");
-        scanf(" %d", &tmp);
+        scanf(" %ld", &tmp);
         if(tmp != -1) {
             find->loyalty = tmp;
         }
