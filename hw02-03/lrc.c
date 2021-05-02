@@ -49,7 +49,7 @@ void __lrc_header_handler(lrcobj *obj) {
 }
 
 lrcobj *read_lrc(const char *fileName) {
-    if(strcmp(strrchr(fileName, '.'), ".lrc") != 0) {
+    if(strcmp(&fileName[strlen(fileName) - 4], ".lrc") != 0) {
         return NULL;
     }
     
