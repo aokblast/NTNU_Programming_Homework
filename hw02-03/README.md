@@ -19,8 +19,8 @@ Execute the file.
 ./hw0304:
 Just Execute the file.
 
+./hw0305:
+1. You can only type integer
+2. Can't have totally same data on city, commander, monarch
 
-Using step
-Restriction on Number
-Duplicate information is not allow
-Cant change phy and active and age
+Can't change phy and active and age
