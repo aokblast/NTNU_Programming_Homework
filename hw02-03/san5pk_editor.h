@@ -19,7 +19,8 @@
 
 
 typedef struct _monarch_info {
-    uint32_t heart;
+    uint16_t heart;
+    uint16_t unknow_1;
     uint32_t gold;
     uint32_t food;
 }__attribute__ ((__packed__)) monarInfo;

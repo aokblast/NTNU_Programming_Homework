@@ -14,7 +14,7 @@ void init_term() {
         return;
     }
     */
-    fstream readFile = fopen("/home/blast/sanguo/SAVEDATA.S5P", "rb");
+    fstream readFile = fopen("SAVEDATA.S5P", "rb+");
     if(readFile == NULL) {
         printf("File not exist.\n");
         return;

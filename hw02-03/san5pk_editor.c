@@ -17,7 +17,7 @@ void edit_monarch(fstream readFile) {
     //Enter query
     enter_target:
     printf("Please input the monarch data you want to search (-1 for re-enter, -2 for return menu):\n");
-    printf("Reputation:");
+    printf("Reputation(Must be original value):");
     scanf(" %ld", &tmp); 
     if(tmp == -1) goto enter_target;
     else if (tmp == -2) return;
@@ -37,7 +37,6 @@ void edit_monarch(fstream readFile) {
         fread(find, sizeof(monarInfo), 1, readFile);
         find->food &= THREEBYTE;
         find->gold &= THREEBYTE;
-        find->heart &= TWOBYTE;
         if(((find->heart) == (target->heart)) && ((find->food) == (target->food)) && ((find->gold) == (target->gold))) {
             isIn = true;
             break;
@@ -47,19 +46,31 @@ void edit_monarch(fstream readFile) {
     //Change Value
     if(isIn) {
         printf("Enter the data you want to change(-1 for not change):\n");
-        printf("Reputation:");
+        printf("Reputation(0 <= enter_num <= 1000):");
         tmp = 0;
         scanf(" %ld", &tmp);
+        while(tmp > 1000 || tmp < -1) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->heart = tmp;
         }
-        printf("Gold:");
+        printf("Gold(0 <= enter_num <= 3000000):");
         scanf(" %ld", &tmp);
+        while(tmp > 3000000 || tmp < -1) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->gold = tmp;
         }
-        printf("Food:");
+        printf("Food(0 <= enter_num <= 3000000):");
         scanf(" %ld", &tmp);
+        while(tmp > 3000000 || tmp < -1) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->food = tmp;
         }
@@ -78,10 +89,11 @@ void edit_city(fstream readFile) {
     int count =  0;
     int64_t tmp = 0;
     uint64_t fileSize = getFileSize(readFile);
+    uint64_t offset = 0;
 
     //Enter query(Population, Soldier, Defeat)
     enter_target:
-    printf("Please input the under three city data City data you want to search (-1 for re-enter, -2 for return to menu):\n");
+    printf("Please input the under three City data you want to search (-1 for re-enter, -2 for return to menu):\n");
     printf("Population:");
     scanf(" %ld", &tmp); 
     if(tmp == -1) goto enter_target;
@@ -92,7 +104,7 @@ void edit_city(fstream readFile) {
     if(tmp == -1) goto enter_target;
     if(tmp == -2) return;
     target->prepare_soldier = tmp;
-    printf("Defeat:");
+    printf("Defend:");
     scanf(" %ld", &tmp);
     if(tmp == -1) goto enter_target;
     if(tmp == -2) return;
@@ -105,6 +117,7 @@ void edit_city(fstream readFile) {
         if(((test->prepare_soldier) == (target->prepare_soldier)) && ((test->population) == (target->population)) && ((test->defeat) == (target->defeat))) {
             ++count;
             find[0] = test[0];
+            offset = ftell(readFile);
         }
         fseek(readFile,-(sizeof(cityinfo)) + 1 ,SEEK_CUR);
     }
@@ -141,6 +154,7 @@ void edit_city(fstream readFile) {
             if(((test->prepare_soldier) == (target->prepare_soldier)) && ((test->population) == (target->population)) && ((test->defeat) == (target->defeat)) && ((test->development) == (target->development)) && ((test->water) == (target->water)) && ((test->business) == (target->business))) {
                 ++count;
                 find[0] = test[0];
+                offset = ftell(readFile);
             }
             fseek(readFile,-(sizeof(cityinfo)) + 1 ,SEEK_CUR);
         }
@@ -177,6 +191,7 @@ void edit_city(fstream readFile) {
             if(((test->prepare_soldier) == (target->prepare_soldier)) && ((test->population) == (target->population)) && ((test->defeat) == (target->defeat)) && ((test->development) == (target->development)) && ((test->water) == (target->water)) && ((test->business) == (target->business)) && ((test->moral) == (target->moral)) && ((test->train) == (target->train)) && ((test->loyalty) == (target->loyalty))) {
                 ++count;
                 find[0] = test[0];
+                offset = ftell(readFile);
             }
             fseek(readFile,-(sizeof(cityinfo)) + 1 ,SEEK_CUR);
         }
@@ -185,54 +200,91 @@ void edit_city(fstream readFile) {
     //Change Value
     if(count == 1) {
         printf("Enter the data you want to change(-1 for not change):\n");
-        printf("Preparatory-Soldier:");
-        tmp = 0;
+        printf("Prepared Soldier(0 <= enter_num <= 5000000) If it is 0, you can't change train:");
         scanf(" %ld", &tmp);
+        while(tmp > 5000000  || tmp < -1) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->prepare_soldier = tmp;
         }
-        printf("Population:");
+        printf("Population(50000 <= enter_num <= 3000000):");
         scanf(" %ld", &tmp);
+        while((tmp > 3000000 || tmp < 50000) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             tmp /= 100;
             find->population = tmp;
         }
-        printf("Defeat:");
+        printf("Defend(0 <= enter_num <= 999):");
         scanf(" %ld", &tmp);
+        while((tmp > 999 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->defeat = tmp;
         }
-        printf("Development:");
+        printf("Development(0 <= enter_num <= 999) Maximum may different from city:");
         scanf(" %ld", &tmp);
+        while((tmp > 999 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->development = tmp;
         }
-        printf("Business:");
+        printf("Business(0 <= enter_num <= 999) Maximum may different from city:");
         scanf(" %ld", &tmp);
+        while((tmp > 999 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->business = tmp;
         }
-        printf("Water:");
+        printf("Water(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->water = tmp;
         }
-        printf("Loyalty:");
+        printf("Loyalty(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->loyalty = tmp;
         }
-        printf("Train:");
-        scanf(" %ld", &tmp);
-        if(tmp != -1) {
-            find->train = tmp;
+        if(find->prepare_soldier != 0){
+            printf("Train(0 <= enter_num <= 100):");
+            scanf(" %ld", &tmp);
+            while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+                printf("Invalid number, Please re-input:");
+                scanf(" %ld", &tmp);
+            }
+            if(tmp != -1) {
+                find->train = tmp;
+            }
         }
-        printf("Moral:");
+        printf("Moral(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->moral = tmp;
         }
-        fseek(readFile, -sizeof(cityinfo), SEEK_CUR);
+        fseek(readFile, offset -sizeof(cityinfo), SEEK_SET);
         fwrite(find, sizeof(cityinfo), 1, readFile);
         fseek(readFile, 0, SEEK_SET);
         return;
@@ -291,6 +343,10 @@ uint32_t setSkill(uint32_t skill) {
         printSkillStat(skill);
         printf("Please enter a index to change the status(1-32 for change, -1 for end):");
         scanf(" %d", &test);
+        while((test > 32 || test < 0) ^ (test ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %d", &test);
+        }
         if(test == -1) break;
         else skill ^= (1 << (test - 1));
     }
@@ -303,11 +359,12 @@ void edit_commander(fstream readFile) {
     int count =  0;
     int64_t tmp = 0;
     uint64_t fileSize = getFileSize(readFile);
+    uint64_t offset = 0;
 
     //Enter query(Reputation, Soldier, Expirence)
     enter_target:
     printf("Please input the under three hero data you want to search (-1 for re-enter, -2 for return to menu):\n");
-    printf("Reputation:");
+    printf("Reputation(YongMing):");
     scanf(" %ld", &tmp); 
     if(tmp == -1) goto enter_target;
     if(tmp == -2) return;
@@ -329,6 +386,7 @@ void edit_commander(fstream readFile) {
         if(((test->reputation) == (target->reputation)) && ((test->exp) == (target->exp)) && ((test->soldier) == (target->soldier))) {
             ++count;
             find[0] = test[0];
+            offset = ftell(readFile);
         }
         fseek(readFile,-(sizeof(heroinfo)) + 1 ,SEEK_CUR);
     }
@@ -364,6 +422,7 @@ void edit_commander(fstream readFile) {
             if(((test->reputation) == (target->reputation)) && ((test->exp) == (target->exp)) && ((test->soldier) == (target->soldier)) && ((test->force) == (target->force)) && ((test->wise) == (target->wise)) && ((test->policy) == (target->policy))) {
                 ++count;
                 find[0] = test[0];
+                offset = ftell(readFile);
             }
             fseek(readFile,-(sizeof(heroinfo)) + 1 ,SEEK_CUR);
         }
@@ -404,6 +463,7 @@ void edit_commander(fstream readFile) {
             if(((test->reputation) == (target->reputation)) && ((test->exp) == (target->exp)) && ((test->soldier) == (target->soldier)) && ((test->force) == (target->force)) && ((test->wise) == (target->wise)) && ((test->policy) == (target->policy)) && ((test->charm) == (target->charm)) && ((test->train) == (target->train)) && ((test->moral) == (target->moral)) && ((test->loyalty) == (target->loyalty))) {
                 ++count;
                 find[0] = test[0];
+                offset = ftell(readFile);
             }
             fseek(readFile,-(sizeof(heroinfo)) + 1 ,SEEK_CUR);
         }
@@ -412,60 +472,99 @@ void edit_commander(fstream readFile) {
     //Change Value
     if(count == 1) {
         printf("Enter the data you want to change(-1 for not change):\n");
-        printf("Reputation:");
-        tmp = 0;
+        printf("Reputation(YongMing)(0 <= enter_num <= 10000):");
         scanf(" %ld", &tmp);
+        while((tmp > 10000 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->reputation = tmp;
         }
-        printf("Expirence:");
+        printf("Expirence(0 <= enter_num <= 60000):");
         scanf(" %ld", &tmp);
+        while((tmp > 60000 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->exp = tmp;
         }
-        printf("Soldier:");
+        printf("Soldier(0 <= enter_num <= 20000) max may different from everyone:");
         scanf(" %ld", &tmp);
+        while((tmp > 20000 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->soldier = tmp;
         }
-        printf("Force:");
+        printf("Force(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->force = tmp;
         }
-        printf("Wise:");
+        printf("Wise(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->wise = tmp;
         }
-        printf("Policy:");
+        printf("Policy(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->policy = tmp;
         }
-        printf("Charm:");
+        printf("Charm(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->charm = tmp;
         }
-        printf("Train:");
+        printf("Train(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->train = tmp;
         }
-        printf("Moral:");
+        printf("Moral(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->moral = tmp;
         }
-        printf("Loyalty:");
+        printf("Loyalty(0 <= enter_num <= 100):");
         scanf(" %ld", &tmp);
+        while((tmp > 100 || tmp < 0) ^ (tmp ==  -1)) {
+            printf("Invalid number, Please re-input:");
+            scanf(" %ld", &tmp);
+        }
         if(tmp != -1) {
             find->loyalty = tmp;
         }
         printf("Skill:");
         find->skills = setSkill(find->skills);
-        fseek(readFile, -sizeof(heroinfo), SEEK_CUR);
+        fseek(readFile, offset - sizeof(heroinfo), SEEK_SET);
         fwrite(find, sizeof(heroinfo), 1, readFile);
         fseek(readFile, 0, SEEK_SET);
         return;
