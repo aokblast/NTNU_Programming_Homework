@@ -5,16 +5,16 @@
 void init_term() {
     //file read and check
      
-    /*
+    
     string fileName;
-    printf("Please enter the file you want to edit.\n");
+    printf("Please enter the file you want to edit:\n");
     scanf(" %s", fileName);
     if(strcmp(&fileName[strlen(fileName) - 4], ".S5P") != 0) {
         printf("Wrong file.\n");
         return;
     }
-    */
-    fstream readFile = fopen("SAVEDATA.S5P", "rb+");
+    
+    fstream readFile = fopen(fileName, "rb+");
     if(readFile == NULL) {
         printf("File not exist.\n");
         return;
