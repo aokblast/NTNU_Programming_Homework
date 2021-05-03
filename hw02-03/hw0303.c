@@ -5,7 +5,7 @@ int main(){
     char fileName[100];
     double angle = 0;
 
-    printf("Please input a BMP:");
+    printf("Please input a BMP file:");
     scanf(" %s", fileName);
     FILE *readFile = fopen(fileName, "r");
 
