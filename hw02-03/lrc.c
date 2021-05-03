@@ -13,13 +13,15 @@ void __lrc_header_handler(lrcobj *obj) {
     size_t offset = ftell(obj->src);
     while(!feof(obj->src)) {
         char type[10], content[1000];
+        bool isType = false;
         if(line[0] == '\r') {
             fgets(line, 1000, obj->src);
             continue;
         }
+        if(line[0] == '[' && line[strlen(line) - 3] == ']') isType = true;
         strcpy(type, strtok(line, "[:]"));
         strcpy(content, strtok(NULL, "[:]"));
-        
+        printf("%s\n", line);
         if(strcmp(type, "al") == 0) {
             strcpy(obj->header->album, content);
         }else if (strcmp(type, "ar") == 0) {
@@ -38,7 +40,13 @@ void __lrc_header_handler(lrcobj *obj) {
             strcpy(obj->header->version, content);
         }else if(strcmp(type, "la") == 0){
             strcpy(obj->header->language, content);
-        } else{
+        }else if(isType){
+            isType = false;
+            offset = ftell(obj->src);
+            fgets(line, 1000, obj->src);
+            continue;
+            
+        }else{
             break;
         }
         offset = ftell(obj->src);
@@ -49,7 +57,7 @@ void __lrc_header_handler(lrcobj *obj) {
 }
 
 lrcobj *read_lrc(const char *fileName) {
-    if(strcmp(&fileName[strlen(fileName) - 4], ".lrc") != 0) {
+    if(strlen(fileName) < 5 || strcmp(&fileName[strlen(fileName) - 4], ".lrc") != 0) {
         return NULL;
     }
     
