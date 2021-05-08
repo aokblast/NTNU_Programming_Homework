@@ -16,8 +16,12 @@ void reverseStr(char *str){
 char *inttohex(int num){
     char *result = calloc(20, sizeof(char));
     int i = 0;
+    if(num == 0) {
+        result[0] = '0';
+        return result;
+    }
     uint32_t tmp = (uint32_t) num;
-    while(i < 8) {
+    while(tmp > 0) {
         result[i++] = hexTable[(tmp & 0xF)];
         tmp >>= 4;
     }
@@ -26,10 +30,13 @@ char *inttohex(int num){
 }
 
 char *inttostr(int num){
-    bool neg = (num > 0 ? false : true);
+    bool neg = (num >= 0 ? false : true);
     num = abs(num);
     char *result = calloc(20, sizeof(char));
     int i = 0;
+    if(num == 0) {
+        result[i++] = '0';
+    }
     while(num > 0) {
         result[i++] = hexTable[num % 10];
         num /= 10;
@@ -97,9 +104,9 @@ int myprintf(char *format, ... ) {
                 case 'x': {
                     int arg = va_arg(args, int);
                     char *hexStr = inttohex(arg);
-                    int totalLen = strlen(hexStr) + (hex ? 2 : 0);
-                    if(left) {
-                        if(hex) {
+                    int totalLen = strlen(hexStr) + (hex ? (arg == 0 ? 0 : 2) : 0);
+                    if(left && arg != 0) {
+                        if(hex && arg != 0) {
                             fputc('0', stdout), ++count;
                             fputc(*iter, stdout), ++count;
                         }
@@ -107,7 +114,7 @@ int myprintf(char *format, ... ) {
                         while(min_width - totalLen > 0) fputc((padding ? '0' : ' '), stdout), ++count, --min_width;
                     }else {
                         while(min_width - totalLen > 0) fputc((padding ? '0' : ' '), stdout), ++count, --min_width;
-                        if(hex) {
+                        if(hex && arg != 0) {
                             fputc('0', stdout), ++count;
                             fputc(*iter, stdout), ++count;
                         }

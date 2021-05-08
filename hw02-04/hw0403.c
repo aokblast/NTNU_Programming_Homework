@@ -2,6 +2,6 @@
 #include "myprintf.h"
 
 int main(){
-    printf("%#+-23X123\n", -123);
-    myprintf("%#+-23X123\n", -123);
+    printf("%#d123 %s \n", -1250, "Hello World.\n");
+    myprintf("%#d123 %s \n", -1250, "Hello World.\n");
 }
