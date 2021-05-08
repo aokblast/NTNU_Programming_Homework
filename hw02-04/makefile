@@ -6,7 +6,7 @@ all:
 
 	for name in ${TARGETS}; \
 	do \
-	${CC} $$name.c ${CFLAG} myprintf.c -o $$name ;\
+	${CC} $$name.c ${CFLAG} -o $$name ;\
 	done
 	gcc hw0403.c myprintf.c -o hw0403
 	gcc hw0404.c zipreader.c -o hw0404
