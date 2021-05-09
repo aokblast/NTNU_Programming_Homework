@@ -25,6 +25,7 @@ char *inttohex(int num){
         result[i++] = hexTable[(tmp & 0xF)];
         tmp >>= 4;
     }
+    result[i++] = '\0';
     reverseStr(result);
     return result;
 }
@@ -42,6 +43,7 @@ char *inttostr(int num){
         num /= 10;
     }
     result[i++] = (neg ? '-' : '+');
+    result[i++] = '\0';
     reverseStr(result);
     return result;
 }
