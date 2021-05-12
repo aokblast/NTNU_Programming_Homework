@@ -1,10 +1,13 @@
 #include "all.h"
 
+
+//Problem: can't parse neg
+
 bool start_func = false;
 bool end_func  = false;
 bool is_end = false;
 
-char opers[] = "+!~*/&%<>=^|?:'";
+char opers[] = "+-!~*/&%<>=^|?:";
 
 char *random_length_string(char *str, size_t length) {
     int i = 0;
@@ -18,7 +21,6 @@ char *random_length_string(char *str, size_t length) {
 int in_variables_index(char str[], char variables[][100]) {
     for(int i = 0; i < 10000; ++i) {
         if(strcmp(str, variables[i]) == 0) {
-            
             return i;
         }else if (variables[i][0] == '\0') {
             return -1;
@@ -28,12 +30,12 @@ int in_variables_index(char str[], char variables[][100]) {
 }
 
 bool is_function(char str[]) {
-    return (strrchr(str, '(') != NULL && strrchr(str, ')') != NULL);
+    return (strchr(str, '(') != NULL && strchr(opers, *(strchr(str, '(') - 1)) == NULL);
 }
 
 void get_line(char *str, fstream readFile) {
     int index = 0;
-    
+    bool inStr = false;
     while(!feof(readFile)) {
         int c = fgetc(readFile);
         if(c == -1) {
@@ -41,22 +43,23 @@ void get_line(char *str, fstream readFile) {
             return;
         }
         if(c != ';' && c != '{' && c != '}') {
-            if(strchr(opers, c) != NULL) {
+            if(c == '"' || c == '\'') inStr ^= true;
+            else if(strchr(opers, c) != NULL && !inStr) {
                 str[index++] = ' ';
                 str[index++] = c;
                 while(strchr(opers, (c = fgetc(readFile)) ) != NULL) {
                     str[index++] = c;
                 }
                 str[index++] = ' ';
-            }else if(c == '(') {
+            }else if(c == '(' && !inStr) {
                 while(str[--index] == ' ');
                 ++index;
                 str[index++] = '(';
                 str[index++] = ' ';
                 continue;
-            }else if (c == ')') {
+            }else if (c == ')' && !inStr) {
                 str[index++] = ' ';
-            }else if( c == ',') {
+            }else if( c == ',' && !inStr) {
                 str[index++] = ' ';
                 str[index++] = ',';
                 str[index++] = ' ';
@@ -79,9 +82,62 @@ void add_redundant(fstream writeFile) {
     while(times--) fwrite((rand() % 2 == 0) ? "\n" : " ", 1, 1, writeFile);
 }
 
-char *operator_obfs(char *str, int a) {
-     
+char *operator_obfs(char *str, int num) {
+    int index = 0;
+    
+    
+    str[index++] = '(';
+    if(num > 0) {
+        str[index++] = '0';
+        int i = 0;
+        while(i <= num) {
+            if(i + 2 > num) break;
+            else {
+                str[index++] = '+';
+                str[index++] = '2';
+            }
+            i += 2;
+        }
+        if(i < num){
+            str[index++] = '+';
+            str[index++] = '1';            
+        }
+        str[index++] = '*';
+        str[index++] = '1'; 
+    }else if(num < 0){
+        str[index++] = '0';
+        int i = 0;
+        while(i >= num) {
+            if(i - 2 < num) break;
+            else {
+                str[index++] = '-';
+                str[index++] = '1';
+            }
+            i += 2;
+        }
+        if(i < num){
+            str[index++] = '-';
+            str[index++] = '2';            
+        }
+        str[index++] = '*';
+        str[index++] = '1'; 
+    }else if(num == 0) {
+        str[index++] = '1';
+        str[index++] = '-';
+        str[index++] = '1';
+        str[index++] = '*';
+        str[index++] = '1';
+    }
+    str[index++] = ')';
+    str[index++] = '\0';    
+
+    return str;
 }
+
+bool is_var(char *var){
+    return  strchr(var, '(') == NULL && var[0] != '"' && var[0] != ')' && !isdigit(var[0]) && (var[0] != '_' && var[0] != '\'' && var[0] != '\"' && strchr(opers, var[0]) == NULL && strcmp(var, "char") != 0 && strcmp(var, "int") != 0) && var[0] != ',';
+}
+
 
 
 void obfuscation(fstream readFile, fstream writeFile, int mode) {
@@ -107,13 +163,13 @@ void obfuscation(fstream readFile, fstream writeFile, int mode) {
     //obfuscation
     while(!feof(readFile)) {
         get_line(line, readFile);
-        bool isFunction = is_function(line);
         if(line[0] == '\n') continue;
         char *iter = strtok(line, " ");
         if(iter == NULL) goto end;
         if(strcmp(iter, "char") == 0 || strcmp(iter, "int") == 0) {
             if(obfus_redun)add_redundant(writeFile);
             fwrite(iter, 1, strlen(iter), writeFile);
+            fwrite(" ", 1, 1, writeFile);
             iter = strtok(NULL, " ");
             if(strcmp(iter, "main(") == 0) {
                 fwrite(" ", 1, 1, writeFile);
@@ -121,50 +177,49 @@ void obfuscation(fstream readFile, fstream writeFile, int mode) {
                 fwrite(")", 1, 1, writeFile);
                 goto end;
             }
-            if(obfus_redun)add_redundant(writeFile);
-            if((isFunction && obfus_func) || (!isFunction && obfus_variable)) {
-                strcpy(replacement[top], random_length_string(tmp, 16));
-                if(isFunction)strncpy(variables[top], iter, strchr(iter, '(') - iter);
-                else strcpy(variables[top], iter);
-                fwrite(replacement[top], 1, strlen(replacement[top]), writeFile);
-                if(isFunction) fwrite(strchr(iter, '('), 1, strlen(strchr(iter, '(')), writeFile);
-                while((iter = strtok(NULL, " ")) != NULL) {
-                    int index = in_variables_index(iter, variables);
-                    if(obfus_redun)add_redundant(writeFile);
-                    if(index != -1) {
-                        fwrite(replacement[index], 1, strlen(replacement[index]), writeFile);
-                    }else {
-                        fwrite(iter, 1, strlen(iter), writeFile);
-                    }
-                }
-                 ++top;
-            }else {
+            do {
+                int index = in_variables_index(iter, variables);
                 if(obfus_redun)add_redundant(writeFile);
-                fwrite(iter, 1, strlen(iter), writeFile);
-                while((iter = strtok(NULL, " ")) != NULL) {
-                    if(obfus_redun)add_redundant(writeFile);
-                   fwrite(iter, 1, strlen(iter), writeFile); 
+                
+                if(index != -1) {
+                    fwrite(replacement[index], 1, strlen(replacement[index]), writeFile);
+                }else if(is_function(iter) && obfus_func) {
+                    strcpy(replacement[top], random_length_string(tmp, 16));
+                    replacement[top][strlen(replacement[top])] = '(';
+                    strcpy(variables[top], iter);
+                    fwrite(replacement[top], 1, strlen(replacement[top]), writeFile);
+                    ++top;
                 }
-            }
-           
-            
+                else if(is_var(iter) && obfus_variable) {
+                    strcpy(replacement[top], random_length_string(tmp, 16));
+                    strcpy(variables[top], iter);
+                    fwrite(replacement[top], 1, strlen(replacement[top]), writeFile);
+                    ++top;
+                }
+                else if(isdigit(iter[0]) && obfus_oper) {
+                    operator_obfs(tmp, strtol(iter, NULL, 10));
+                    fwrite(tmp, 1, strlen(tmp), writeFile);
+                }else {
+                    fwrite(iter, 1, strlen(iter), writeFile);
+                }
+                if(obfus_redun)add_redundant(writeFile);
+            }while((iter = strtok(NULL, " ")) != NULL);
         }else {
             bool left = false;
             do {
                 int index;
-                if(strchr(iter, '(') != NULL) {
-                    left = true;
-                    *(strchr(iter, '(')) = '\0';
-                }
-                
                 index = in_variables_index(iter, variables);
                 if(obfus_redun)add_redundant(writeFile);
                 if(index != -1) {
                     fwrite(replacement[index], 1, strlen(replacement[index]), writeFile);
-                }else {
+                } else if(isdigit(iter[0]) && obfus_oper) {
+                    operator_obfs(tmp, strtol(iter, NULL, 10));
+                    fwrite(tmp, 1, strlen(tmp), writeFile);
+                }
+                else {
                     fwrite(iter, 1, strlen(iter), writeFile);
                 }
-                if(left) fwrite("(", 1, 1, writeFile), left = false;
+                if(obfus_redun)add_redundant(writeFile);
             }while((iter = strtok(NULL, " ")) != NULL);
             
 
