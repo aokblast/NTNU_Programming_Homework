@@ -151,10 +151,27 @@ void show_zip_file_list(zipobj *zipFile){
     for(int i = 0; i < zipFile->end_record.central_dir_num_total; ++i) {
         int layer = getLayer(zipFile->central_header[i].fileName);
         if(zipFile->central_header[i].fileName[strlen(zipFile->central_header[i].fileName) - 1] == '/'){
-            printf("+-- %s\n", zipFile->central_header[i].fileName);
+            for(int i = 0; i < layer - 1; ++i) printf("\t");
+            char *iter = strrchr(zipFile->central_header[i].fileName, '/');
+            if(iter == NULL) iter = zipFile->central_header[i].fileName;
+            else {
+                
+                *iter = '\0';
+                iter = strrchr(zipFile->central_header[i].fileName, '/');
+                if( iter == NULL) {
+                    iter = zipFile->central_header[i].fileName;
+                }else {
+                    ++iter;
+                }
+            }
+            
+            printf("+-- %s\n", iter);
         }else {
             for(int i = 0; i < layer; ++i) printf("\t");
-            printf("+-- %s\n", strrchr(zipFile->central_header[i].fileName, '/') + 1);
+            char *iter = strrchr(zipFile->central_header[i].fileName, '/');
+            if(iter == NULL) iter = zipFile->central_header[i].fileName;
+            else ++iter;
+            printf("+-- %s\n", iter);
         }
     }
 }
