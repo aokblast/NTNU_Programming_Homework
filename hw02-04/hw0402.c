@@ -30,13 +30,14 @@ int in_variables_index(char str[], char variables[][100]) {
 }
 
 bool is_function(char str[]) {
-    return (strchr(str, '(') != NULL && strchr(opers, *(strchr(str, '(') - 1)) == NULL);
+    return (strlen(str) > 1 && strchr(str, '(') != NULL && strchr(opers, *(strchr(str, '(') - 1)) == NULL);
 }
 
 void get_line(char *str, fstream readFile) {
     int index = 0;
     bool inStr = false;
     while(!feof(readFile)) {
+        
         int c = fgetc(readFile);
         if(c == -1) {
             str[index++] = '\0';
@@ -53,7 +54,8 @@ void get_line(char *str, fstream readFile) {
                 str[index++] = ' ';
             }else if(c == '(' && !inStr) {
                 while(str[--index] == ' ');
-                ++index;
+                if(strchr(opers, str[index]) != NULL) str[++index] = ' ';
+                else ++index;
                 str[index++] = '(';
                 str[index++] = ' ';
                 continue;
@@ -75,6 +77,8 @@ void get_line(char *str, fstream readFile) {
             return;
         }
     }
+    
+    
 }
 
 void add_redundant(fstream writeFile) {
@@ -84,41 +88,57 @@ void add_redundant(fstream writeFile) {
 
 char *operator_obfs(char *str, int num) {
     int index = 0;
-    
-    
     str[index++] = '(';
     if(num > 0) {
         str[index++] = '0';
         int i = 0;
-        while(i <= num) {
-            if(i + 2 > num) break;
-            else {
-                str[index++] = '+';
-                str[index++] = '2';
+        while(num) {
+            if(num & 1) {
+                if(i == 0) {
+                    str[index++] = '+';
+                    str[index++] = '1';
+                }else {
+                    str[index++] = '+';
+                    str[index++] = '2';
+                    for(int j = 1; j < i; ++j) {
+                        str[index++] = '*';
+                        str[index++] = '2';
+                    }
+                }
             }
-            i += 2;
-        }
-        if(i < num){
-            str[index++] = '+';
-            str[index++] = '1';            
+            ++i;
+            num >>= 1;
         }
         str[index++] = '*';
         str[index++] = '1'; 
     }else if(num < 0){
         str[index++] = '0';
         int i = 0;
-        while(i >= num) {
-            if(i - 2 < num) break;
-            else {
-                str[index++] = '-';
-                str[index++] = '1';
+        str[index++] = '+';
+        str[index++] = ' ';
+        str[index++] = (num > 0 ? '+' : '-');
+        str[index++] = 1;
+        str[index++] = '*';
+        num = abs(num);
+        str[index++] = '(';
+        while(num) {
+            if(num & 1) {
+                if(i == 0) {
+                    str[index++] = '+';
+                    str[index++] = '1';
+                }else {
+                    str[index++] = '+';
+                    str[index++] = '2';
+                    for(int j = 1; j < i; ++j) {
+                        str[index++] = '*';
+                        str[index++] = '2';
+                    }
+                }
             }
-            i += 2;
+            ++i;
+            num >>= 1;
         }
-        if(i < num){
-            str[index++] = '-';
-            str[index++] = '2';            
-        }
+        str[index++] = ')';
         str[index++] = '*';
         str[index++] = '1'; 
     }else if(num == 0) {
@@ -137,8 +157,6 @@ char *operator_obfs(char *str, int num) {
 bool is_var(char *var){
     return  strchr(var, '(') == NULL && var[0] != '"' && var[0] != ')' && !isdigit(var[0]) && (var[0] != '_' && var[0] != '\'' && var[0] != '\"' && strchr(opers, var[0]) == NULL && strcmp(var, "char") != 0 && strcmp(var, "int") != 0) && var[0] != ',';
 }
-
-
 
 void obfuscation(fstream readFile, fstream writeFile, int mode) {
     char variables[10000][100] = {0}, replacement[10000][100] = {0};
