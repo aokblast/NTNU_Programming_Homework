@@ -133,8 +133,28 @@ void show_file_info(zip_dir_header *file) {
     printf("Uncompressed-size: %d\n", dir_header->uncompressed_size);
 }
 
+int getLayer(char *fileDir) {
+    int layer = 1;
+    fileDir = strchr(fileDir, '/');
+    if(fileDir == NULL) return layer;
+    ++fileDir;
+    while(fileDir != NULL) {
+        fileDir = strchr(fileDir, '/');
+        if(fileDir == NULL) break;
+        ++layer, ++fileDir;
+    }
+
+    return layer;
+}
+
 void show_zip_file_list(zipobj *zipFile){
     for(int i = 0; i < zipFile->end_record.central_dir_num_total; ++i) {
-        printf("    +-- %s\n", zipFile->central_header[i].fileName);
+        int layer = getLayer(zipFile->central_header[i].fileName);
+        if(zipFile->central_header[i].fileName[strlen(zipFile->central_header[i].fileName) - 1] == '/'){
+            printf("+-- %s\n", zipFile->central_header[i].fileName);
+        }else {
+            for(int i = 0; i < layer; ++i) printf("\t");
+            printf("+-- %s\n", strrchr(zipFile->central_header[i].fileName, '/') + 1);
+        }
     }
 }
