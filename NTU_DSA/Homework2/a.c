@@ -5,8 +5,8 @@
 
 #define ll long long
 
-int ans , n , *p, *q, *r, tmp_p[100005], tmp_q[100005], tmp_r[100005];
-
+int  n , *p, *q, *r, tmp_p[100005], tmp_q[100005], tmp_r[100005];
+ll ans;
 
 void swap(int *a, int *b) {
     int tmp = *a;
@@ -15,20 +15,36 @@ void swap(int *a, int *b) {
 }
 
 int p_merge(int a, int b) {
-    return  p[a] < p[b];
+    if(  p[a] != p[b]) return p[a] < p[b];
+    else if(q[a] != q[b]) {
+        ans += 1;
+        return q[a] < q[b];
+    }
+    else {
+        ans += 1;
+        return r[a] < r[b];
+    }
+
 }
 
+int q_merge(int a, int b) {
+    return q[a] < q[b];
+}
 
-void merge_sort(int front, int end, int (*cmp_func)(int a, int b)) {
-    if(end - front > 1){
+int r_merge(int a, int b) {
+    return r[a] < r[b];
+}
+
+void merge_sort_1(int front, int end) {
+    if((end - front) > 1){
         int mid = (front + end) / 2;
-        merge_sort(front, mid, cmp_func);
-        merge_sort(mid, end, cmp_func);
+        merge_sort_1(front, mid);
+        merge_sort_1(mid, end);
         int left_index = front;
         int right_index = mid;
         int exc_index = 0;
         while(left_index < mid && right_index < end) {
-            if(cmp_func(left_index, right_index)) {
+            if(p_merge(left_index, right_index)) {
                 tmp_q[exc_index] = q[left_index];
                 tmp_r[exc_index] = r[left_index];
                 tmp_p[exc_index++] = p[left_index++];
@@ -39,15 +55,15 @@ void merge_sort(int front, int end, int (*cmp_func)(int a, int b)) {
             }
         }
         
-        for(; left_index < mid;  ++left_index) {
+        for(; left_index < mid;  ++left_index, ++exc_index) {
                 tmp_q[exc_index] = q[left_index];
                 tmp_r[exc_index] = r[left_index];
-                tmp_p[exc_index++] = p[left_index];            
+                tmp_p[exc_index] = p[left_index];            
         }
-        for(; right_index < end;  ++right_index) {
+        for(; right_index < end;  ++right_index, ++exc_index) {
                 tmp_q[exc_index] = q[right_index];
                 tmp_r[exc_index] = r[right_index];
-                tmp_p[exc_index++] = p[right_index];            
+                tmp_p[exc_index] = p[right_index];            
         }
         for(int i = 0; i < exc_index; ++i) {
             p[i+front] = tmp_p[i];
@@ -56,6 +72,73 @@ void merge_sort(int front, int end, int (*cmp_func)(int a, int b)) {
         }
     }
 }
+
+void merge_sort_2(int front, int end) {
+    if((end - front) > 1){
+        int mid = (front + end) / 2;
+        merge_sort_2(front, mid);
+        merge_sort_2(mid, end);
+        
+        for(int i = end - 1, j = mid - 1; i >= mid; --i) {
+            while(q[j] >= r[i] && j >= front) --j;
+            ans += (mid - j - 1);
+        }
+    
+
+        int left_q_index = front;
+        int right_q_index = mid;
+        int left_r_index = front;
+        int right_r_index = mid;
+        int exc_q_index = 0;
+        int exc_r_index = 0;
+
+        while(left_q_index < mid && right_q_index < end) {
+            if(q_merge(left_q_index, right_q_index)) {
+                tmp_q[exc_q_index++] = q[left_q_index++];
+            }else {
+                tmp_q[exc_q_index++] = q[right_q_index++];
+            }
+        }
+
+        while(left_r_index < mid && right_r_index < end) {
+            if(r_merge(left_r_index, right_r_index)) {
+                tmp_r[exc_r_index++] = r[left_r_index++];
+            }else {
+                tmp_r[exc_r_index++] = r[right_r_index++];
+            }
+        }
+        
+
+
+        for(; left_q_index < mid;  ++left_q_index, ++exc_q_index) {
+                tmp_q[exc_q_index] = q[left_q_index];        
+        }
+        for(; right_q_index < end;  ++right_q_index, ++exc_q_index) {
+                tmp_q[exc_q_index] = q[right_q_index];        
+        }
+
+        for(int i = 0; i < exc_q_index; ++i) {
+            q[i+front] = tmp_q[i];
+        }
+
+        for(; left_r_index < mid;  ++left_r_index, ++exc_r_index) {
+            tmp_r[exc_r_index] = r[left_r_index];        
+        }
+        for(; right_r_index < end;  ++right_r_index, ++exc_r_index) {
+            tmp_r[exc_r_index] = r[right_r_index];        
+        }
+
+        for(int i = 0; i < exc_r_index; ++i) {
+            r[i+front] = tmp_r[i];
+        }
+        
+
+
+
+
+    }
+}
+
 
 
 
@@ -69,11 +152,19 @@ void normalize() {
 
 
 void solve(){
-    ans = 0;
+    
     normalize();
-    merge_sort(0, n, p_merge);
     ans = 0;
-    merge_sort(0, n, qr_merge);
+    merge_sort_1(0, n);
+    
+    
+    merge_sort_2(0, n);
+    /*
+    for(int i = 0; i < n; ++i) printf("%d ", q[i]);
+    printf("\n");
+    for(int i = 0; i < n; ++i) printf("%d ", r[i]);
+    printf("\n");
+    */
 }
 
 
