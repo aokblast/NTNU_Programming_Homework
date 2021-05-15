@@ -15,16 +15,16 @@ void swap(int *a, int *b) {
 }
 
 int p_merge(int a, int b) {
-    if(  p[a] != p[b]) return p[a] < p[b];
+    if(p[a] != p[b]) return p[a] < p[b];
     else if(q[a] != q[b]) {
-        ans += 1;
+        if((q[a] >= q[b] && r[b] >= r[a] ) || (r[a] >= q[b]) || (q[b] >= q[a] && r[a] >= r[b] ) || (r[b] >= q[a])) ++ans;
         return q[a] < q[b];
     }
-    else {
-        ans += 1;
+    else if(r[a] != r[b]){
+        if((q[a] >= q[b] && r[b] >= r[a] ) || (r[a] >= q[b]) || (q[b] >= q[a] && r[a] >= r[b] ) || (r[b] >= q[a]) ) ++ans;
         return r[a] < r[b];
     }
-
+    else return 0;
 }
 
 int q_merge(int a, int b) {
@@ -78,13 +78,14 @@ void merge_sort_2(int front, int end) {
         int mid = (front + end) / 2;
         merge_sort_2(front, mid);
         merge_sort_2(mid, end);
-        
-        for(int i = end - 1, j = mid - 1; i >= mid; --i) {
-            while(q[j] >= r[i] && j >= front) --j;
-            ans += (mid - j - 1);
-        }
-    
 
+
+        for(int i = front, j = mid; i < mid; ++i){
+            while(q[i] >= r[j] && j < end) ++j;
+            ans += j - mid;
+        }
+
+    
         int left_q_index = front;
         int right_q_index = mid;
         int left_r_index = front;
@@ -156,7 +157,6 @@ void solve(){
     normalize();
     ans = 0;
     merge_sort_1(0, n);
-    
     
     merge_sort_2(0, n);
     /*
