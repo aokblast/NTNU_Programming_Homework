@@ -134,23 +134,17 @@ void show_file_info(zip_dir_header *file) {
 }
 
 int getLayer(char *fileDir) {
-    int layer = 1;
-    fileDir = strchr(fileDir, '/');
-    if(fileDir == NULL) return layer;
-    ++fileDir;
-    while(fileDir != NULL) {
-        fileDir = strchr(fileDir, '/');
-        if(fileDir == NULL) break;
-        ++layer, ++fileDir;
-    }
-
+    int layer = 0;
+    for(int i = 0; fileDir[i] != '\0'; ++i) if(fileDir[i] == '/') ++layer;
     return layer;
 }
 
 void show_zip_file_list(zipobj *zipFile){
     for(int i = 0; i < zipFile->end_record.central_dir_num_total; ++i) {
         int layer = getLayer(zipFile->central_header[i].fileName);
+
         if(zipFile->central_header[i].fileName[strlen(zipFile->central_header[i].fileName) - 1] == '/'){
+            
             for(int i = 0; i < layer - 1; ++i) printf("\t");
             char *iter = strrchr(zipFile->central_header[i].fileName, '/');
             if(iter == NULL) iter = zipFile->central_header[i].fileName;
@@ -165,7 +159,7 @@ void show_zip_file_list(zipobj *zipFile){
                 }
             }
             
-            printf("+-- %s\n", iter);
+            printf("+-- %s/\n", iter);
         }else {
             for(int i = 0; i < layer; ++i) printf("\t");
             char *iter = strrchr(zipFile->central_header[i].fileName, '/');

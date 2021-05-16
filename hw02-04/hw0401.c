@@ -136,7 +136,7 @@ int main(int argc, char *argv[]){
             if(strcmp(argv[3], "--size") == 0) {
                 char *errPtr;
                 size = strtol(argv[4], &errPtr, 10);
-                if(errPtr != NULL) {
+                if(*errPtr != '\0') {
                     fclose(inFile);
                     goto error_operation;
                 }
