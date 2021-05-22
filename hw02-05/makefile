@@ -6,7 +6,7 @@ all:
 
 	for name in ${TARGETS}; \
 	do \
-	${CC} $$name.c ${CFLAG} -o $$name ;\
+	${CC} $$name.c ${CFLAG} -lcurl -o $$name ;\
 	done
 
 
