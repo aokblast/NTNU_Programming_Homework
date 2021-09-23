@@ -2,7 +2,7 @@
 
 1. $1 - \frac{C^{n^2}_{n}}{n^{2n}}$
 
-2. $\frac{|P|}{4}$ (not sure)
+2. $\frac{|P|}{4}+\frac{|P|}{16}$
 
 3. a.
 
@@ -159,8 +159,6 @@ end procedure
 
 ​	  X[8] = {8, 0, 0, 0, 3, 0, 0, 0}
 
-​		Need check
-
 3. According to the problem, we can use the KMP's failure function(line 2-16) to create a Failure Table which means S[1...FailureFunc[i]] == S[i... i + FailureFunc[i] - 1]. It means we can find all the possible S[1...p] == S[i... i + p -1 ] which p is FailureFunc[i]. 
    
    Space Complexity: O(n), FailureFun use n extra space which n is the length of string
@@ -177,7 +175,6 @@ end procedure
        	while j != 1 and S[i] != S[j] 
        		set j to FailureFunc[j - 1]
        	end while
-       	
        	if(S[i] == S[j]) 
        		set FailureFunc[i] to j + 1
        	else 
@@ -186,7 +183,7 @@ end procedure
    	end for
    	
    	for i from 1 to S.length()
-   		if i == FailureFunc[i] x[i] = S.length()- i
+   		if i == FailureFunc[i] set x[i] to S.length()- i
    		else if FailureFunc[i] != 1
    			set x[i - FailureFunc[i]] to FailureFunc[i] - 1
    		else
@@ -195,13 +192,21 @@ end procedure
    end procedure
    ```
    
-4. 
+4. Space Complexity: O(1) because it only use X array (not count in extra space), and two variable
+   
+   Time complexity: O(t.length() + O(s.length())) + O(t.length()) + O(t.length()) = O(t.length() + s.length()) for find the first hit and countFunc() and a for loop
    
    ```pseudocode
    procedure stringMatching(S, P)
-   	countFunc(S)
-   	
-   end procedure procedure 
+   	set result to 0
+   	set i to KMP-StringMatching(S, P) //return the first hit index
+   	countFunc(S[i:S.length()])
+   	for j from i to S.length()
+   		if(X[j] >= P.length()) set result to result + 1
+   		end if
+   	end for
+   	return result
+   end procedure
    ```
 
 ## Problem 3 - Having Fun with Disjoint Set
@@ -255,7 +260,7 @@ end procedure
    		else if aSet == midSet
    			UNION(N, b)
    		else if aSet == bigSet
-   			UNION(M + 1, b)
+   			UNION(N + 1, b)
    		end if
    	end if
    end procedure
@@ -284,4 +289,43 @@ end procedure
    * UNDO():  undo() calls djs_undo() which has a while loop. In each iteration, it pop an element and  a element means an ADD-EDGE() operation.  Namely, it at most pop $(M - 1)$ element  in only one djs_undo() in the total process(In total M operations, it calls UNDO() 1 times pop (M - 1) elements and ADD-EDGE() (M - 1) times). So it takes $O(M - 1) = O(M)$
 
    So the total time consumption is $O(N)$(for init) + $(M - 1)O(logN) + O(M) = O(N + MlogN)$
+   
+5. ```pseudocode
+   assume SET[M] is an array
+   assume SIZE[M] is an array
+   procedure MAKE-SET(x)
+   	set SET[x] to x
+   	set SIZE[x] to 1
+   end procedure
+   
+   procedure FIND-SET(x)
+   	if SET[x] != x
+   		set SET[x] to FIND-SET(SET[x])
+   	end if
+   	return SET[x]
+   end procedure
+   
+   procedure UNION(x, y)
+   	set x to FIND-SET(x)
+   	set y to FIND-SET(y)
+   	if SIZE[x] > SIZE[y]
+   		set SET[y] to x
+   		set SIZE[x] to SIZE[x] + SIZE[y]
+   	else
+   		set SET[x] to y
+   		set SIZE[y] to SIZE[x] + SIZE[y]
+       end if
+   end procedure
+   
+   procedure SAME-SET(x, y)
+   	return FIND-SET(x) == FIND-SET(y)
+   end procedure
+   
+   procedure ISOLATE(k)
+   	set x to FIND-SET(k)
+   	set SIZE[x] to SIZE[x] - 1
+   	set SET[k] to k
+   	set SIZE[k] to 1
+   end procedure
+   ```
 

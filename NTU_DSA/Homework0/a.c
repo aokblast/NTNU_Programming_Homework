@@ -1,10 +1,11 @@
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#define MAXLEN 256
+#define MAXLEN 257
 
 typedef enum {
 	EQ = 0,NEQ,AB,LW
@@ -19,7 +20,7 @@ typedef struct {
 BigInt getIntArr(char *num, size_t len) {
 	BigInt ret;
 	ret.len = len;
-	ret.content = calloc(sizeof(int), len);
+	ret.content = calloc(sizeof(int), MAXLEN);
 	for (size_t i = 0; i < len; i++) ret.content[i] = num[len - i - 1] - '0';
 	return ret;
 }
@@ -49,7 +50,7 @@ BigInt divide(BigInt num) {
 			num.content[i] = (num.content[i] + carry * 10) / 2;
 			carry = tmp % 2;
 	}
-	while(num.content[num.len - 1] == 0) --num.len;
+	while(num.len != 0 && num.content[num.len - 1] == 0) --num.len;
 	if(num.len == 0) num.len = 1;
    	return num;	
 }
@@ -74,7 +75,7 @@ BigInt sub(BigInt num1, BigInt num2) {
 			}
 		}
 	}
-	while(num1.content[num1.len - 1] == 0) --num1.len;
+	while(num1.len != 0 && num1.content[num1.len - 1] == 0) --num1.len;
 	if(num1.len == 0) num1.len = 1;
 	return num1;
 }
@@ -102,15 +103,19 @@ status compare(BigInt num1, BigInt num2) {
 BigInt multi(BigInt num, uint64_t ans){
 	BigInt ret;
 	int carry = 0;
-	ret.content = calloc(sizeof(int), 257);
-	for(ret.len = 0; ret.len < num.len; ret.len++) {
+	ret.content = calloc(sizeof(int), MAXLEN);
+	for(ret.len = 0; ret.len < num.len; ++ret.len) {
 		ret.content[ret.len] = num.content[ret.len] * ans + carry;
 		carry = ret.content[ret.len] / 10;
 		ret.content[ret.len] %= 10;
 	}
+	if(carry == 1) ret.content[ret.len++] = 1;
 	return ret;
 }
 
+void clear(BigInt *num) {
+	free(num->content);
+}
 
 int main (){
 	char num[MAXLEN] = {0};
@@ -120,7 +125,6 @@ int main (){
 	num1 = getIntArr(num, strlen(num));
 	scanf("%s", num);
 	num2 = getIntArr(num, strlen(num));
-
 	if(compare(num1, num2) == LW) swap(&num1, &num2);
 	while(!checkZero(num1) && !checkZero(num2)) {
 		if(checkEven(num1) && checkEven(num2) ) {
@@ -134,8 +138,11 @@ int main (){
 		}
 		if(compare(num1, num2) == LW) swap(&num1, &num2);
 		num1 = sub(num1, num2);
-
 	}
 	answer = multi(num2, ans);
 	print(answer);
+	clear(&num1);
+	clear(&num2);
+	clear(&answer);
+
 }
