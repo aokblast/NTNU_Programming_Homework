@@ -101,7 +101,7 @@ private:
         Node(NodeType &&_val){
             val = std::move(_val);
         }
-        Node(){}
+        Node() = default;
     };
 
 
@@ -145,11 +145,13 @@ public:
         NodeType &operator*(){
             return cur->val;
         }
+
         __iterator(Node *_node){
             cur = _node;
         }
 
         __iterator(){}
+        friend class LinkedList<NodeType>;
     private:
         Node* cur;
 
@@ -163,14 +165,17 @@ public:
         return iterator(dummyEnd);
     }
 
-    void insert(iterator iter, const NodeType &val) {
+    void insert(iterator _node, const NodeType &val) {
         Node *newNode = new Node(val);
-        iter->prev->next = newNode;
-        newNode->prev = iter->prev;
-        iter->prev = newNode;
-        newNode->next = iter;
+        Node *node = _node.cur;
+        node->prev->next = newNode;
+        newNode->prev = node->prev;
+        node->prev = newNode;
+        newNode->next = node;
     }
-    void erase(iterator node){
+
+    void erase(iterator _node){
+        Node *node = _node.cur;
         if(!(isErasableNode(node)))return;
         node->prev->next = node->next;
         node->next->prev = node->prev;
@@ -178,7 +183,7 @@ public:
     }
 
 private:
-    inline bool isErasableNode(iterator iter){
+    inline bool isErasableNode(Node* iter){
         return (iter != dummyHead) && (iter != dummyEnd);
     }
 };
