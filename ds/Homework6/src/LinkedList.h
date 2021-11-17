@@ -22,19 +22,13 @@ public:
     }
 
     void push_back(const NodeType &_val){
-        auto newNode = new Node(_val);
-        dummyEnd->prev->next = newNode;
-        newNode->prev = dummyEnd->prev;
-        dummyEnd->prev = newNode;
-        newNode->next = dummyEnd;
+        Node *newNode = new Node(_val);
+        add_back(newNode);
     }
 
     void emplace_back(NodeType &&_val){
-        auto newNode = new Node(_val);
-        dummyEnd->prev->next = newNode;
-        newNode->prev = dummyEnd->prev;
-        dummyEnd->prev = newNode;
-        newNode->next = dummyEnd;
+        Node *newNode = new Node(_val);
+        add_back(newNode);
     }
 
     NodeType &back(){
@@ -50,19 +44,13 @@ public:
     }
 
     void push_front(const NodeType &_val){
-        auto newNode = new Node(_val);
-        dummyHead->next->prev=  newNode;
-        newNode->next = dummyHead->next;
-        dummyHead->next = newNode;
-        newNode->prev = dummyHead;
+        Node *newNode = new Node(_val);
+        add_front(newNode);
     }
 
     void emplace_front(NodeType &&_val){
-        auto newNode = new Node(_val);
-        dummyHead->next->prev=  newNode;
-        newNode->next = dummyHead->next;
-        dummyHead->next = newNode;
-        newNode->prev = dummyHead;
+        Node *newNode = new Node(_val);
+        add_front(newNode);
     }
 
     NodeType &front(){
@@ -104,6 +92,19 @@ private:
         Node() = default;
     };
 
+    void add_front(Node* newNode){
+        dummyHead->next->prev =  newNode;
+        newNode->next = dummyHead->next;
+        dummyHead->next = newNode;
+        newNode->prev = dummyHead;
+    }
+
+    void add_back(Node *newNode){
+        dummyEnd->prev->next = newNode;
+        newNode->prev = dummyEnd->prev;
+        dummyEnd->prev = newNode;
+        newNode->next = dummyEnd;
+    }
 
     Node *dummyHead;
     Node *dummyEnd;
