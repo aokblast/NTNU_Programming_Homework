@@ -112,16 +112,26 @@ private:
 public:
     class __iterator{
     public:
+        const __iterator operator++(int){
+            iterator tmp = *this;
+            cur = cur->next;
+            return tmp;
+        }
+
         __iterator operator++(){
+            cur = cur->next;
+            return cur;
+        }
+
+        const __iterator operator--(int){
             iterator tmp = *this;
             cur = cur->next;
             return tmp;
         }
 
         __iterator operator--(){
-            iterator tmp = *this;
             cur = cur->prev;
-            return tmp;
+            return cur;
         }
 
         bool operator==(const __iterator &iter) const{
