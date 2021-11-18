@@ -9,16 +9,28 @@
 
 template<typename NodeType> class LinkedList {
 public:
+    using size_type = unsigned long;
+
     LinkedList(): dummyHead(new Node), dummyEnd(new Node){
         dummyHead->next = dummyEnd;
         dummyEnd->prev = dummyHead;
         dummyHead->prev = dummyEnd->next = nullptr;
     }
 
+    const LinkedList &operator=(const LinkedList<NodeType> &list){
+        auto lbeg = list.begin(), lend = list.end();
+        for(lbeg; lbeg != lend; ++lbeg){
+            push_back(*lbeg);
+        }
+        _size = list.size();
+        return *this;
+    }
+
     LinkedList(const LinkedList<NodeType> &list) : LinkedList(){
         for(const NodeType &node : list){
             push_back(node);
         }
+        _size = list.size();
     }
 
     void push_back(const NodeType &_val){
@@ -41,6 +53,7 @@ public:
         dummyEnd->prev = dummyEnd->prev->prev;
         dummyEnd->prev->next = dummyEnd;
         delete tmp;
+        --_size;
     }
 
     void push_front(const NodeType &_val){
@@ -63,10 +76,15 @@ public:
         dummyHead->next = dummyHead->next->next;
         dummyHead->next->prev = dummyHead;
         delete tmp;
+        --_size;
     }
 
     bool empty(){
         return dummyHead->next == dummyEnd;
+    }
+
+    size_type size() const{
+        return _size;
     }
 
     ~LinkedList(){
@@ -75,8 +93,6 @@ public:
         }
         delete dummyEnd;
     }
-
-
 
 private:
     struct Node{
@@ -97,6 +113,7 @@ private:
         newNode->next = dummyHead->next;
         dummyHead->next = newNode;
         newNode->prev = dummyHead;
+        ++_size;
     }
 
     void add_back(Node *newNode){
@@ -104,10 +121,12 @@ private:
         newNode->prev = dummyEnd->prev;
         dummyEnd->prev = newNode;
         newNode->next = dummyEnd;
+        ++_size;
     }
 
     Node *dummyHead;
     Node *dummyEnd;
+    size_type _size = 0;
 
 
 public:
@@ -173,6 +192,27 @@ public:
         newNode->prev = node->prev;
         node->prev = newNode;
         newNode->next = node;
+        ++_size;
+    }
+
+    iterator lower_bound(const NodeType &node){
+        auto ed = end();
+        for(auto iter = begin(); iter != ed; ++iter){
+            if(*iter <= node){
+                return iter;
+            }
+        }
+        return end();
+    }
+
+    iterator upper_bound(const NodeType &node){
+        auto ed = end();
+        for(auto iter = begin(); iter != ed; ++iter){
+            if(*iter > node){
+                return iter;
+            }
+        }
+        return end();
     }
 
     void erase(iterator _node){
@@ -181,11 +221,66 @@ public:
         node->prev->next = node->next;
         node->next->prev = node->prev;
         delete node;
+        --_size;
+    }
+
+    void sort(){
+        LinkedList<NodeType> tmp = *this;
+        __sort(tmp, 0, _size - 1);
     }
 
 private:
     inline bool isErasableNode(Node* iter){
         return (iter != dummyHead) && (iter != dummyEnd);
+    }
+
+    void __sort(LinkedList<NodeType> &tmp, size_type left, size_type right){
+        if((right - left) <= 1)return;
+        size_type mid = left + ((right - left) >> 1);
+        __sort(tmp, left, mid);
+        __sort(tmp, mid + 1, right);
+
+        size_type lb = left, le = mid, re = right;
+        iterator liter = begin(), riter = begin();
+        while(lb-- && le-- && re--){
+            ++liter;
+            ++riter;
+        }
+        while(le-- && re--){
+            ++riter;
+        }
+        iterator lend = ++riter;
+        iterator rend = lend;
+
+        while(re--) ++rend;
+
+        iterator titer = tmp.begin(), lc = liter, rc = rend, tc = tmp.begin();
+
+        while(liter != lend && riter != rend){
+            if(*liter < *riter)*titer = *liter, ++liter;
+            else *titer = *riter, ++riter;
+            ++titer;
+        }
+
+        while(liter != lend){
+            *titer = *liter;
+            ++liter;
+            ++titer;
+        }
+
+        while(riter != rend){
+            *titer = *riter;
+            ++riter;
+            ++titer;
+        }
+
+        while(lc != rc){
+            *lc = *tc;
+            ++tc;
+            ++lc;
+        }
+
+
     }
 };
 
