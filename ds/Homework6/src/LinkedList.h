@@ -138,12 +138,12 @@ public:
             return tmp;
         }
 
-        __iterator operator++(){
+        const __iterator operator++(){
             cur = cur->next;
             return cur;
         }
 
-        const __iterator operator--(int){
+        __iterator operator--(int){
             iterator tmp = *this;
             cur = cur->next;
             return tmp;
@@ -185,6 +185,63 @@ public:
         return iterator(dummyEnd);
     }
 
+    class __reverse_iterator{
+    public:
+        const __reverse_iterator operator++(int){
+            iterator tmp = *this;
+            cur = cur->prev;
+            return tmp;
+        }
+
+        __reverse_iterator operator++(){
+            cur = cur->prev;
+            return cur;
+        }
+
+        const __reverse_iterator operator--(int){
+            iterator tmp = *this;
+            cur = cur->next;
+            return tmp;
+        }
+
+        __reverse_iterator operator--(){
+            cur = cur->next;
+            return cur;
+        }
+
+        bool operator==(const __reverse_iterator &iter) const{
+            return cur == iter.cur;
+        }
+
+        bool operator!=(const __reverse_iterator &iter) const {
+            return cur != iter.cur;
+        }
+
+        NodeType &operator*(){
+            return cur->val;
+        }
+
+        __reverse_iterator(Node *_node){
+            cur = _node;
+        }
+
+        __reverse_iterator(){}
+        friend class LinkedList<NodeType>;
+    private:
+        Node* cur;
+
+    };
+
+    using reverse_iterator = __reverse_iterator;
+
+    reverse_iterator rbegin() const{
+        return __reverse_iterator(dummyEnd->prev);
+    }
+
+    reverse_iterator rend() const {
+        return __reverse_iterator(dummyHead);
+    }
+
     void insert(iterator _node, const NodeType &val) {
         Node *newNode = new Node(val);
         Node *node = _node.cur;
@@ -198,7 +255,7 @@ public:
     iterator lower_bound(const NodeType &node){
         auto ed = end();
         for(auto iter = begin(); iter != ed; ++iter){
-            if(*iter <= node){
+            if(node <= *iter){
                 return iter;
             }
         }
@@ -208,7 +265,7 @@ public:
     iterator upper_bound(const NodeType &node){
         auto ed = end();
         for(auto iter = begin(); iter != ed; ++iter){
-            if(*iter > node){
+            if(node < *iter){
                 return iter;
             }
         }
@@ -218,6 +275,7 @@ public:
     void erase(iterator _node){
         Node *node = _node.cur;
         if(!(isErasableNode(node)))return;
+
         node->prev->next = node->next;
         node->next->prev = node->prev;
         delete node;
@@ -225,7 +283,9 @@ public:
     }
 
     void sort(){
+        if(size() == 0)return ;
         LinkedList<NodeType> tmp = *this;
+
         __sort(tmp, 0, _size - 1);
     }
 
