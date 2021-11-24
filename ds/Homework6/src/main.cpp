@@ -21,9 +21,12 @@ int main(){
 
 
     UI u;
-    std::vector<UI::Menu> m = {UI::Menu("Get Cards", 5, 5), UI::Menu("Show order", 7, 5),
-                               UI::Menu("Show reverse order", 9, 5), UI::Menu("Show by size", 11, 5), UI::Menu("Delete a card", 13, 5),
-                               UI::Menu("Abort", 15, 5), UI::Menu("Add another player", 17, 5)};
+    std::vector<UI::Menu> m = {UI::Menu("Get Cards", 5), UI::Menu("Show order", 7),
+                               UI::Menu("Show reverse order", 9), UI::Menu("Show by size", 11), UI::Menu("Delete a card", 13),
+                               UI::Menu("Abort", 15), UI::Menu("Add another player", 17)};
+    std::vector<UI::Menu> colorMenu = {UI::Menu("Spade", 5), UI::Menu("Heart", 7),
+                                       UI::Menu("Diamond", 9), UI::Menu("Club", 11), UI::Menu("Go back", 13)};
+
     bool end = false;
     hands h[2];
     std::vector<Card> deck;
@@ -35,15 +38,18 @@ int main(){
         }
     }
 
-
+    std::string title = "Player 1";
 
 
     while(!end){
-        int i = u.getChoose(m);
+        title[7] = '1' + cur;
+        int i = u.getChoose(m, title);
         switch(i){
             case 0: {
                 while(h[cur].size())deck.push_back(h[cur].back()), h[cur].pop_back();
                 int n = u.getInt("Please enter the number of card you want to add: ");
+
+                if(n == -1)break;
 
                 shuffle(deck);
                 while(n--){
@@ -54,22 +60,99 @@ int main(){
             }
                 break;
             case 1: {
-                char c = u.getChar("Please enter the color you want to search: ");
-                u.printCards(h[cur], UI::LIFO_ORDER, c);
+                int i = u.getChoose(colorMenu, "Please choose the color you want: ");
+                char c;
+                bool choose = true;
+                switch(i){
+                    case 0:
+                        c = 'S';
+                        break;
+                    case 1:
+                        c = 'H';
+                        break;
+                    case 2:
+                        c = 'D';
+                        break;
+                    case 3:
+                        c = 'C';
+                        break;
+                    default:
+                        choose = false;
+                        break;
+                }
+                if(choose)u.printCards(h[cur], UI::LIFO_ORDER, c);
             }
                 break;
             case 2: {
-                char c = u.getChar("Please enter the color you want to search: ");
+                int i = u.getChoose(colorMenu, "Please choose the color you want: ");
+                char c;
+                bool choose = true;
+                switch(i){
+                    case 0:
+                        c = 'S';
+                        break;
+                    case 1:
+                        c = 'H';
+                        break;
+                    case 2:
+                        c = 'D';
+                        break;
+                    case 3:
+                        c = 'C';
+                        break;
+                    default:
+                        choose = false;
+                        break;
+                }
                 u.printCards(h[cur], UI::FIFO_ORDER, c);
             }
                 break;
             case 3: {
-                char c = u.getChar("Please enter the color you want to search: ");
+                int i = u.getChoose(colorMenu, "Please choose the color you want: ");
+                char c;
+                bool choose = true;
+                switch(i){
+                    case 0:
+                        c = 'S';
+                        break;
+                    case 1:
+                        c = 'H';
+                        break;
+                    case 2:
+                        c = 'D';
+                        break;
+                    case 3:
+                        c = 'C';
+                        break;
+                    default:
+                        choose = false;
+                        break;
+                }
                 u.printCards(h[cur], UI::SIZE_ORDER, c);
             }
                 break;
             case 4:{
-                char c = u.getChar("Please enter the color you want to search:");
+                int i = u.getChoose(colorMenu, "Please choose the color you want: ");
+                char c;
+                bool choose = true;
+                switch(i){
+                    case 0:
+                        c = 'S';
+                        break;
+                    case 1:
+                        c = 'H';
+                        break;
+                    case 2:
+                        c = 'D';
+                        break;
+                    case 3:
+                        c = 'C';
+                        break;
+                    default:
+                        choose = false;
+                        break;
+                }
+                if(!choose)break;
                 int num = u.getInt("Please enter the number you want to search: ");
                 Card ca = {c, num};
                 auto tmp = h[cur];
@@ -93,6 +176,13 @@ int main(){
                 end = true;
                 break;
             case 6:
+                if(m[6].msg[0] == 'A'){
+                    m[6] = UI::Menu("Switch player", 17);
+                    m.push_back({"Compare card with two player", 19});
+                    cur = 1 - cur;
+                }else{
+                    cur = 1 - cur;
+                }
                 break;
             case 7:
                 break;
