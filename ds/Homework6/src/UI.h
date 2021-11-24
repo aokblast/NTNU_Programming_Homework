@@ -19,7 +19,7 @@ public:
         std::string msg;
         int x;
         int y;
-        Menu(const std::string &msg, int x, int y) : x(x), y(y), msg(msg){}
+        Menu(const std::string &msg, int x) : x(x), msg(msg){ y = (COLS - msg.size()) / 2;}
     };
 
     enum mode{
@@ -31,8 +31,7 @@ public:
 
     UI();
     int getInt(const std::string &msg = "Input a integer:");
-    char getChar(const std::string &msg = "Input a char:");
-    int getChoose(const std::vector<Menu> &chooses);
+    int getChoose(const std::vector<Menu> &chooses, const std::string &msg = "");
     void printCards(const hands &h, mode m, char color);
     void printCard(const Card &c);
     void printMsg(const std::string& msg);
