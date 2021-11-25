@@ -81,13 +81,54 @@ int UI::getChoose(const std::vector<Menu> &chooses,  const std::string &msg) {
     }while(true);
 }
 
-void UI::printCards(const hands& h, mode m, char color) {
+void UI::printCards(const hands& h, mode m, char color, const std::string &msg) {
     hands res;
 
     clear();
     std::for_each(h.begin(), h.end(), [&res, &color](const Card &c){
         if(c.color == color) { res.push_back(c);}
     });
+
+    if(m == ALL_ORDER){
+
+        WINDOW *newWind = newwin(LINES, COLS, 0, 0);
+
+        mvwprintw(newWind, 3, (COLS - msg.size()) / 2, msg.c_str());
+
+
+
+        keypad(newWind, true);
+        std::stringstream ss;
+        auto iter = h.begin(), ed = h.end();
+        if(h.size()) ss << (*iter).getColorString() << " " << (*iter).num, ++iter;
+        while(iter != ed){
+            ss << " -> " << (*iter).getColorString() << " " << (*iter).num, ++iter;
+        }
+        std::string line = ss.str();
+
+
+        if(line.size() >= COLS){
+            std::string prev(line.begin(), line.begin() + (line.size() / 2));
+            mvwprintw(newWind, 5, (COLS - prev.size()) / 2, prev.c_str());
+            mvwprintw(newWind, 7, (COLS - line.size() / 2) / 2, line.c_str() + (line.size() / 2));
+        }else{
+            mvwprintw(newWind, 5, (COLS - line.size()) / 2, line.c_str());
+        }
+
+
+        mvwprintw(newWind, 9, (COLS - 23) / 2, "Press enter to go back:");
+
+        int ch;
+        wrefresh(newWind);
+        while(true){
+            ch = mvwgetch(newWind, 9, (COLS - 23) / 2 + 23);
+            if(ch == 10){
+                break;
+            }
+        }
+        delwin(newWind);
+        return ;
+    }
 
     std::vector<int> printVal;
 
@@ -120,6 +161,8 @@ void UI::printCards(const hands& h, mode m, char color) {
     }
     std::string line = ss.str();
 
+    mvwprintw(newWind, 3, (COLS - msg.size()) / 2, msg.c_str());
+
     mvwprintw(newWind, 5, (COLS - line.size()) / 2, line.c_str());
 
     mvwprintw(newWind, 7, (COLS - 23) / 2, "Press enter to go back:");
@@ -132,6 +175,7 @@ void UI::printCards(const hands& h, mode m, char color) {
             break;
         }
     }
+    delwin(newWind);
 
 }
 

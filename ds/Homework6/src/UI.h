@@ -26,13 +26,14 @@ public:
         LIFO_ORDER,
         FIFO_ORDER,
         SIZE_ORDER,
+        ALL_ORDER,
     };
 
 
     UI();
     int getInt(const std::string &msg = "Input a integer:");
     int getChoose(const std::vector<Menu> &chooses, const std::string &msg = "");
-    void printCards(const hands &h, mode m, char color);
+    void printCards(const hands &h, mode m, char color, const std::string &msg = "");
     void printCard(const Card &c);
     void printMsg(const std::string& msg);
     ~UI();
