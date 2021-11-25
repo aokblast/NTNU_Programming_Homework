@@ -3,9 +3,10 @@
 //
 #include "UI.h"
 #include <vector>
+#include <algorithm>
 
 
-
+static std::vector<Card> deck;
 
 
 template<typename eleType> void shuffle(std::vector<eleType> &vec){
@@ -13,8 +14,94 @@ template<typename eleType> void shuffle(std::vector<eleType> &vec){
         int j = rand() % vec.size();
         std::swap(vec[j], vec[i]);
     }
-
 }
+
+Card getRandCard(hands &h){
+    int idx = rand() % h.size();
+    auto iter = h.begin();
+    while(idx--)++iter;
+    Card res = *iter;
+    h.erase(iter);
+    return res;
+}
+
+std::vector<LinkedList<Card>::iterator> getSameColor(hands &h, int color){
+    auto iter = h.begin(), ed = h.end();
+    std::vector<LinkedList<Card>::iterator> res;
+    while(iter != ed){
+        if((*iter).color == color)res.push_back(iter);
+        ++iter;
+    }
+    std::sort(res.begin(), res.end(), [](const LinkedList<Card>::iterator &i1, const LinkedList<Card>::iterator &i2){
+        return  (*i1).num < (*i2).num;
+    });
+    return res;
+}
+
+void cardDeletionHandler(UI &u, hands h[2]){
+    int cur = 0;
+    Card c;
+    std::vector<decltype(h[0].begin())> hsort[2];
+    while(h[0].size() && h[1].size()){
+        c = getRandCard(h[cur]);
+
+        deck.push_back(c);
+        hsort[0] = getSameColor(h[0], c.color);
+        hsort[1] = getSameColor(h[1], c.color);
+        int ccur = 1 - cur;
+
+        u.printMsg("Player " + std::to_string(cur + 1) + " choose " + c.getColorString() + " " + std::to_string(c.num));
+
+        u.printCards(h[0], UI::ALL_ORDER, 0, "Player 1(Before):");
+        u.printCards(h[1], UI::ALL_ORDER, 0, "Player 2(Before):");
+
+        while(hsort[ccur].size()){
+            auto del = std::find_if(hsort[ccur].begin(), hsort[ccur].end(), [&c](const LinkedList<Card>::iterator &iter){
+                    if((*iter).num > c.num)return true;
+                    return false;
+            });
+            if(del == hsort[ccur].end()){
+                del = hsort[ccur].begin();
+            }
+
+            u.printMsg("Player " + std::to_string(ccur + 1) + " delete " + (*(*del)).getColorString() + " " + std::to_string((*(*del)).num));
+
+            //before erase
+            deck.push_back(**del);
+
+            h[ccur].erase(*del);
+            hsort[ccur].erase(del);
+
+
+
+            ccur = 1 - ccur;
+        }
+        cur = 1 - cur;
+        shuffle(deck);
+
+        u.printCards(h[0], UI::ALL_ORDER, 0, "Player 1(After):");
+        u.printCards(h[1], UI::ALL_ORDER, 0, "Player 2(After):");
+        if(h[ccur].size()) h[ccur].push_back(deck.back()), deck.pop_back();
+    }
+    u.printMsg("Winner is player " + std::to_string(h[0].size() ? 2 : 1));
+}
+
+int idxtoColor(int i){
+    switch(i){
+        case 0:
+            return 'S';
+        case 1:
+            return 'H';
+        case 2:
+            return 'D';
+        case 3:
+            return 'C';
+        default :
+            return -1;
+    }
+}
+
+
 
 int main(){
 
@@ -29,7 +116,7 @@ int main(){
 
     bool end = false;
     hands h[2];
-    std::vector<Card> deck;
+
     int cur = 0;
 
     for(int i = 1; i <= 4; ++i){
@@ -44,6 +131,7 @@ int main(){
     while(!end){
         title[7] = '1' + cur;
         int i = u.getChoose(m, title);
+
         switch(i){
             case 0: {
                 while(h[cur].size())deck.push_back(h[cur].back()), h[cur].pop_back();
@@ -61,98 +149,33 @@ int main(){
                 break;
             case 1: {
                 int i = u.getChoose(colorMenu, "Please choose the color you want: ");
-                char c;
-                bool choose = true;
-                switch(i){
-                    case 0:
-                        c = 'S';
-                        break;
-                    case 1:
-                        c = 'H';
-                        break;
-                    case 2:
-                        c = 'D';
-                        break;
-                    case 3:
-                        c = 'C';
-                        break;
-                    default:
-                        choose = false;
-                        break;
-                }
-                if(choose)u.printCards(h[cur], UI::LIFO_ORDER, c);
+                i = idxtoColor(i);
+                if(i == -1)break;
+                char c = i;
+                u.printCards(h[cur], UI::LIFO_ORDER, c);
             }
                 break;
             case 2: {
                 int i = u.getChoose(colorMenu, "Please choose the color you want: ");
-                char c;
-                bool choose = true;
-                switch(i){
-                    case 0:
-                        c = 'S';
-                        break;
-                    case 1:
-                        c = 'H';
-                        break;
-                    case 2:
-                        c = 'D';
-                        break;
-                    case 3:
-                        c = 'C';
-                        break;
-                    default:
-                        choose = false;
-                        break;
-                }
+                i = idxtoColor(i);
+                if(i == -1)break;
+                char c = i;
                 u.printCards(h[cur], UI::FIFO_ORDER, c);
             }
                 break;
             case 3: {
                 int i = u.getChoose(colorMenu, "Please choose the color you want: ");
-                char c;
-                bool choose = true;
-                switch(i){
-                    case 0:
-                        c = 'S';
-                        break;
-                    case 1:
-                        c = 'H';
-                        break;
-                    case 2:
-                        c = 'D';
-                        break;
-                    case 3:
-                        c = 'C';
-                        break;
-                    default:
-                        choose = false;
-                        break;
-                }
+                i = idxtoColor(i);
+                if(i == -1)break;
+                char c = i;
                 u.printCards(h[cur], UI::SIZE_ORDER, c);
             }
                 break;
             case 4:{
                 int i = u.getChoose(colorMenu, "Please choose the color you want: ");
-                char c;
-                bool choose = true;
-                switch(i){
-                    case 0:
-                        c = 'S';
-                        break;
-                    case 1:
-                        c = 'H';
-                        break;
-                    case 2:
-                        c = 'D';
-                        break;
-                    case 3:
-                        c = 'C';
-                        break;
-                    default:
-                        choose = false;
-                        break;
-                }
-                if(!choose)break;
+                i = idxtoColor(i);
+                if(i == -1)break;
+                char c = i;
                 int num = u.getInt("Please enter the number you want to search: ");
                 Card ca = {c, num};
                 auto tmp = h[cur];
@@ -185,6 +208,8 @@ int main(){
                 }
                 break;
             case 7:
+                cardDeletionHandler(u, h);
+                end = true;
                 break;
 
         }
