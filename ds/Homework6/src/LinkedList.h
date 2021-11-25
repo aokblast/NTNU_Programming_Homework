@@ -162,7 +162,7 @@ public:
             return cur != iter.cur;
         }
 
-        NodeType &operator*(){
+        NodeType &operator*() const{
             return cur->val;
         }
 
@@ -252,20 +252,20 @@ public:
         ++_size;
     }
 
-    iterator lower_bound(const NodeType &node){
+    iterator lower_bound(const NodeType &node, bool (*compare) (const NodeType &n1, const NodeType &n2) = [](const NodeType &n1, const NodeType &n2){return n1 <= n2;}){
         auto ed = end();
         for(auto iter = begin(); iter != ed; ++iter){
-            if(node <= *iter){
+            if(compare(node, *iter)){
                 return iter;
             }
         }
         return end();
     }
 
-    iterator upper_bound(const NodeType &node){
+    iterator upper_bound(const NodeType &node, bool (*compare) (const NodeType &n1, const NodeType &n2) = [](const NodeType &n1, const NodeType &n2){return n1 < n2;}){
         auto ed = end();
         for(auto iter = begin(); iter != ed; ++iter){
-            if(node < *iter){
+            if(compare(node, *iter)){
                 return iter;
             }
         }
