@@ -179,12 +179,11 @@ int main(){
                 int num = u.getInt("Please enter the number you want to search: ");
                 Card ca = {c, num};
                 auto tmp = h[cur];
-                tmp.sort();
                 auto dele = tmp.upper_bound(ca);
                 if(dele == tmp.end()){
-                    auto f = tmp.lower_bound({c, - 1});
+                    auto f = tmp.lower_bound({c, 2});
                     if(f != tmp.end()){
-                        u.printCard(*f);
+                        u.printCard(*f, "No card, the minimal value is: ");
                     }else{
                         u.printMsg("Card not found!");
                     }
