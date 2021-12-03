@@ -5,14 +5,14 @@
 #include "Card.h"
 
 bool Card::operator<(const Card &c) const {
-    return colorc[color] == colorc[c.color] ? numc[num] < numc[c.num] : colorc[color] < numc[c.color];
+    return colorc[color] == colorc[c.color] ? numc[num] < numc[c.num] : colorc[color] < colorc[c.color];
 }
 
 bool Card::operator<=(const Card &c) const {
-    return colorc[color] == colorc[c.color] ? numc[num] <= numc[c.num] : colorc[color] <= numc[c.color];
+    return colorc[color] == colorc[c.color] ? numc[num] <= numc[c.num] : colorc[color] <= colorc[c.color];
 }
 
-std::string Card::getColorString() {
+std::string Card::getColorString() const{
     return color == 'C' ? "Club" : color == 'D' ? "Diamond" : color == 'H' ? "Heart" : "Spade";
 }
 

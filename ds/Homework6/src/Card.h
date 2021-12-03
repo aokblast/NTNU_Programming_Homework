@@ -17,7 +17,7 @@ struct Card {
     bool operator<(const Card &c) const;
     bool operator<=(const Card &c) const;
 
-    std::string getColorString();
+    std::string getColorString() const;
 
 private:
     static std::unordered_map<char, int> colorc;
