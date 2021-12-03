@@ -286,7 +286,7 @@ public:
         if(size() == 0)return ;
         LinkedList<NodeType> tmp = *this;
 
-        __sort(tmp, 0, _size - 1);
+        _sort(tmp, 0, _size - 1);
     }
 
 private:
@@ -294,11 +294,11 @@ private:
         return (iter != dummyHead) && (iter != dummyEnd);
     }
 
-    void __sort(LinkedList<NodeType> &tmp, size_type left, size_type right){
-        if((right - left) <= 1)return;
+    void _sort(LinkedList<NodeType> &tmp, size_type left, size_type right){
+        if((right - left + 1) <= 1)return;
         size_type mid = left + ((right - left) >> 1);
-        __sort(tmp, left, mid);
-        __sort(tmp, mid + 1, right);
+        _sort(tmp, left, mid);
+        _sort(tmp, mid + 1, right);
 
         size_type lb = left, le = mid, re = right;
         iterator liter = begin(), riter = begin();
