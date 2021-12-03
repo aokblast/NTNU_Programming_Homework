@@ -34,7 +34,7 @@ public:
     int getInt(const std::string &msg = "Input a integer:");
     int getChoose(const std::vector<Menu> &chooses, const std::string &msg = "");
     void printCards(const hands &h, mode m, char color, const std::string &msg = "");
-    void printCard(const Card &c);
+    void printCard(const Card &c, const std::string &msg);
     void printMsg(const std::string& msg);
     ~UI();
 

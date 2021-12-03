@@ -130,21 +130,21 @@ void UI::printCards(const hands& h, mode m, char color, const std::string &msg) 
         return ;
     }
 
-    std::vector<int> printVal;
+    std::vector<std::pair< std::string, int> > printVal;
 
 
     switch(m){
         case LIFO_ORDER:{
-            std::for_each(res.begin(), res.end(), [&printVal](const Card &c){printVal.push_back(c.num);});
+            std::for_each(res.begin(), res.end(), [&printVal](const Card &c){printVal.push_back({c.getColorString(), c.num});});
         }
             break;
         case FIFO_ORDER:{
-            std::for_each(res.rbegin(), res.rend(), [&printVal](const Card &c){printVal.push_back(c.num);});
+            std::for_each(res.rbegin(), res.rend(), [&printVal](const Card &c){printVal.push_back({c.getColorString(), c.num});});
         }
             break;
         case SIZE_ORDER:{
             res.sort();
-            std::for_each(res.rbegin(), res.rend(), [&printVal](const Card &c){printVal.push_back(c.num);});
+            std::for_each(res.rbegin(), res.rend(), [&printVal](const Card &c){printVal.push_back({c.getColorString(), c.num});});
         }
             break;
     }
@@ -155,9 +155,9 @@ void UI::printCards(const hands& h, mode m, char color, const std::string &msg) 
     keypad(newWind, true);
     std::stringstream ss;
 
-    if(printVal.size()) ss << printVal[0];
+    if(printVal.size()) ss << printVal[0].first << " " << printVal[0].second;
     for(int i = 1; i < printVal.size(); ++i){
-        ss << " -> " << printVal[i];
+        ss << " -> " <<  printVal[i].first << " " << printVal[i].second;
     }
     std::string line = ss.str();
 
@@ -179,9 +179,10 @@ void UI::printCards(const hands& h, mode m, char color, const std::string &msg) 
 
 }
 
-void UI::printCard(const Card &c) {
+void UI::printCard(const Card &c, const std::string &msg) {
     clear();
     box(stdscr, '|', '-');
+    mvprintw(3, (COLS - msg.size()) / 2, "%s", msg.c_str());
     mvprintw(5, (COLS) / 2, "%d", c.num);
     mvprintw(7, (COLS - 23) / 2, "Press enter to go back:");
     refresh();
