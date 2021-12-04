@@ -144,7 +144,7 @@ void UI::printCards(const hands& h, mode m, char color, const std::string &msg) 
             break;
         case SIZE_ORDER:{
             res.sort();
-            std::for_each(res.rbegin(), res.rend(), [&printVal](const Card &c){printVal.push_back({c.getColorString(), c.num});});
+            std::for_each(res.begin(), res.end(), [&printVal](const Card &c){printVal.push_back({c.getColorString(), c.num});});
         }
             break;
     }
