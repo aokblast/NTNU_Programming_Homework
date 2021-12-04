@@ -116,6 +116,8 @@ int main(){
 
     bool end = false;
     hands h[2];
+    LinkedList<Card> arr[2][4];
+
 
     int cur = 0;
 
@@ -142,8 +144,8 @@ int main(){
                 shuffle(deck);
                 while(n--){
                     h[cur].push_back(deck.back());
+                    arr[cur][h[cur].back().color == 'C' ? 0 : h[cur].back().color == 'D' ?  1 : h[cur].back().color == 'H' ? 2 : 3].push_back(h[cur].back());
                     deck.pop_back();
-
                 }
             }
                 break;
@@ -190,6 +192,7 @@ int main(){
                 }else{
                     deck.push_back(*dele);
                     auto del = h[cur].lower_bound(*dele);
+                    u.printCard(*del, std::string("Delete Card") + " Color " + (*del).getColorString());
                     h[cur].erase(del);
                 }
             }
