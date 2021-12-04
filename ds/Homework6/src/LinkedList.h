@@ -79,7 +79,7 @@ public:
         --_size;
     }
 
-    bool empty(){
+    bool empty() const{
         return dummyHead->next == dummyEnd;
     }
 
