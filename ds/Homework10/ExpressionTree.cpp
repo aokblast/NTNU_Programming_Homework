@@ -63,6 +63,7 @@ ExpressionTree::ExpressionTree(std::string exp) {
             stk.push(root);
         }else{
             root = new Node(c);
+            vals[c] = 0;
             stk.push(root);
         }
     }
@@ -137,13 +138,14 @@ void ExpressionTree::infixTraverse(Node *root, std::string &res) {
     infixTraverse(root->right, res);
 }
 
+
 void ExpressionTree::levelTraverse(Node *root, std::string &res) {
     std::queue<Node *> q;
-    if(root)q.push(root);
+    if(root != nullptr)q.push(root);
     while(!q.empty()){
-        Node *top = q.front();
+        Node *top = q.front(); q.pop();
         res += top->val;
-        if(root->left) q.push(root->left);
-        if(root->right) q.push(root->right);
+        if(top->left) q.push(top->left);
+        if(top->right) q.push(top->right);
     }
 }
