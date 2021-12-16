@@ -5,6 +5,7 @@
 #include "ExpressionTree.h"
 #include <stack>
 #include <queue>
+#include <iostream>
 
 static std::unordered_map<char, int> level = {{'+', 1}, {'-', 1}, {'*', 2}, {'/', 2}};
 
@@ -48,11 +49,56 @@ static std::string infixToPostFix(const std::string &exp) {
 
 }
 
+static void checkExpression(const std::string &exp){
+    int left = 0, right = 0, opers = 0, vars = 0;
+    for(const char &c : exp){
+        switch(c){
+            case '(':
+                ++left;
+                break;
+            case ')':
+                ++right;
+                if(right > left){
+                    throw "Parantheses is not paired";
+                }
+                break;
+            case '+':
+            case '-':
+            case '*':
+            case '/':
+                ++opers;
+                break;
+        }
+        if(isupper(c)){
+            ++vars;
+        }
+    }
+    if(opers + 1!= vars){
+        if(opers + 1> vars ){
+            throw "Too much operators";
+        }else{
+            throw "Too much variable";
+        }
+    }
+    if(left != right){
+        throw "Parantheses is not paired";
+    }
+
+}
+
 ExpressionTree::Node::Node(char val) : val(val){
     left = right = nullptr;
 }
 
 ExpressionTree::ExpressionTree(std::string exp) {
+    try{
+        checkExpression(exp);
+    }catch(const char *err){
+        std::cout << err << '\n';
+        exit(0);
+
+    }
+
     exp = infixToPostFix(exp);
     std::stack<Node*> stk;
     for(const char &c : exp){
