@@ -3,14 +3,26 @@
 //
 
 #include "ExpressionTree.h"
-#include <stack>
-#include <queue>
+#include "LinkedList.h"
 #include <iostream>
 
-static std::unordered_map<char, int> level = {{'+', 1}, {'-', 1}, {'*', 2}, {'/', 2}};
+
+int level(char op){
+    switch(op){
+        case '+':
+        case '-':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+        default:
+            break;
+    }
+    return 0;
+}
 
 static std::string infixToPostFix(const std::string &exp) {
-    std::stack<char> opers;
+    LinkedList<char> opers;
     std::string res;
 
     for(const char &c : exp){
@@ -19,21 +31,21 @@ static std::string infixToPostFix(const std::string &exp) {
             case '-':
             case '*':
             case '/':
-                while(!opers.empty() && opers.top() != '(' && level[opers.top()] >= level[c]){
-                    res += opers.top();
-                    opers.pop();
+                while(!opers.empty() && opers.front() != '(' && level(opers.front()) >= level(c)){
+                    res += opers.front();
+                    opers.pop_front();
                 }
-                opers.push(c);
+                opers.push_front(c);
                 break;
             case ')':
-                while(opers.top() != '('){
-                    res += opers.top();
-                    opers.pop();
+                while(opers.front() != '('){
+                    res += opers.front();
+                    opers.pop_front();
                 }
-                opers.pop();
+                opers.pop_front();
                 break;
             case '(':
-                opers.push('(');
+                opers.push_front('(');
                 break;
             default:
                 res += c;
@@ -41,8 +53,8 @@ static std::string infixToPostFix(const std::string &exp) {
         }
     }
     while(!opers.empty()){
-        res += opers.top();
-        opers.pop();
+        res += opers.front();
+        opers.pop_front();
     }
 
     return res;
@@ -68,13 +80,15 @@ static void checkExpression(const std::string &exp){
             case '/':
                 ++opers;
                 break;
+            default:
+                break;
         }
         if(isupper(c)){
             ++vars;
         }
     }
-    if(opers + 1!= vars){
-        if(opers + 1> vars ){
+    if(opers + 1 != vars){
+        if(opers + 1 > vars ){
             throw "Too much operators";
         }else{
             throw "Too much variable";
@@ -90,27 +104,27 @@ ExpressionTree::Node::Node(char val) : val(val){
     left = right = nullptr;
 }
 
-ExpressionTree::ExpressionTree(std::string exp) {
+ExpressionTree::ExpressionTree(const std::string &infix) {
+
     try{
-        checkExpression(exp);
+        checkExpression(infix);
     }catch(const char *err){
         std::cout << err << '\n';
         exit(0);
-
     }
 
-    exp = infixToPostFix(exp);
-    std::stack<Node*> stk;
+    std::string exp = infixToPostFix(infix);
+    LinkedList<Node*> stk;
     for(const char &c : exp){
-        if(level.find(c) != level.end()){
+        if(level(c) != 0){
             root = new Node(c);
-            root->right = stk.top(); stk.pop();
-            root->left = stk.top(); stk.pop();
-            stk.push(root);
+            root->right = stk.front(); stk.pop_front();
+            root->left = stk.front(); stk.pop_front();
+            stk.push_front(root);
         }else{
             root = new Node(c);
             vals[c] = 0;
-            stk.push(root);
+            stk.push_front(root);
         }
     }
 }
@@ -127,7 +141,7 @@ int ExpressionTree::dfs(Node *root) {
     if(!root)return 0;
     int l = dfs(root->left);
     int r = dfs(root->right);
-    if(level.find(root->val) != level.end()){
+    if(level(root->val) != 0){
         switch(root->val){
             case '+':
                 return l + r;
@@ -186,12 +200,12 @@ void ExpressionTree::infixTraverse(Node *root, std::string &res) {
 
 
 void ExpressionTree::levelTraverse(Node *root, std::string &res) {
-    std::queue<Node *> q;
-    if(root != nullptr)q.push(root);
+    LinkedList<Node *> q;
+    if(root != nullptr)q.push_front(root);
     while(!q.empty()){
-        Node *top = q.front(); q.pop();
+        Node *top = q.back(); q.pop_back();
         res += top->val;
-        if(top->left) q.push(top->left);
-        if(top->right) q.push(top->right);
+        if(top->left) q.push_front(top->left);
+        if(top->right) q.push_front(top->right);
     }
 }

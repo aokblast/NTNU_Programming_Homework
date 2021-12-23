@@ -16,7 +16,7 @@ public:
         LEVEL_ORDER
     };
 
-    explicit ExpressionTree(std::string exp);
+    explicit ExpressionTree(const std::string &exp);
     std::string str(TraversalMode ts);
     int calculate();
     void setVar(char var, int val);
@@ -41,7 +41,7 @@ private:
 
 
     Node *root = nullptr;
-    std::unordered_map<char, int> vals;
+    int vals[128] = {0};
 
 
 };
