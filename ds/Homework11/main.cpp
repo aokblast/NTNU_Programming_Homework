@@ -17,8 +17,8 @@ template<typename Ta, typename Tb> struct Pair{
 };
 
 namespace DJS{
-	int djs[MAXLEN] = {0};
-	constexpr int parent(int u){return u == djs[u] ? u : djs[u] = parent(djs[u]);}
+    int djs[MAXLEN] = {0};
+    int parent(int u){return u == djs[u] ? u : djs[u] = parent(djs[u]);}
 	void init()noexcept{for(int i = 0; i < MAXLEN; ++i)djs[i] = i;}
 }
 
