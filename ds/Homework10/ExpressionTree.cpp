@@ -123,7 +123,7 @@ ExpressionTree::ExpressionTree(const std::string &infix) {
             stk.push_front(root);
         }else{
             root = new Node(c);
-            vals[c] = 0;
+            vals[c] = 1;
             stk.push_front(root);
         }
     }

@@ -16,7 +16,7 @@ int main() {
 
     char var;
     std::string num;
-    std::cout << "Calculator(All variable are default zero):\n";
+    std::cout << "Calculator(All variable are default one):\n";
     while(true){
         std::cout << "Please input your variable: ";
         std::cin >> var;
