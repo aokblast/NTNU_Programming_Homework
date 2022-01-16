@@ -1,3 +1,0 @@
-doraemon.bmp 
-doraemon_output.bmp 
-20
