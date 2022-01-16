@@ -1,0 +1,17 @@
+Name:洪盛益
+Student ID:40947047s
+
+Build:
+use /make to build all file
+
+Run:
+use ./hw0301 ./hw0302.... to run the file.
+
+Remove:
+use /make clear to clean all .o file
+
+HW0301...HW0305:
+just execute the file(./hw0301...).
+
+HW0306:
+just read the pdf file(hw0306.pdf).

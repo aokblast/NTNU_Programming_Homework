@@ -1,0 +1,17 @@
+name:洪盛益
+student ID:40947047s
+
+Build:
+run make to generate files.
+
+run:
+use ./hw0201 ./hw0202... to open files.
+
+clear:
+use make clear to clean all files expect .c
+
+HW0201~HW0205:
+Just run the file.
+
+HW0206:
+Read the pdf file.
