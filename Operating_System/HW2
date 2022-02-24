@@ -1,0 +1,19 @@
+# Operating System HW2
+
+## 1.
+
+​	
+
+## 2.
+
+Pros: We don't have to use different function to handle different types of the destionation we want to write
+
+Cons: Everything must use general perpose function(Ex. If we want to control a light in some device with Linux, we have to write the file descriptor of the deviceby write()  instead of just turning it up by using a more intuitive method like turnOn())
+
+## 3.
+
+ab. In linux, we can use many to get useful debug informatiom
+
+	* strace: check all syscall make by the process
+	* gdb: set break-point, disassamble, check the program stack where program failed
+	* pmap: display a memory map of the process
