@@ -104,9 +104,7 @@ function recursivePrintFile {
 	done
 }
 
-
-
-if [ $# -ge 2 ] && ([ ${#1} != 2 ] || [ ${1::1} != '-' ]); then
+if ([ ${#1} != 2 ] || [ ${1::1} != '-' ]); then
 	path=$1
 	shift
 fi
