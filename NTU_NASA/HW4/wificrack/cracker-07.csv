@@ -1,0 +1,9 @@
+
+BSSID, First time seen, Last time seen, channel, Speed, Privacy, Cipher, Authentication, Power, # beacons, # IV, LAN IP, ID-length, ESSID, Key
+54:3D:37:3D:81:18, 2022-05-01 20:38:50, 2022-05-01 20:39:02,  5,  54, , TKIP, PSK, -57,        5,      533,   0.  0.  0.  0,  15, Mysterious Room, 
+
+Station MAC, First time seen, Last time seen, Power, # packets, BSSID, Probed ESSIDs
+8C:88:2B:00:73:6E, 2022-05-01 20:38:52, 2022-05-01 20:39:02, -59,       66, 54:3D:37:3D:81:18,
+14:7D:DA:5B:43:06, 2022-05-01 20:38:50, 2022-05-01 20:39:02, -39,      536, 54:3D:37:3D:81:18,
+F4:D4:88:5B:E6:0C, 2022-05-01 20:38:51, 2022-05-01 20:39:02, -34,      154, 54:3D:37:3D:81:18,
+
