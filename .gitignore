@@ -1,2 +1,7 @@
 .*
 !/.gitignore
+*.csv
+*.md
+solver
+*.png
+*.jpg
