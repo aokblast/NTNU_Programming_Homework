@@ -1,0 +1,91 @@
+#+STARTUP: inlineimages
+#+OPTIONS: tex:t
+
+* Image Process
+
+** CH0 - Introduction
+
+*** Objective:
+
++ Human Interpretation
+  1. Image Sharpening
+  2. Noise Removal
+  3. Deblurring
+
++ Machine Perception
+  1. Scene Understanding
+
+*** Three level processing:
+
+1) Low-level Processing
+   - Threshold
+   - Noise Removal :: smoothing
+   - Contrast Enhancement :: sharpening
+
+2) Mid-level Processing
+   - Grouping :: form region
+   - Clustering :: associate with objects
+   - Edge Detection
+   - Image Segmentation :: locate primary area
+
+3) High-levle Processing
+   - Object Recognition
+   - Scene Understanding
+
+*** Image Acquisition and Sampling
+
+**** Eyes
+
+[[./Eyes.png]]
+
++ Retina -> Image Plane
++ Fovea -> Principal Point
++ Lens -> Lens
++ Visual Axis -> Optical Axis
+
+**** Digital Camera
+
++ CCD :: charge-coupled device
++ CMOS :: complementary metal oxide semiconductor
+
+**** Sampling
+
++ Spatial Resolutino :: Pixel density
+  Grid Effect
++ Grayscale Resolutino :: Quantization
+  False Contours
+
+*** Image and Digital Image
+
++ Scene :: a 3-D continuous function
+  \(g(x, y, z)\)
++ Image :: a 2-D continuous function
+  \(f(x, y)\)
++ Digital Image :: a 2-D discrete function
+  \(I(r, c)\)
+
+Pixel: Picture element
+Gray level: Pixel value (0-255)
+
+*** Types of Digital Images
+
++ Grayscale Image :: One Channel (0-255)
++ Binary Image :: One Channel (0-1)
++ Color Image :: Three Channel (R, G, B)
++ Multispectral Image :: Multiple Channel
++ Radio Image
++ Ultrasound Iamge
++ Ultraviolet Image
++ X-ray Image
++ Gamma-ray Image
++ CT Image
++ Range Image :: The Gray level is distance
++ Moire Image :: High interfere Image (Phone photo) (?)
++ Structure light Image :: Projectile Image
+
+*** Image Perception
+
++ Simultaneous contrast
++ Optical illusion
++ Subjective Object
++ Obershoot and Undershoot (?)
