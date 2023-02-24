@@ -1,0 +1,61 @@
+\hypertarget{polytable_8h_source}{}\doxysection{polytable.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef POLYTABLE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define POLYTABLE\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <QTabWidget>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}poly.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{namespace }Ui \{}
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{classPolyTable}{PolyTable}};}
+\DoxyCodeLine{10 \}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{class }\mbox{\hyperlink{classPolyTable}{PolyTable}} : \textcolor{keyword}{public} QWidget}
+\DoxyCodeLine{13 \{}
+\DoxyCodeLine{14     Q\_OBJECT}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{public}:}
+\DoxyCodeLine{17     \textcolor{keyword}{explicit} \mbox{\hyperlink{classPolyTable}{PolyTable}}(QWidget *parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{18     \textcolor{keyword}{explicit} \mbox{\hyperlink{classPolyTable}{PolyTable}}(QWidget *parent, \mbox{\hyperlink{classPoly}{Poly}} \&op);}
+\DoxyCodeLine{19     \mbox{\hyperlink{classPolyTable}{\string~PolyTable}}();}
+\DoxyCodeLine{20     \textcolor{keyword}{const} \mbox{\hyperlink{classPoly}{Poly}} \&getPoly();}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{23     \textcolor{keywordtype}{void} on\_showPolyButton\_clicked();}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keywordtype}{void} on\_getCoefButton\_clicked();}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} on\_addElementButton\_clicked();}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} on\_delElementButton\_clicked();}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31     \textcolor{keywordtype}{void} on\_add\_clicked();}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33     \textcolor{keywordtype}{void} on\_minus\_clicked();}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{void} on\_multiply\_clicked();}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37     \textcolor{keywordtype}{void} on\_divide\_clicked();}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordtype}{void} on\_remainder\_clicked();}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \textcolor{keyword}{const} \mbox{\hyperlink{classPoly}{Poly}} \&getTabs();}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{void} on\_renameButton\_clicked();}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{keywordtype}{void} on\_dupliButton\_clicked();}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \textcolor{keywordtype}{void} on\_clearButton\_clicked();}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{keywordtype}{void} operatorHandler(\textcolor{keyword}{const} \textcolor{keywordtype}{char} oper);}
+\DoxyCodeLine{50 \textcolor{keyword}{private}:}
+\DoxyCodeLine{51     Ui::PolyTable *ui;}
+\DoxyCodeLine{52     \mbox{\hyperlink{classPoly}{Poly}} p;}
+\DoxyCodeLine{53     QTabWidget *parentTab;}
+\DoxyCodeLine{54 \};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// POLYTABLE\_H}}
+
+\end{DoxyCode}
