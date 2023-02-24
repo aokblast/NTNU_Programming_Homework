@@ -1,0 +1,12 @@
+#+TITLE: Verilog Note
+
+* Outline
+
++ Transistor and Circuit Fabrication
++ CMOS Circuit and Login Gate
++ Digital Circuit
++ VLSI Design Flow and Style
++ Hardware Description Language
++ FPGA/CPLD Design Tool
+
+
