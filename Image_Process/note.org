@@ -1,11 +1,10 @@
+#+TITLE: Image Processing Note
 #+STARTUP: inlineimages
 #+OPTIONS: tex:t
 
-* Image Process
+* CH0 - Introduction
 
-** CH0 - Introduction
-
-*** Objective:
+** Objective:
 
 + Human Interpretation
   1. Image Sharpening
@@ -15,7 +14,7 @@
 + Machine Perception
   1. Scene Understanding
 
-*** Three level processing:
+** Three level processing:
 
 1) Low-level Processing
    - Threshold
@@ -32,9 +31,9 @@
    - Object Recognition
    - Scene Understanding
 
-*** Image Acquisition and Sampling
+** Image Acquisition and Sampling
 
-**** Eyes
+*** Eyes
 
 [[./Eyes.png]]
 
@@ -43,19 +42,19 @@
 + Lens -> Lens
 + Visual Axis -> Optical Axis
 
-**** Digital Camera
+*** Digital Camera
 
 + CCD :: charge-coupled device
 + CMOS :: complementary metal oxide semiconductor
 
-**** Sampling
+*** Sampling
 
 + Spatial Resolutino :: Pixel density
   Grid Effect
 + Grayscale Resolutino :: Quantization
   False Contours
 
-*** Image and Digital Image
+** Image and Digital Image
 
 + Scene :: a 3-D continuous function
   \(g(x, y, z)\)
@@ -67,7 +66,7 @@
 Pixel: Picture element
 Gray level: Pixel value (0-255)
 
-*** Types of Digital Images
+** Types of Digital Images
 
 + Grayscale Image :: One Channel (0-255)
 + Binary Image :: One Channel (0-1)
@@ -83,7 +82,7 @@ Gray level: Pixel value (0-255)
 + Moire Image :: High interfere Image (Phone photo) (?)
 + Structure light Image :: Projectile Image
 
-*** Image Perception
+** Image Perception
 
 + Simultaneous contrast
 + Optical illusion
