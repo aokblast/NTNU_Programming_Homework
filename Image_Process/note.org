@@ -65,6 +65,7 @@
 
 Pixel: Picture element
 Gray level: Pixel value (0-255)
+Gray scale: Number of gray level
 
 ** Types of Digital Images
 
