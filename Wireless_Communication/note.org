@@ -1,0 +1,206 @@
+#+TITLE: Wireless Communication
+
+* CH1 - Intro
+
+** Celluar System
+
+- Shrinking cell size increase capacity.
+- Coverage from large to small
+  + Macrocell ~ 35 km
+  + Microcell ~ 2 km
+  + Picocell ~ 200 m
+  + Femtocell ~ 10 m
+- Generation
+  + 1G: pure voice (analog)
+  + 2G: voice + sms (digital)
+  + 2.5G: voice + mms + data
+  + 3G: voice + mms + data
+    384 Kbps
+    Burst data
+    CDMA
+    Packet-base switching
+  + 4G: data + video
+    50 ~ 100 Mbps
+  + 5G: Mission critical App
+
+** Satellite System
+
+- Cover large region
+- GEO(39000km)
+  1 way transmission: TV and radio
+- LEO(2000km)
+  2 way transmission: satellite communication
+- GPS
+
+** Paging System
+
+- Broad coverage for short message
+- Message broad from all base station
+- Simple terminal
+- 1 way transmission
+- By cellular
+
+** Radio broadcast
+
+- Analog: AM, FM, and analog TV
+- Digital: DAB / DAV system
+  OFDM
+  HiFi/HiTV
+  DVB-H
+- 1 way service
+
+** Cordless phone
+
+- 1st generation: analog, poor quality
+- 2nd generation: digital
+  CT - 2
+  DECT
+
+** PHS
+
+- Metropolitan wide communication tool
+
+** Wifi
+
+- Shared channel access
+
+*** 802.11b
+
+- 2.4G
+- CDMA
+- 1.6 ~ 10 Mbps, 500 ft
+
+*** 802.11a
+
+- 5G
+- OFDM
+- 54Mbps
+
+*** 802.11g
+
+- 2.4G, competible with 11b
+- OFDM
+- 54Mbps
+
+*** 802.11n
+
+- Support MIMO
+- 150Mbps
+- Support two HDTV streams
+
+*** 802.11ac
+
+- Support Multi-user MIMO
+- video channels
+
+** Bluetooth
+
+- RF technology
+- Short range (10m)
+- 2.4G band
+- 1 data channel and three voice channel
+
+** Ultra-Wideband Radio
+
+- impulse radio
+- no need carrier
+- use a lot of bandwidth
+- low probability of detection
+- ranging capability
+- unique position property
+- low power cmos transmission
+- very high data rate possible ( 500 Mbps ~ 10ft )
+
+** Zigbee
+
+- Low rate WPAN
+- 20, 40, and 250 kbps
+- Star cluster or peer to peer operation
+- Support for low latency
+- CDMA-CA
+- very low power consumption
+- ISM band
+
+
+* CH2
+
+** Ad hoc wireless network :: infrastructure less
+
+- Peer to peer
+- No backbone
+- Router can be multi-hop
+- Dynamic topology
+
+** Sensor Network :: energy driven
+
+- Nodes powered by non-rechargable battery
+- Data flow to a certain sink
+- Low per-node rate, but up to 10000 nodes
+- Data hightly correlate in time and space
+
+*** Energy constrain node
+
+- Maximize bit transmission time to minimize energy consumption
+- Introduce delay versus energy tradeoff for each bit
+- Old technique may not necessarily energy-efficient
+- Sleep mode saves energy but complicate network
+
+
+** Distributed control network :: hard delay and reliability requirement (traffic light?)
+
+- Packet loss and delay impacts controller performance
+- Control design must be robust to network fault
+- Joint communication network and application design
+
+*** Joint design
+
+- No methology incooperate random delay or packet loss into control system design
+- The best rate/delay tradeoff for a system cannot be determined
+
+** Cognitive radios :: new paradise of spectrum use
+
+- Second generation for Software Radio
+- Dynamic spectrum usage
+- Programmable platform
+
+** Next-generation broadband :: IEEE-802.20
+** Nano Wireless system :: medical purpose
+** RFID-based systems :: bar code replacemnet
+
+** Information, Data, and Signal
+
+- Data
+  A representation of facts, concepts or instructions in a formal representation
+- Information
+  Means of data
+- Signal
+  + Digital Signal: discrete
+    Cheaper
+    Suffer more attenuation
+    Less susceptible to noise inteference
+    Repeater recover the signal
+    Retransmission device generate new and clean analog signal
+
+  + Analog Signal: continuous
+    Wireless
+    Fiber
+    Cable
+    Transmit with out regard to content
+    Amplifier boost signal but cause distortion
+
+** Frequency-Domain Concept
+
+- Fundamental frequency
+  Gcd of all frequency
+- Spectrum
+  Range of the frequency signal
+- Absolute bandwidth
+  Width of the spectrum
+- Effective bandwidth
+  Narrow of the bandwidth that most of the signal's energy is contained in
+
+Period of the total signal equals to the period of the fundamental frequency
+
+** Data rate and bandwidth
+
+
