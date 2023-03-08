@@ -33,6 +33,20 @@ Flow will flow from source to drain when on
 1: off
 0: on
 
+*** Circuit fabrication step
+
+1. silicon -> silicon ingot
+2. ingot -> wafer
+3. wafer -> circuit
+   resin ( photoresist ) coat on wafer
+   paste diagram on circuit ( by mask ) -> photo lithography ( by stepper )
+4. wafer -> die -> package
+   dicing to die ( diamond blade )
+   silver paste paste die to island ( package )
+   connect chip with wire ( bonding )
+5. encapsulation
+   molding resin
+
 
 
 
