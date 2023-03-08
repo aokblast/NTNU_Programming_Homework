@@ -89,3 +89,13 @@ Gray scale: Number of gray level
 + Optical illusion
 + Subjective Object
 + Obershoot and Undershoot (?)
+
+* CH - 2 File Format
+
++ BMP :: Without Compression
++ JPEG :: Lossy compression, smaller storage
++ GIF :: Lossless compression
++ TIFF :: Multiple image
++ PNG :: Lossless compression
+
+
