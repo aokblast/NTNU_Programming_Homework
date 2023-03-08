@@ -204,3 +204,22 @@ Period of the total signal equals to the period of the fundamental frequency
 ** Data rate and bandwidth
 
 
+** Channel Capacity
+
+Maximum bits rate for transmission
+
+*** Nyquist formula
+
+2Blog_{2}^{M}
+
+*** SNR
+
+measured at a receiver
+
+SNR_{db} = 10log_{10}^{S/N}
+
+*** Shannon Capacity formula
+
+C = Blog_2^{1 + S/N}
+
+Only consider white noise
