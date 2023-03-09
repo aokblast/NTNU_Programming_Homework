@@ -90,7 +90,7 @@ Gray scale: Number of gray level
 + Subjective Object
 + Obershoot and Undershoot (?)
 
-* CH - 2 File Format
+* CH2 - File Format
 
 + BMP :: Without Compression
 + JPEG :: Lossy compression, smaller storage
@@ -98,4 +98,65 @@ Gray scale: Number of gray level
 + TIFF :: Multiple image
 + PNG :: Lossless compression
 
+** Gamma Correction
 
+* CH3 - Image Display
+
+** Quality
+
++ Spatial Resolution
++ Quantization
+
+** Display device
+
++ Monitor Type
++ Monitor Resolution
++ Graphic card
++ Printer
+
+** Working environment
+
+** Ditchering
+
+The process of reduce the number of gray level in an image using similar dots
+
+1. Uniform Quantization :: 0.5 -> False contours
+2. Random Noise :: 0.5 + noise
+3. Order ditching :: Using matrix to decide 0 or 1
+4. Error Diffusion :: Use matrix to represent  error
+
+** Half toning
+
+Using different size and distnace to represent multiple gray levels by two color
+
+** Point Proessing
+
+** Point processing
+
++ Addition and Subtraction
+  y = x + C, y = x - C
+
++ Multiplication
+  y = Cx
+
++ Complementation
+  y = 255 - x
+
++ Solarization
+  y = 255 - x if x < 128
+  y = x if x >= 128
+
++ Histogram Equalization
+  - Continous
+    ps(s) = pr(r)|dr / ds|
+
+  - Discrete
+    L = number of gray level
+    Sk = (L - 1)\sigma^k_0{n_j} / N
+
++ Contrast stretching
+  General form:
+  y = ((x - a) / (b - a)) ^ r (d - c) + c
+  r effect shape of curve
+
+** Neighborhood processing
