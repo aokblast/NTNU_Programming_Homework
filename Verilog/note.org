@@ -48,5 +48,60 @@ Flow will flow from source to drain when on
    molding resin
 
 
+*** Logic Circuit
 
+AND, OR, XOR...
 
+*** Digital Circuit
+
++ Multiplexer
++ Latch
+  Change when CLK is 1, unchanged when CLK is 0
++ Flip flop
+  Change when CLK is up, unchanged when other case
+
+*** Cost
+
++ NRE costs
+  Fixed cost on design
+  Influence by the design complexity and productivity
+
++ Recurring cost
+  Silicon processing
+  Assembly
+  Test
+
+*** VLSI Design Flow
+
+1. Specification
+   What chip do
+   How fast
+   How much power
+   Size
+
+2. Register Transfer Level Design Like workflow in MIPS
+   Set of registers
+   Operation
+   Control
+
+3. Gate Level Design
+   All in logic gate
+
+4. Circuit Level Design
+   To basic electronic things
+   By trransistor
+
+5. Physical Design
+   To chemistry things
+   Layout for fabrication
+   Placement and Routing
+   DRC happens in here
+
+*** Design style
+
+1. Full custom design
+2. Standard cell
+   Stop in Logic Level
+
+3. Gate Array
+4. FPGA
