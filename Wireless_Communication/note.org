@@ -1,4 +1,6 @@
 #+TITLE: Wireless Communication
+#+STARTUP: inlineimages
+#+OPTIONS: tex:t
 
 * CH1 - Intro
 
@@ -210,16 +212,236 @@ Maximum bits rate for transmission
 
 *** Nyquist formula
 
-2Blog_{2}^{M}
+\[ 2Blog_{2}M \]
 
 *** SNR
 
 measured at a receiver
 
-SNR_{db} = 10log_{10}^{S/N}
+\[ SNR_{db} = 10log_{10}S/N \]
 
 *** Shannon Capacity formula
 
-C = Blog_2^{1 + S/N}
+\[ C = Blog_2(1 + S/N) \]
 
 Only consider white noise
+
+* CH3
+
+** Classification of Transmission Media
+
+*** Transmission Medium
+
+Physical path between transmitter and receiver
+
++ Guided Media
+  solid Medium
+  E.g. copper twisted pair, copper coaxial cable, optical fiber
+
++ Unguided Media
+  Provide means of transmission but oes not guide signals
+  Wireless transmission
+  Transmitter and receiver are antenna
+  E.g. atmosphere, outer space
+
+*** Configuration for wireless transmission
+
+- Omnidirectional
+- Directional
+
+*** General frequency ranges
+
++ Radio
+  30MHz to 1GHz
+  Omnidirectional applications
+
++ Infrared
+  Roughly, 300 GHz to 200000 GHz
+  P2P multiopoint applications
+
++ Microwave
+  1GHz to 300 GHz
+  Directional beams possible
+  P2P transmission
+  Staellite, WiFi, ...etc
+
+*** Terrestrial Microwave
+
++ Common microwave antenna
+  Parabolic dish, 3m in diameter
+  Fixed rigidly and focuses a narrow beam
+  Achieve line-of-sight transmission to receiving antenna
+  Substantial heights above ground level
+
++ Application
+  Long haul telecommunication service
+  Short P2P links between buildings
+
+*** Satellite Microwave
+
++ Communication satellite
+  Microwave relay station
+  Link two or more ground-based microwave transmitter/receiver
+  Receive transmissions on one frequency band(uplink)
+  Amplifies or repeat the signal
+  Transmit it on another frequency(downlink)
+
++ Application
+  Television distribution
+  Long-distance telephone transmission
+  Private business networks
+
+*** Wireless LAN microwave
+
++ Wireless LAN
+  2.4G industrial, scientific and medical (ISM) radio bands
+  Using wireless distribution method (spread-spectrum or OFDM radio)
+
++ Applications (802.11)
+  WiFi
+
+*** Broadcast Radio
+
++ Broadcast radio antennas
+  Omnidirectional
+  Not need to be dish-shaped
+  Not need to be rigidly mounted
+
++ Application
+  Broadcast radio
+  VHF and part of UHF band; 30 MHz to 1GHz
+  Cover FM radio and UHF and VHF television
+
+** Multiplexing
+
++ Capacity of transmission medium usually exceed capacity required fpr transmission for a single signal
++ Multiplexing - carrying multile signals on a single medium
+
+*** Why Multiplexing is widespread
+
++ Cost per kbps of transmission facility declines -> increase in the data rate
++ Cost of transmission and receiving equipmemt decline -> increase in the data rate
++ Most individual data communicating device require relatively modest data rate support
+
+*** Multiplexing Techniques
+
++ FDM
+  Use different frequency to carry multiple data
+  Take advantage of the fact that the useful bandwidth of the medium exceed the required bandwidth of a given signal
++ TDM
+  Take advantage of the fact that the achievable bit rate of the medium exceed the required data rate of a digital signal
+
+* CH5
+
+An antenna is an electrical conductor or system of conductors
+The same antenna can be used for transmission and reception
+
++ Transmission :: radiate electromagnetic energy into space
++ Reception :: collects electromagnetic energy from space
+
+** Radiation Pattern
+
++ Radiation pattern
+  Graphical representation of radiation properties of an antenna
+  Depicted as two-dimensional cross section
+
++ Beam width ( or half-power beam width )
+  Measure of directivity of antenna
+  Angele must at least 1/2 fo antenna's strongest direction
+
++ Reception pattern
+  Equals to radiation pattern
+
+** Type of Antenna
+
++ Isotropic antenna (dealize)
+  Radiates power equally in all directions
+
++ Dipole antennas
+  Half-wave dipole antenna ( Hertz antenna )
+  Quarter-wave vertical antenna ( Marconi antenna )
+
++ Parabolic Reflective Antenna
+
+** Antenna Gain
+
+*** Antenna gain
+
++ Power output in a particular direction, compared to that produced by perfect isotropic antenna
++ Howe well the antenna converts input power into radio waves headed in a specified direction
+
+\[ G = \frac{4 \pi A_e}{\lambda ^2 } \]
+
+
+*** Effective area
+
++ Related to physical size and shape of antenna
+
+[[./antenna_gains.png]]
+
+** Propagation Modes
+
++ Ground-wave propagation
+  Follow contour of the earth
+  Can propagate considerable distances
+  Frequency up to 2 MHz
+  E.g. AM radio
+
++ Sky-wave propagation
+  Signal reflected from ionized layer of atmosphere back down to earch
+  Can travel a number of hops, back and forth between ionosphere and earth's surface
+  Reflection effect caused by refraction
+  E.g. Amateur radio, CB radio
+
++ Line-of-sight propagation
+  Transmitting and receiving antennas must be witin line of sight
+  Satellite communication - signal above 30MHz not reflected by ionosphere
+  Ground communication - antennas within effective line of site due to refraction
+
+*** Refraction :: bending of microwaves by the atmosphere
+
+Velocity of electromagnetic wave is a function of the density of the medium
+When wave changes medium, speed changes
+Wave bends at the boundary between mediums
+
+*** Line-of-Sight Equations
+
++ Optical line of sight
+
+\[  d = 3.57\sqrt{h} \]
+
++ Effective, or radio, line of sight
+
+\[  d = 3.57\sqrt{Kh} \]
+
+\[ K = \frac{4}{3} \]
+
++ Maximum distance d between two antennas for LOS propagation
+
+\[ d = 3.57(\sqrt{Kh_1} + \sqrt{Kh_2}) \]
+
+
+** LOS wireless transmission impairment
+
+*** Attenuation
+
++ Strength of signal falls of with distance over transmission medium
++ Attenuation factors for unguided media
+  Received signal must have sufficient strength so that circuitry in the receiver can interpret the signal
+  Signal must maintain a level sufficiently higher than noise to be received without errore
+  Attenuation is greater at higher frequency, causing distortion
+
+** Free space Loss
+
+*** Ideal isotropic antenna
+
+\[ \frac{P_t}{P_r} = \frac{(4 \pi d)^2}{\lambda ^ 2} = \frac{(4\pi fd)^2}{c^2}\]
+
+\[ L_{dB} = 10 \log \frac{P_t}{P_r} = 20 log (\frac{4 \pi d }{\lambda}) = -20log(\lambda) + 20 log (d) + 21.98 dB \]
+\[ = 20 log (\frac{4 \pi fd}{c}) = 20 log (f) + 20 log (d) - 147.56 dB \]
+
+*** Accounting for gain of other antennas
+
+\[ \frac{P_t}{P_r} = \frac{(4 \pi ) ^2 (d) ^2}{G_rG_t\lambda ^ 2} = \frac{(\pi d) ^ 2}{A_rA_t} = \frac{(cd) ^ 2}{f^2A_rA_t}  \]
+
+\[ L_{dB} = 10 log (\frac{P_t}{P_r}) = 20 log (\lambda) + 20 log (d) - 10 log (A_tA_r) = -20 log (f) + 20 log (d) - 10 log(A_tA_r) + 169.54dB \]
