@@ -445,3 +445,112 @@ Wave bends at the boundary between mediums
 \[ \frac{P_t}{P_r} = \frac{(4 \pi ) ^2 (d) ^2}{G_rG_t\lambda ^ 2} = \frac{(\pi d) ^ 2}{A_rA_t} = \frac{(cd) ^ 2}{f^2A_rA_t}  \]
 
 \[ L_{dB} = 10 log (\frac{P_t}{P_r}) = 20 log (\lambda) + 20 log (d) - 10 log (A_tA_r) = -20 log (f) + 20 log (d) - 10 log(A_tA_r) + 169.54dB \]
+
+* CH4
+
+** Categories of Noise
+
++ Thermal Noise
+  Due to agitation of electrons
+  Present in all electronic devices and transmission media
+  Cannot be eliminated
+  Function of temperature
+  Particularly significant for satellite communication
+  \[ N_0 = kT(\frac{W}{Hz}) where k = 1.3803 * 10 ^{-23} (J/K) \]
+  \[ N = N_0B = 10 log (kTB) = 10 log k + 10 log B + 10 log T = -228.6 + 10 log T + 10 log B \]
+
++ Intermodulation Noise
+  Resulted from signals at different frequencies share same transmission medium
+  Produeces signals at a frequency that is sum or difference of the two original or multiplies of those frequencies
+
++ Crosstalk
+  An unwanted coupling between signal paths - telephone - able to hear another conversation
+  Signal picked up by microwave antenna
+  Directional antennas still have crosstalk problem
+  Same r less order of magnitude as thermal noise
+
++ Impulse Noise
+  Noncontinuous
+  Consisting of irregular pulse or nise spike of short duration and high amplitide
+  External electromagnetic disturbance
+  Minor annoyance for analog data
+  Primary source of error in digital data transmission
+
+** Expression Eb/N0
+
+Ratio of signal energy (E_b) per bit to noise power density (N_0) per Hertz
+
+\[ \frac{E_b}{N_0} = \frac{S}{N_0R}  \]
+\[ E_b = signal energy per bits = ST_b \]
+\[ S = signal power \]
+\[ T_b = time required to send one bit \]
+\[ R = bit rate of a signal contains binary digital data = \fraC{1}{T_b} \]
+
+The bit error rate for digital data is a function of E_b/N_0
+
+\[ (\frac{E_b}{N_0})_{dB} = (\frac{S}{kTR})_dB = S_{dBW} = 10 log R - 10 log k - 10 log T = S_{dBW} - 10 log R + 228.6 - 10 log T  \]
+
+According to Shannon Capacityt Formula \[ C = B log_2(1 + \frac{S}{N}) \]
+
+\[ \frac{E_b}{N_0} = \frac{S}{N}\frac{B_T}{R} = \frac{B}{C}(2^{\frac{C}{B}} - 1 ) \]
+
+*** Other Impairment
+
++ Atmospheric absorption
+  Water vapor and oxygen contribute to attenuation
+
++ Multipath
+  Obstacle reflect signals so that multiple copies with varying delays are received
+  - Reflaction
+  - Diffraction
+  - Scattering
+
++ Refraction
+  Bending of radio waves as they propagate through the atmosphere
+
+*** Effect of Multipath Propagation
+
++ Multiple copies of a signal may arrive at different phases
++ Intersymbol interference - Multiple copies of a signal may arrive as the primary pulse for subsequent bit
+
+** Type of Fading
+
++ Fast fading
+  Rapidly changing fading
+  E.g. mobile phone user passes buildins, tunnels, etc.
+
++ Slow fading
+  Change in average received power level of rapid fluctuations
+
++ Flat fading
+  All frequency components of the received signal fluctuate in the same proportion
+
++ Selective fading
+  Affects unequally the different spectral components
+
++ Rayleigh fading
+  multiple indirect paths and no distinct dominant path (i.e. LOS path)
+
++ Rician fading
+  multiple indirect paths and a distinct dominant path (i.e. LOS path)
+
+** Error Compensation Mechanisms
+
++ Forward erorr correction
++ Adaptive equalization
+  Can be applied to transmissions that carry analog or digital information
+  - Analog voice or video
+  - Digital data, digitized voice or video
+
+  Used to combat intersymbol interference
+  Involves gathering dispersed symbol energy back into its original time interval
+  Techniques
+  - Lumped analog circuits
+  - Sophisticated digital signal processing algorithm
+
++ Diversity techniques
+  Diversity is based on the fact that individual channel experience independent fading events
+  - Space diversity
+  - Frequency diversity
+  - Time diversity
+
