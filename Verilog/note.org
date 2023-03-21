@@ -79,7 +79,7 @@ AND, OR, XOR...
    How much power
    Size
 
-2. Register Transfer Level Design Like workflow in MIPS
+2. Register Transfer Level Design Like workflow in MIPS (RTL)
    Set of registers
    Operation
    Control
@@ -100,8 +100,73 @@ AND, OR, XOR...
 *** Design style
 
 1. Full custom design
+   Design from scratch
+
 2. Standard cell
    Stop in Logic Level
 
 3. Gate Array
+   Wire and between the cell are customized
+
 4. FPGA
+
+*** Programmable Logic Devices  (PLDs)
+
+PLD is a general purpose chip for implementing logic circuitry
+
+- Advantage: ideal for low volume production, low NRE cost
+- Disadvantage: lower performance and large chip size
+- Can be divided based on capacity complexity and architecture
+  1. Simple PLDs ( SPLDs )
+  2. Complex PLDs ( CPLDs )
+  3. FPGA
+
+
+** HDLs
+
+*** HDL are the major tools for the RTL level and gate ;eve; design of VLSI circuit
+
+1. Highly portable and readable
+2. Support structured design methodology
+3. Support hardware concurrency
+4. Serve as IP repository
+
+*** Major HDLs
+
+1. VHDL ( VHSIC HDL )
+   Better system level
+   Close to Ada/Pascal
+   User define data structure
+
+2. Verilog
+   Better at agte/transisitor level
+   Close to C
+   Pre-defined data type, easy to use
+
+* CH2 - VHDL
+
+** Data Class
+
+1. Constant
+2. Variable
+3. Signal
+4. File
+5. Ports of an entity. All ports are signal object.
+6. Generics of an entity. These are constatnt objects.
+7. Formal parameter of functions and procedures
+
+** Data Type
+
++ Scalar Type
+   Enumeration
+   Integer
+   Physical
+   Floating
+
++ Composite Type
+  Array
+  Record
+
++ Access Type :: Pointer
++ File Type
+
