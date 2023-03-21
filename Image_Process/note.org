@@ -148,15 +148,41 @@ Using different size and distnace to represent multiple gray levels by two color
 
 + Histogram Equalization
   - Continous
-    ps(s) = pr(r)|dr / ds|
+  \[  ps(s) = pr(r)|dr / ds| \]
 
   - Discrete
     L = number of gray level
-    Sk = (L - 1)\sigma^k_0{n_j} / N
+  \[  Sk = (L - 1)\Sigma^k_0 n_j / N \]
 
 + Contrast stretching
   General form:
-  y = ((x - a) / (b - a)) ^ r (d - c) + c
+  \[ y = ((x - a) / (b - a)) ^ r (d - c) + c \]
   r effect shape of curve
 
 ** Neighborhood processing
+
++ Different size
++ Different shape
++ Different reference point
+
+** Mask + Function = Filter
+
++ Image Boundary
+  1. Ignore it
+  2. Pad with Zero
+  3. Copy
+
++ Value outside 0-255
+  1. Clip value
+  2. Scale value
+
+*** Linear filter
+
+\[ \Sigma_{s = -1}^{1} \Sigma_{t = -2}^{2} p(x + s, y + t) m(s, t) \]
+
+*** Seperable filter
+
+\[ f(x, y) = (f_1(x) f_2(y) \]
+
+
+
