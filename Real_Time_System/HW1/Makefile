@@ -1,4 +1,4 @@
-build_req: obj
+build_req:
 	mkdir -p obj
 
 build_p1: build_req p1/main.cpp
@@ -9,7 +9,7 @@ build_p3: build_req p3/main.cpp
 	g++ -pthread -lrt p3/main.cpp -o obj/p3_t2
 
 build_plotter: build_req plotter/src/main.rs
-	cargo build --manifest-path plotter/ --release
+	cargo build --manifest-path plotter/Cargo.toml --release
 	mv plotter/target/release/plotter obj/
 
 p1: build_p1
@@ -19,15 +19,15 @@ p1: build_p1
 p2:
 
 p3: build_p3
-	chrt -f 99 obj/p3_t1 obj/p3_t1_result &
-	chrt -f 98 obj/p3_t2 obj/p3_t2_result &
+	chrt -f 99 obj/p3_t1 obj/p3_t1_result_a &
+	chrt -f 98 obj/p3_t2 obj/p3_t2_result_a &
 
-	timeout 1800
+	sleep 1800
 
-	chrt -f 98 obj/p3_t1 obj/p3_t1_result &
-	chrt -f 99 obj/p3_t2 obj/p3_t2_result &
+	chrt -f 98 obj/p3_t1 obj/p3_t1_result_b &
+	chrt -f 99 obj/p3_t2 obj/p3_t2_result_b &
 
-	timeout 1800
+	sleep 1800
 
 	echo "P3 finish"
 
