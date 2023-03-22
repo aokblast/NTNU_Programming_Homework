@@ -30,10 +30,13 @@ int idx = 0;
 std::vector<long long> result_array(TOTAL_CNT);
 
 void workload() {
+  long j = 0;
   #ifdef T1
-  std::this_thread::sleep_for(std::chrono::milliseconds(50));
+  for(long i = 0; i < 11345000; ++i)
+    j = sqrt(i * i);
   #else
-  std::this_thread::sleep_for(std::chrono::milliseconds(80));
+  for(long i = 0; i < 18000000; ++i)
+    j = sqrt(i * i);
   #endif
 }
 

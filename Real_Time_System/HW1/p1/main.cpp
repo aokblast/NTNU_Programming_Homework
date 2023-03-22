@@ -24,7 +24,9 @@ int idx = 0;
 std::vector<long long> result_array(TOTAL_CNT);
 
 void workload() {
-  std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  long j = 0;
+  for(long i = 0; i < 200000; ++i)
+    j = sqrt(i * i);
 }
 
 static void
