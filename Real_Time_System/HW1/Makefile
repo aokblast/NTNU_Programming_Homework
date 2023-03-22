@@ -14,6 +14,7 @@ build_plotter: build_req plotter/src/main.rs
 
 p1: build_p1
 	obj/p1 >> obj/p1_result
+	echo "P1 finish!!"
 
 p2:
 
@@ -23,17 +24,12 @@ p3: build_p3
 
 	timeout 1800
 
-	pkill -9 -f p3_t1
-	pkill -9 -f p3_t2
-
 	chrt -f 98 obj/p3_t1 obj/p3_t1_result &
 	chrt -f 99 obj/p3_t2 obj/p3_t2_result &
 
 	timeout 1800
 
-	pkill -9 -f p3_t1
-	pkill -9 -f p3_t2
-
+	echo "P3 finish"
 
 run: p1 p2 p3
 
