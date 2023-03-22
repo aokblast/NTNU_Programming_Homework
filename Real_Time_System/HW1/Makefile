@@ -26,6 +26,15 @@ p3: build_p3
 	pkill -9 -f p3_t1
 	pkill -9 -f p3_t2
 
+	chrt -f 98 obj/p3_t1 obj/p3_t1_result &
+	chrt -f 99 obj/p3_t2 obj/p3_t2_result &
+
+	timeout 1800
+
+	pkill -9 -f p3_t1
+	pkill -9 -f p3_t2
+
+
 run: p1 p2 p3
 
 clean:
