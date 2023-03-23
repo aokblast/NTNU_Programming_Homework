@@ -185,4 +185,35 @@ Using different size and distnace to represent multiple gray levels by two color
 \[ f(x, y) = (f_1(x) f_2(y) \]
 
 
+*** Frequency domain filter
+
++ High frequency components
+  edges, noises
++ Low frequency components
+  regions
+
+*** Edge sharpening
+
+ 
+
+*** High-boost filter
+
++ k(original) - (lowpass) = k(original) - (original - highpass) = (k - 1)(original) + highpass
++ (k/(k-1))(original) + (1/(k-1))(low pass)
++ (k/(2k-1))(original) + ((1-k)/(2k-1))(low pass)
+
+*** Non-linear smoothing filters
+
++ Maximum filter
++ Minimum filter
++ Median filter
+  Noise removal
+  edge preserving
++ Kuwahara filter
++ K-nearth neighbors
++ Geometry mean filter
++ Alpha-trimmed mean filter
+  1. Order elements
+  2. Trim off m end elements
+  3. Take mean
 
