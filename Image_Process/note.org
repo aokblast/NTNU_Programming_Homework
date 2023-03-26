@@ -194,7 +194,7 @@ Using different size and distnace to represent multiple gray levels by two color
 
 *** Edge sharpening
 
- 
+[[./Edge_Sharpening.png]]
 
 *** High-boost filter
 
@@ -217,3 +217,35 @@ Using different size and distnace to represent multiple gray levels by two color
   2. Trim off m end elements
   3. Take mean
 
+* Image Geometry
+
+Consider transformation of the:
+
++ Shape
++ Size
++ Position
++ Orientation
+
+Two types:
+
++ Rigid transformation
+  Transformation directly, with edge
++ Deformable transformation
+  Transformation without edge
+
+** Transformation method
+
+*** Sampling
+
+[[./Sampling.png]]
+
+*** Interpolation
+
+[[./Interpolation.png]]
+
++ NN-Interpolation
++ Linear-Interpolation
+
+*** Cubic Interpolation
+
+[[./Cubic_Interpolation.png]]
