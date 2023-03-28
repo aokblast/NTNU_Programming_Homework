@@ -554,3 +554,79 @@ According to Shannon Capacityt Formula \[ C = B log_2(1 + \frac{S}{N}) \]
   - Frequency diversity
   - Time diversity
 
+* CH 5
+
+** Signal Encoding Criteria
+
++ SNR
+  Decrease bit eror rate
++ Data rate
+  Increase bit error rate
++ Bandwidth
+  Increate data rate
+
+*** Factors
+
++ Signal spectrum
+  With lack of high-frequency component, less bandwidth required ( Shannon Nyquist's Theorm )
+  With no dc component, ac coupling via transformer possible
+  Transfer fucntion of a channel is worse near band edge
+
++ Clocking
+  Ease of determining beginning and end of each bit position
+
++ Signal interference and noise immunity
+  Perform in the presence of noise
+
++ Cost and complexity
+  Higher signal reate to achieve a given data rate, the greater the cost
+
+*** Basic encoding technique
+
+Digital to analog signal
+
++ Amplitude-shift keying (ASK)
+  Amplitude difference of carrier frequency
+  One binary digit represented by presence of carrier, at condsant amplitute
+  Other represneted by absence of carrier
+  Susceptible to sudden changes
+  Inefficient modulation technique
+  On voice-grade lines, up to 1200 bps
+  Used to transmit digital data over optical fiber
+  
+
++ Frequency-shift keying (FSK)
+  Frequency difference near carrier frequency
+  - Binary Frequency-Shift Key (BFSK)
+     Less susceptible to error than ASK
+     On voice-grade line, used up to 1200 bps
+     Use for high-frequency radio transmission (3 to 30 MHz)
+     Can be used at higher freqencies on LANS that use coaxial cable
+
+  - Multiple Frequency-Shift Key (MFSK)
+     Use more than two frequencies
+     More bandwidth efficient but more susceptible
+       \[ s(t) = A\cose 2 \pi f_it 1 \leq i \leq M \]
+       \[ f_i = f_c + (2i - 1 - M)f_d \]
+       \[ f_c = \text{the carrier frequency} \]
+     To match data rate of input bit stream, each output signal element is held for
+     \[ T_s = LT \]
+     Total bandwidth required:
+     \[ 2Mf_d \]
+     Minimum frequency separation reqired
+     \[ 2f_d = \frac{1}{T_s} \]
+     Therefore, modulation requres a bandwidth of
+     \[ W_d = \frac{2^L}{LT} = \frac{M}{T_s} \]
+
++ Phase-shift keying (PSK)
+  Phase of carrier signal shifted
+  - Two-level PSK (BPSK)
+  - Differential PSK (DPSK)
+     signal burst of same phase as previous signal burst
+  - Four-level PSK (QPSK)
+     Allow symbol phase to jump by as much as 180 degree at a time
+  - OQPSK
+     Offset the timing of 1 bit-period T_b which limit the phase shift to no more than 90 degree at a time
+
+
+[[./qpsk.png]]
