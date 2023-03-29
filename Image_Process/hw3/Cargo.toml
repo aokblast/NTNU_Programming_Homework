@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 opencv = "0.78.0"
+quick_select = "1.0.0"

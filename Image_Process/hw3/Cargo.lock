@@ -70,6 +70,7 @@ name = "hw3"
 version = "0.1.0"
 dependencies = [
  "opencv",
+ "quick_select",
 ]
 
 [[package]]
@@ -170,6 +171,12 @@ name = "pkg-config"
 version = "0.3.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6ac9a59f73473f1b8d852421e59e64809f025994837ef743615c6d0c5b305160"
+
+[[package]]
+name = "quick_select"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c153cec43bc203d98708e37d09979d9260db558636bbfb5c55db7b96b2aaad03"
 
 [[package]]
 name = "regex"
