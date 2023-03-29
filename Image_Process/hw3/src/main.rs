@@ -4,28 +4,43 @@ use opencv::imgcodecs::{imread, IMREAD_COLOR, imwrite};
 use opencv::prelude::*;
 use quick_select::quick_select;
 
-const K: f64 = 0.7;
+const K: f64 = 0.5;
 
 fn filter(src: &Mat, func: fn(Mat, &Vec3b) -> Vec3b, n: i32) -> Mat {
     let mut result = Mat::new_size_with_default(src.size().unwrap(), CV_8UC3, Scalar::all(0 as f64)).unwrap();
 
-    for x in 0..src.rows() {
-        for y in 0..src.cols() {
-            let pixels;
+    for (pos, pixel) in src.iter::<Vec3b>().unwrap() {
+        let x = pos.y;
+        let y = pos.x;
+        if let Ok(neighbor) = src.row_bounds(x - n / 2, x + n / 2 + 1).and_then(|row| {row.col_bounds(y - n / 2, y + n / 2 + 1)}) {
+            *(result.at_2d_mut::<Vec3b>(x, y).unwrap()) = func(neighbor, &pixel.clone());
+        } else {
+            *(result.at_2d_mut::<Vec3b>(x, y).unwrap()) = pixel.clone();
+        }
 
-            if let Ok(neighbor) = src.row_bounds(x - n / 2, x + n / 2 + 1).and_then(|row| {row.col_bounds(y - n / 2, y + n / 2 + 1)}) {
-                pixels = neighbor;
-            } else {
-                *(result.at_2d_mut::<Vec3b>(x, y).unwrap()) = *(src.at_2d::<Vec3b>(x, y).unwrap());
-                continue;
-            }
+    }
 
-            *(result.at_2d_mut::<Vec3b>(x, y).unwrap()) = func(pixels, src.at_2d::<Vec3b>(x, y).unwrap());
+    result
+}
+
+fn add_weight(src1: &Mat, alpha: f64, src2: &Mat, beta: f64) -> Mat {
+    let mut result = Mat::new_size_with_default(src1.size().unwrap(), CV_8UC3, Scalar::all(0 as f64)).unwrap();
+
+    for x in 0..src1.rows() {
+        for y in 0..src1.cols() {
+            let res = result.at_2d_mut::<Vec3b>(x, y).unwrap();
+            let a = src1.at_2d::<Vec3b>(x, y).unwrap();
+            let b = src2.at_2d::<Vec3b>(x, y).unwrap();
+
+            res[0] = (a[0] as f64 * alpha + b[0] as f64 * beta) as u8;
+            res[1] = (a[1] as f64 * alpha + b[1] as f64 * beta) as u8;
+            res[2] = (a[2] as f64 * alpha + b[2] as f64 * beta) as u8;
         }
     }
 
     result
 }
+
 
 fn average_filter(src: Mat, _cur: &Vec3b) -> Vec3b {
     let tot = (src.rows() * src.cols()) as f64;
@@ -66,11 +81,11 @@ fn unsharp_mask(src: Mat, cur: &Vec3b) -> Vec3b {
     }
 
     for idx in 0..cnt.len() {
-        cnt[idx] = ((cur[idx] as f64 - (cnt[idx] as f64 / tot)) * K + cur[idx] as f64) as i32;
+        cnt[idx] = ((1.0 + K) * cur[idx] as f64 - (cnt[idx] as f64 / tot) * K) as i32;
     }
 
 
-    Vec3b::from(cnt.map(|x|{(x) as u8}))
+    Vec3b::from(cnt.map(|x|{x as u8}))
 }
 
 fn unsharp_median(src: Mat, cur: &Vec3b) -> Vec3b {
@@ -85,7 +100,7 @@ fn unsharp_median(src: Mat, cur: &Vec3b) -> Vec3b {
 
     for idx in 0..cur.len() {
         let l = cnt[idx].len();
-        res[idx] = ((cur[idx] as f64 - (*quick_select(&mut cnt[idx], l / 2)) as f64) * K + cur[idx] as f64) as i32;
+        res[idx] = ((1.0 + K) * cur[idx] as f64 - (*quick_select(&mut cnt[idx], l / 2)) as f64 * K) as i32;
     }
 
     Vec3b::from(res.map(|x|{x as u8}))
@@ -97,8 +112,8 @@ fn main() {
 
     let avg_filter_img = filter(&img, average_filter, 5);
     let median_filter_img = filter(&img, median_filter, 5);
-    let unsharp_img = filter(&img, unsharp_mask, 5);
-    let unsharp_median_img = filter(&img, unsharp_median, 5);
+    let unsharp_img = add_weight(&img, (1.0 + K), &avg_filter_img, -K);
+    let unsharp_median_img = add_weight(&img, (1.0 + K),&median_filter_img, -K);
 
     imshow("Origin", &img).unwrap();
     imshow("Avg", &avg_filter_img).unwrap();
