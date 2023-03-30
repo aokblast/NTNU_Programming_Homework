@@ -25,7 +25,7 @@ bool hts(const char target[], char to[]) {
         if(tmp >= 32 && tmp <= 127) {
             to[j++] = tmp;
         }else if (tmp == 0) {
-            break;            
+            break;
         }else{
             printf("Invalid input.\n");
             return false;

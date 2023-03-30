@@ -27,6 +27,7 @@ const struct option long_option[] = {
     {0, 0, 0, 0}
 };
 
+
 void to_base64(uint8_t to[4], uint8_t from[3]) {
     to[0] = from[0] >> 2;
     to[1] = (((from[0] & 0x03) << 4) | (from[1] >> 4));
@@ -109,3 +110,5 @@ int main (int argc, char *argv[]) {
     return 0;
 
 }
+
+

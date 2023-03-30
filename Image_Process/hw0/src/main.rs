@@ -4,7 +4,7 @@ use opencv::highgui::{destroy_all_windows, imshow, wait_key};
 use opencv::imgcodecs::{imread, IMREAD_COLOR, imwrite};
 
 fn main() {
-    let img = imread("ccw.jpg", IMREAD_COLOR).unwrap();
+    let img = imread("image.png", IMREAD_COLOR).unwrap();
 
     let mut gray_scale_img = Mat::new_size_with_default(
         img.size().unwrap(), CV_8UC3, Scalar::all(0 as f64)).unwrap();

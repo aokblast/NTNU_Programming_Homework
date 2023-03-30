@@ -84,26 +84,7 @@ fn unsharp_mask(src: Mat, cur: &Vec3b) -> Vec3b {
         cnt[idx] = ((1.0 + K) * cur[idx] as f64 - (cnt[idx] as f64 / tot) * K) as i32;
     }
 
-
-    Vec3b::from(cnt.map(|x|{x as u8}))
-}
-
-fn unsharp_median(src: Mat, cur: &Vec3b) -> Vec3b {
-    let mut cnt: [Vec<u8>; 3] = Default::default();
-    let mut res = [0 as i32; 3];
-
-    for (_, pixel) in src.iter::<Vec3b>().unwrap() {
-        cnt[0].push(pixel[0]);
-        cnt[1].push(pixel[1]);
-        cnt[2].push(pixel[2]);
-    }
-
-    for idx in 0..cur.len() {
-        let l = cnt[idx].len();
-        res[idx] = ((1.0 + K) * cur[idx] as f64 - (*quick_select(&mut cnt[idx], l / 2)) as f64 * K) as i32;
-    }
-
-    Vec3b::from(res.map(|x|{x as u8}))
+    Vec3b::from(cnt.map(|x|{(x) as u8}))
 }
 
 

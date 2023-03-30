@@ -3,7 +3,7 @@ use plotters::prelude::*;
 use std::{env, io::{BufReader, BufRead}, fs::File};
 use std::cmp::{max, min};
 
-const BINS: usize = 128;
+const BINS: usize = 512;
 const GIGA: f64 = 1e6;
 
 const COLORS: [RGBColor; 7] = [BLUE, RED, MAGENTA, CYAN, GREEN, BLACK, YELLOW];
@@ -80,7 +80,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut chart = ChartBuilder::on(&root)
         .set_label_area_size(LabelAreaPosition::Left, 60)
         .set_label_area_size(LabelAreaPosition::Bottom, 60)
-        .caption("P1_Result", ("sans-serif", 40))
+        .caption("Result", ("sans-serif", 40))
         .build_cartesian_2d((boundary.0 as f64 / GIGA)..((boundary.1 + 1) as f64 / GIGA), 0.0..1.0)?;
 
     chart.configure_mesh()

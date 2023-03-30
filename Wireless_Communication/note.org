@@ -593,7 +593,7 @@ Digital to analog signal
   Inefficient modulation technique
   On voice-grade lines, up to 1200 bps
   Used to transmit digital data over optical fiber
-  
+
 
 + Frequency-shift keying (FSK)
   Frequency difference near carrier frequency
