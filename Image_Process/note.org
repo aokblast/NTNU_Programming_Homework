@@ -249,3 +249,29 @@ Two types:
 *** Cubic Interpolation
 
 [[./Cubic_Interpolation.png]]
+
+*** Bicubic interpolation
+
+Apply cubic interpolation first along the rows and then down the columns
+
+** Image Enlargement
+
+1. Zero interleave
+2. Filling or bilinear interpolation, bicublic interpolation
+   +  NN
+     [[./nn.png]]
+   + Bilinear
+     [[./bi.png]]
+   + Bicubic
+     [[./bic.png]]
+
+** Image Reduction
+
+** Image Rotation
+
+Solution:
++ Enlarge image size
++ Inverse transformation
+
+
+
