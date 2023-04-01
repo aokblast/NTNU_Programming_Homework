@@ -273,5 +273,9 @@ Solution:
 + Enlarge image size
 + Inverse transformation
 
+* CH7 Fourier Analysis
+
+Fourier Analysis = Fourier series + Fourier transformation
+
 
 
