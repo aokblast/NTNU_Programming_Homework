@@ -1,0 +1,60 @@
+#+TITLE: Wireless Communication HW4
+
+
+* Problem 1
+
+\[ A_e = \text{effective area} \]
+\[ f = \text{frequency} \]
+\[ c = \text{speed of light} \]
+
+* Problem 2
+
+1. Slow fading vs Fast fading
+   Fast fading means the change of attenuation is very fast in a time unit.
+   Slow fading means the change of attenuation is slow in a time unit.
+
+2. Diffraction vs scattering
+   Diffraction is wave change it's propagating direction when facing impenetrate object whose size is large than wavelength.
+   Scattering is wave change it's propagating direction when facing impenetrate object whose size is same of less than wavelength.
+
+3. Flat fading vs selective fading
+   Flat fading means the change of attenuation is almost zero for every frequency components.
+   Selective fading means the change of attenuation is huge for every frequency components.
+
+* Problem 3
+
+1. Thermal Noise
+   Noise that cause by agitation of electrons.
+
+2. Intermodulation Noise
+   Noise cause by multiple signals of different frequency pass through same medium and add up to create a new frequency component as a new noise.
+
+3. Crosstalk
+   Noise cause by same frequency but different sender. The receiver receive wrong signal send by others.
+
+4. Impluse Noise
+   Noise cause by some impulse that is from other source like lightening or hammer
+
+* Problem 4
+
+1. Wave length:
+   \[ \lambda = \frac{c}{f} = \frac{3 * 10 ^ 8}{300} = 10^6 m  \]
+   Half wave length long:
+   \[ \frac{\lambda}{2} = \frac{10^6}{2} = 5 * 10^5 m \]
+2. Wave legth:
+   \[ (\frac{\lambda}{2}) * 2 = 3 * 2 = 6 m \]
+   Frequency:
+   \[ \frac{c}{\lambda} = \frac{3 * 10 ^ 8}{6} = 5 * 10^7 Hz \]
+
+* Problem 5
+
+\[ d = 3.57\sqrt{Kh} \]
+\[ h = \frac{(\frac{d}{3.57})^2}{K} = \frac{(28.0112)^2}{K} = \frac{784.62757}{K} = 1046.1701 m \]
+
+* Problem 6
+
+1. Thermal Noise
+   \[ N = kTB = 1.38 * 10^{-23} * (17 + 273.15) * 30 * 10^3 = 1.38 * 10^{-20} * 290.15 * 30 \]
+   \[ = 12012.210 * 10^{-20} = 1.2012 * 10^{-16}W \]
+   Compare with the operating power, the Thermal noise is much smaller than operating power.
+
