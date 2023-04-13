@@ -1,6 +1,9 @@
 #+TITLE: Image Processing Note
 #+STARTUP: inlineimages
 #+OPTIONS: tex:t
+#+attr_html: :width 100px
+#+attr_latex: :width 100px
+#+ATTR_ORG: :width 80px
 
 * CH0 - Introduction
 
@@ -277,5 +280,92 @@ Solution:
 
 Fourier Analysis = Fourier series + Fourier transformation
 
+* CH8 Image Restoration
+
+** Type of Image degradation
+
++ Noise
++ Error
++ Distortion
++ blurring
+
+** Recover way
+
++ Image Enhancement
+  Don't need to know about the problem of degradation
++ Image Restoration
+  Known degradation process, need to know about the model of degradation
+
+** Type of Noises
+
++ White noise
+  Noise whose Fourier spectrum is constant
++ Periodic noise
++ Additive noise
+  eachg pixel is added a valoue (noise) chosen from probability distribution
++ Salt-and-pepper (impulse) noise
+  [[./sat.png]]
++ Uniform noise
+  E(x) = (a + b) / 2
+  Var(x) = (b - a)^2 / 12
++ Gaussian noise
+  [[./gauss.png]]
++ Rayleigh noise
+  Hightest point: a + sqrt(b / 2)
+  Left point: a
+  [[./Rayleigh.png]]
++ Erlang(gamma) noise
+  Hightest point: (b - 1) / a
+  [[./Erlang.png]]
++ Exponential noise
+  [[./expo.png]]
+
++ Multiplicative noise
+
+** Filter
+
+*** Mean filter
+
++ Arithmetic mean
+  [[./arthmean.png]]
++ Geometric mean
+  [[./geom.png]]
++ Haromnic mean
+  [[./harm.png]]
++ Contraharmonic mean
+  [[./contra.png]]
+
+*** adaptive filter
+
++ One version
+  [[./adpfilt.png]]
++ If total information is not known
+  [[./adafilt2.png]]
+
+** Multiply Filter
+
+*** Inverse filtering
+
+
+g(i, j) = f(i, j) * h(i, j)
+G(u, v) = F(u, v)H(u, v)
+F(u, v) = G(u, v)/H(u, v)
+
+*** Low-pass filter
+
+F(u, v) = G(u, v) / H(u, v) * L(u, v)
+
+*** Constrained Division
+
+[[./constdiv.png]]
+
+*** Wiener filter
+
+g(i, j) = h(i, j) * f(i, j) + n(i, j)
+
+[[./wienerfilt.png]]
+
+|N(u, v)| ^ 2: power spectrum of noise
+|F(u, v)| ^ 2: power spectrum of image
 
 
