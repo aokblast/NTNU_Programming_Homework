@@ -339,7 +339,7 @@ Fourier Analysis = Fourier series + Fourier transformation
 
 + One version
   [[./adpfilt.png]]
-+ If total information is not known
++ If total variation is not known
   [[./adafilt2.png]]
 
 ** Multiply Filter
@@ -349,7 +349,7 @@ Fourier Analysis = Fourier series + Fourier transformation
 
 g(i, j) = f(i, j) * h(i, j)
 G(u, v) = F(u, v)H(u, v)
-F(u, v) = G(u, v)/H(u, v)
+F(u, v) = G(u, v)/H(wu, v)
 
 *** Low-pass filter
 
