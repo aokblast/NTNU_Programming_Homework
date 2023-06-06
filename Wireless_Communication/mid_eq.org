@@ -1,0 +1,20 @@
+* Sin
+\[ s(t) =  \sin(2 \pi ft + \phi) \]
+* Channel Capacity
+\[ C=2Blog_2M = Blog(1+SNR),\text{ where SNR}_{dB} = 10log_{10}\text{SNR} \]
+* Antenna Gain
+\[ G=\frac{4\pi A_e}{\lambda ^ 2} = \frac{4\pi f^2A_e}{c^2} \]
+* Line of Sight Eq
+\[ d = 3.57\sqrt{Kh} \text{, where } K = \frac{4}{3}, d = 3.57(\sqrt{Kh_1} + \sqrt{K_h2})\]
+* Free Space Loss
+\[ L = \frac{P_t}{P_r} = \frac{(4\pi d) ^ 2}{\lambda ^2}\text{, where }L_{dB} = 10logL = -20log(\lambda) + 20log(d) + 21.98 \]
+* Free Space Loss with other antennas
+\[ \frac{P_t}{P_r} = \frac{L}{G_rG_t} = \frac{((\lambda d) ^ 2)}{A_rA_t}\text{, where }L_{dB} = 10logL = 20log(\lambda) + 20logd - 10log(A_tA_r) \]
+* Thermal Noise
+\[ N = BN_0 = BkT\text{, where }k = 1.3803 * 10^{-23}\text{ and }N_{dB} = 10log(kTB) = -228.6 + 10 log(T) + 10 log (B) \]
+* Expression
+\[ \frac{E_b}{N_0} = \frac{S/R}{N_0} = \frac{S}{kTR} = \frac{S}{N}\frac{B_T}{R} = \frac{B}{C}(2^{\frac{C}{B}} - 1), (\frac{E_b}{N_0})_{dB} = S_{dBW} - 10logR + 228.6 - 10logT \]
+* MFSK
+\[ s_i(t) = A cos2\pi f_i t \text{, where }1\leq i \leq M\text{, where }f_i = f_c + (2i - 1 - M)f_d, B=2Mf_d, 2f_d = \frac{1}{LT}\text \]
+* OPSK
+\[ s(t) = \frac{1}{\sqrt{2}}I(t)cos2\pi f_c t - \frac{1}{\sqrt{2}}Q(t)sin2\pi f_c t, D = \frac{R}{L} \]
