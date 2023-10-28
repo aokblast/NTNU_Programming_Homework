@@ -1,0 +1,176 @@
+For the code tracing problem in this homework. 
+I use dynamic tracing tools instead of static tracing tool to trace the code.
+I use a debugger called lldb to trace the code.
+Notice that in the 2.1 to 2.3 and 4 I use FreeBSD to finish my homework, so the mux__handle will use mux_poll instead of mux_epoll because FreeBSD don’t have epoll.
+
+2.1:
+1. I use the following command
+```
+lldb ./mosquitto
+target modules add ../lib/libmosquitto.so
+breakpoint set -n handle__subscribe
+```
+2. And in another terminal
+
+```
+./mosquitto_sub -t n
+```
+
+3. It stop at the breakpoint where I set in handle__subscribe
+
+Then in lldb terminal
+```
+bt
+```
+
+4. Get the following result
+```
+(lldb) bt
+* thread #1, name = 'mosquitto', stop reason = breakpoint 2.1
+  * frame #0: 0x000000000022f1bf mosquitto`handle__subscribe(context=0x0000000827267300) at handle_subscribe.c:34:6
+    frame #1: 0x000000000024620a mosquitto`handle__packet(context=0x0000000827267300) at read_handle.c:69:9
+    frame #2: 0x000000000023aa77 mosquitto`packet__read(mosq=0x0000000827267300) at packet_mosq.c:566:7
+    frame #3: 0x000000000023462b mosquitto`loop_handle_reads_writes at mux_poll.c:335:10
+    frame #4: 0x00000000002342c7 mosquitto`mux_poll__handle(listensock=0x00000008272789c0, listensock_count=2) at mux_poll.c:224:3
+    frame #5: 0x0000000000233d0b mosquitto`mux__handle(listensock=0x00000008272789c0, listensock_count=2) at mux.c:78:9
+    frame #6: 0x0000000000230bbb mosquitto`mosquitto_main_loop(listensock=0x00000008272789c0, listensock_count=2) at loop.c:205:8
+    frame #7: 0x00000000002327e2 mosquitto`main(argc=1, argv=0x0000000820344db8) at mosquitto.c:576:7
+    frame #8: 0x0000000000214290 mosquitto`_start(ap=<unavailable>, cleanup=<unavailable>) at crt1_c.c:75:7
+```
+
+Ans: Thus we can get the handle__subscribe is in read_handle.c:69
+
+2.2:
+1. I use the following command
+```
+lldb ./mosquitto
+target modules add ../lib/libmosquitto.so
+breakpoint set -n handle__publish
+```
+2. And in another terminal
+
+```
+./mosquitto_pub -t n -m n
+```
+
+3. It stop at the breakpoint where I set in handle__publish
+Then in lldb terminal
+```
+bt
+```
+
+4. Get the following result and it is the answer
+```
+(lldb) bt
+* thread #1, name = 'mosquitto', stop reason = breakpoint 1.1
+  * frame #0: 0x000000000022d990 mosquitto`handle__publish(context=0x00000008277fa300) at handle_publish.c:40:6
+    frame #1: 0x00000000002461b5 mosquitto`handle__packet(context=0x00000008277fa300) at read_handle.c:55:9
+    frame #2: 0x000000000023aa77 mosquitto`packet__read(mosq=0x00000008277fa300) at packet_mosq.c:566:7
+    frame #3: 0x000000000023462b mosquitto`loop_handle_reads_writes at mux_poll.c:335:10
+    frame #4: 0x00000000002342c7 mosquitto`mux_poll__handle(listensock=0x000000082780b9c0, listensock_count=2) at mux_poll.c:224:3
+    frame #5: 0x0000000000233d0b mosquitto`mux__handle(listensock=0x000000082780b9c0, listensock_count=2) at mux.c:78:9
+    frame #6: 0x0000000000230bbb mosquitto`mosquitto_main_loop(listensock=0x000000082780b9c0, listensock_count=2) at loop.c:205:8
+    frame #7: 0x00000000002327e2 mosquitto`main(argc=1, argv=0x00000008206f7e38) at mosquitto.c:576:7
+    frame #8: 0x0000000000214290 mosquitto`_start(ap=<unavailable>, cleanup=<unavailable>) at crt1_c.c:75:7
+```
+
+2.3:
+1. In this problem, I still use lldb
+```
+lldb ./mosquitto_pub
+breakpoint set -n main
+r
+```
+2. Then it stops at start main function and we can use n to get to next line
+After several times of forward, I found the print_usage() function seems is the answer.
+3. Use the following command to explore the information of that symbol
+```
+image lookup -n print_usage
+```
+4. The answer is at pub_client.c:398
+```
+1 match found in /home/blast/mosquittio/mosquitto-2.0.17/build/client/mosquitto_pub:
+        Address: mosquitto_pub[0x0000000000207f30] (mosquitto_pub.PT_LOAD[1]..text + 4912)
+        Summary: mosquitto_pub`print_usage at pub_client.c:398
+```
+
+3.1
+
+As Linux manual shows.We have 
+1. epoll_create() for create event poll queue and initialize it’s structure
+2. epoll_ctl() act as ioctl
+3. epoll_wait() for waiting events
+
+3.2
+
+As epoll_ctl shows, the answer is  EPOLLOUT
+
+3.3
+1. Run the mosquitto at first to load all dll symbol into modules list
+
+```
+lldb ./mosquitto_pub
+r
+```
+2. Now we can set the breakpoint on epoll_ctl
+```
+breakpoint set -n epoll_ctl
+r
+```
+3. Jump to the upper frame and check the code
+```
+frame select 1
+f
+```
+4.  Get the code segment
+```
+   95           for(i=0; i<listensock_count; i++){
+   96                   ev.data.ptr = &listensock[i];
+   97                   ev.events = EPOLLIN;
+-> 98                   if (epoll_ctl(db.epollfd, EPOLL_CTL_ADD, listensock[i].sock, &ev) == -1) {
+   99                           log__printf(NULL, MOSQ_LOG_ERR, "Error in epoll initial registering: %s", strerror(errno));
+   100                          (void)close(db.epollfd);
+   101                          db.epollfd = 0;
+```
+5. No input flag is specified. So as the Linux manual said, the default behavior is level-triggered.
+
+4.1
+
+1. Use lldb as usual
+
+```
+lldb ./mosquitto
+```
+
+2. Press Ctrl-C to stop and get the stack frame
+
+```
+bt
+```
+
+```
+  * frame #0: 0x00000008266e9f5a libc.so.7`__sys_poll at _poll.S:4
+    frame #1: 0x0000000825083d36 libthr.so.3`__thr_poll(fds=0x0000000829f9a880, nfds=2, timeout=100) at thr_syscalls.c:338:8
+    frame #2: 0x0000000000234257 mosquitto`mux_poll__handle(listensock=0x00000008275679c0, listensock_count=2) at mux_poll.c:201:12
+    frame #3: 0x0000000000233d0b mosquitto`mux__handle(listensock=0x00000008275679c0, listensock_count=2) at mux.c:78:9
+    frame #4: 0x0000000000230bbb mosquitto`mosquitto_main_loop(listensock=0x00000008275679c0, listensock_count=2) at loop.c:205:8
+    frame #5: 0x00000000002327e2 mosquitto`main(argc=1, argv=0x0000000820f4f8a8) at mosquitto.c:576:7
+    frame #6: 0x0000000000214290 mosquitto`_start(ap=<unavailable>, cleanup=<unavailable>) at crt1_c.c:75:7
+```
+We can find that __thr_poll yields the CPU cycle thus will not consume CPU
+
+In Linux case would be
+
+```
+(lldb) bt
+* thread #1, name = 'mosquitto', stop reason = signal SIGSTOP
+  * frame #0: 0x00007ffff78eefb7 libc.so.6`epoll_wait(epfd=6, events=0x00005555555bb2a0, maxevents=1000, timeout=100) at epoll_wait.c:30:10
+    frame #1: 0x000055555557f269 mosquitto`mux_epoll__handle at mux_epoll.c:189:16
+    frame #2: 0x000055555557ec9f mosquitto`mux__handle(listensock=0x00005555555d8ab0, listensock_count=2) at mux.c:76:9
+    frame #3: 0x000055555557ca1b mosquitto`mosquitto_main_loop(listensock=0x00005555555d8ab0, listensock_count=2) at loop.c:205:8
+    frame #4: 0x000055555557e48e mosquitto`main(argc=1, argv=0x00007fffffffe2b8) at mosquitto.c:576:7
+    frame #5: 0x00007ffff77f4a90 libc.so.6`__libc_start_call_main(main=(mosquitto`main at mosquitto.c:449:1), argc=1, argv=0x00007fffffffe2b8) at libc_start_call_main.h:58:16
+    frame #6: 0x00007ffff77f4b49 libc.so.6`__libc_start_main_impl(main=(mosquitto`main at mosquitto.c:449:1), argc=1, argv=0x00007fffffffe2b8, init=<unavailable>, fini=<unavailable>, rtld_fini=<unavailable>, stack_end=0x00007fffffffe2a8) at libc-start.c:360:3
+    frame #7: 0x000055555555fea5 mosquitto`_start + 37
+```
+Which is epoll_wait yields the CPU
