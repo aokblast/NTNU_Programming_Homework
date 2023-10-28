@@ -9,6 +9,8 @@ Without any middle task, I found the CPU usage is 30%. So I create a task that r
 Then I reduce the period to 500ms which is half of the original 1s. The CPU usage is 85~87% now. Finally, I change the time period to 400ms, and the CPU usage is 94~96% right now.
 2. How many middle-priority tasks were there and why?
 As describe above, I use 2 same tasks. And these two tasks' priority is 95. I think we should not use too many tasks because the cost of context switch and timer will make the experiment not that precise and hard to predict.
-3. 
+3. In my assumption, there are some priority inverse happen because the two threads use same resources. So there may be sometime for high priority task use 25ms and sometime use 15ms. Then, with the middle task, because the low priority task may be interrupted by te middle priority task.
+The probability of priority inverse may be less happen, because we should execute 95 priority one before 90 priority one. And after executing 95 priority one, the hightest priority task may be ready to execute. Thus, there is no priority inverse happen.
+In the graph of our experiment, it correspond with our assumption. In original, the task has 40% execute in 25ms and 60% execute in 10ms. In the Middle-Task one, 95% of high priority task execute in 15ms that has no priority inverse happen. 
 
 

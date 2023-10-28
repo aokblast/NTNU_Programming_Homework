@@ -1,0 +1,7 @@
+According to the definition of Rate-Monotonic, the higher frequency (shorter period) a process has, the higher priority it has.
+And in the manual of chrt. There is a use menthod like chrt -f [priority] [pogram] [argument].
+The following commands:
+chrt -f 99 ./p1 &
+chrt -f 98 ./p2 &
+Set p1 (higher frequency) with 99 (higher priority) and Set p2 (lower frequency) with 98 (lower priority) will comply with the definition of rate-monotonic and thus can implement this scheduling policy.
+By the way, both of them are set into FIFO scheduler. Which will interrupt the normal process and use the real time scheduler in the Linux. 

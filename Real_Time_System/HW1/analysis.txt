@@ -1,0 +1,4 @@
+We can discover that p1 has higher rate and p2 has lower rate.
+In rm.png’s case, the right priority order is set as their rate(50/100 vs 80 / 500).
+So they can have the correct execution order and thus can run under stable response time.
+In rm-reverse.png’s case, the incorrect priority order is set. Which means, the p1 will interrupt p2 very often. Thus cause unstable running in p1 (lower priority and higher rate).

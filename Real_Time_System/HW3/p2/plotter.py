@@ -3,18 +3,18 @@ import matplotlib.pyplot as plt
 import pandas as pd
 df = []
 
-with open("npp_1_res") as f:
+with open("npp_2_res") as f:
     for line in f:
         line = line.strip()
         if line.isnumeric():
             df.append({"value": int(line), "type": "NPP"})
 
-with open("pcp_1_res") as f:
+with open("pcp_2_res") as f:
     for line in f:
         line = line.strip()
         if line.isnumeric():
             df.append({"value": int(line), "type": "PCP"})
-with open("pip_1_res") as f:
+with open("pip_2_res") as f:
     for line in f:
         line = line.strip()
         if line.isnumeric():

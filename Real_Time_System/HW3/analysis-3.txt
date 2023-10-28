@@ -1,0 +1,8 @@
+In these problem, we analysis on two conditions.
+Assume that we have three level of priority, the last two level use same mutex. The hightest level don't have race conditio. 
+1. The race condition has short execution time
+The race condition has short execution time means there is no need to use PIP. NPP is enough because the portion of race condition is short.
+2. The race condition has long execution time
+The race condition has long execution time that we have to use PIP. Because in NPP's case, the smallest priority level task will rise to hightest level of priority and cause priority inverse.
+So If we use PIP, the lower level task will be raised to middle level and thus will not add the execution time of hightest level task
+
