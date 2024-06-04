@@ -1,0 +1,57 @@
+[package]
+name = "hw4"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "0.2.91"
+wasm-bindgen-futures = "0.4.42"
+js-sys = "0.3.68"
+gl_matrix = "0.0.2"
+wavefront_obj = "10.0.0"
+async-std = { version = "1.12", features = ["attributes", "tokio1"] }
+
+[build]
+target = "wasm32-wasi-preview1-threads"
+
+
+[dependencies.web-sys]
+default-features = true
+version = "0.3.4"
+features = [
+  'Document',
+  'Element',
+  'HtmlCanvasElement',
+  'WebGlBuffer',
+  'WebGlVertexArrayObject',
+  'WebGl2RenderingContext',
+  'WebGlProgram',
+  'WebGlShader',
+  'WebGlUniformLocation',
+  'Window',
+  "EventListener",
+  "KeyboardEvent",
+  "DomRect",
+  "Element",
+  "EventTarget",
+  "MouseEvent",
+  "console",
+  "InputEvent",
+  "HtmlTextAreaElement",
+  "HtmlInputElement",
+  "Headers",
+  "Request",
+  "RequestInit",
+  "RequestMode",
+  "Response",
+  "Text",
+  "CustomEvent",
+  "WebGlTexture",
+  "WebGlFramebuffer",
+  "WebGlRenderbuffer",
+  "WebGlSampler"
+]
